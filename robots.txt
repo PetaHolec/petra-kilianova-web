@@ -1,0 +1,7 @@
+# PROTOTYP – web zatím neindexovat.
+# Před spuštěním ostrého webu nahraďte pravidly níže a doplňte sitemap:
+#   User-agent: *
+#   Allow: /
+#   Sitemap: https://www.[domena].cz/sitemap.xml
+User-agent: *
+Disallow: /

@@ -1,0 +1,8 @@
+Písmo je hostované lokálně (bez načítání z Google Fonts – kvůli GDPR).
+
+Outfit – Copyright 2021 The Outfit Project Authors (https://github.com/Outfitio/Outfit-Fonts)
+
+Šířeno pod licencí SIL Open Font License 1.1:
+https://openfontlicense.org
+
+Zdroj souborů: Google Fonts (proměnná tloušťka 100–900, sady znaků latin + latin-ext, tj. včetně české diakritiky).
