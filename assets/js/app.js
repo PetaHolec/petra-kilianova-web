@@ -18,7 +18,10 @@
 
   // Sekce, které lze vypnout v settings – jejich odkazy v navigaci se pak skryjí
   const optional = { 'proc-se-mnou': 'showWhy', tym: 'showTeam', kalkulacka: 'showTools', reference: 'showTestimonials', otazky: 'showFaq' };
-  const navItems = S.nav.filter((n) => !optional[n.target] || on(optional[n.target]));
+  const hasPosts = !!(PV.blog && PV.blog.hasPosts());
+  const navItems = S.nav
+    .filter((n) => !optional[n.target] || on(optional[n.target]))
+    .filter((n) => !n.needsPosts || hasPosts);
   const mainNav = navItems.filter((n) => n.main);
 
   const href = (id) => (isHome ? '#' : 'index.html#') + id;
@@ -92,7 +95,7 @@
 
   /* ---------- Hlavička ---------- */
   function renderHeader() {
-    const links = mainNav.map((n) => `<li><a class="nav__link" href="${href(n.target)}" data-nav="${esc(n.target)}">${esc(n.label)}</a></li>`).join('');
+    const links = mainNav.map((n) => `<li><a class="nav__link${n.target === 'blog' && (page === 'blog' || page === 'post') ? ' is-active' : ''}" href="${n.url || href(n.target)}" data-nav="${esc(n.target)}">${esc(n.label)}</a></li>`).join('');
     return `
 <a class="skip-link" href="#main">Přeskočit na obsah</a>
 <header class="site-header" data-header>
@@ -390,8 +393,8 @@
         <div class="fixwatch__success" data-fw-success tabindex="-1" hidden>
           ${PV.checkSvg()}
           <h3>Fixaci máme pod dohledem</h3>
-          <div class="demo-box">${icon('info')}<span>${esc(f.success)}</span></div>
-          <button class="btn btn--light btn--sm btn--noicon" type="button" data-fw-reset>Vyzkoušet znovu</button>
+          <p>${esc(f.success)}</p>
+          <button class="btn btn--light btn--sm btn--noicon" type="button" data-fw-reset>Zadat další fixaci</button>
         </div>
       </div>`;
   }
@@ -466,6 +469,10 @@
     </a>
   </div>
 </section>`;
+  }
+
+  function renderBlogTeaser() {
+    return PV.blog ? PV.blog.teaser(eyebrow((S.blog || {}).teaserEyebrow || 'Blog')) : '';
   }
 
   /* ---------- Reference (volitelné) ---------- */
@@ -627,7 +634,7 @@
       </div>
       <div class="footer__nav">
         <p class="footer__title">Navigace</p>
-        <ul class="footer__links footer__links--nav">${navItems.map((n) => `<li><a href="${href(n.target)}">${esc(n.label)}</a></li>`).join('')}</ul>
+        <ul class="footer__links footer__links--nav">${navItems.map((n) => `<li><a href="${n.url || href(n.target)}">${esc(n.label)}</a></li>`).join('')}</ul>
       </div>
       <div>
         <p class="footer__title">Kontakt</p>
@@ -659,7 +666,7 @@
   <div class="menu__inner">
     <div class="menu__top">${logo()}<button class="round-btn" type="button" data-menu-close aria-label="Zavřít menu" autofocus>${icon('close')}</button></div>
     <nav aria-label="Mobilní navigace">
-      <ol class="menu__list" style="--rows:${Math.ceil(mainNav.length / 2)}">${mainNav.map((n, i) => `<li style="--i:${i}"><a class="menu__link" href="${href(n.target)}" data-menu-link>${esc(n.label)}<span class="menu__num">${PV.pad(i + 1)}</span></a></li>`).join('')}</ol>
+      <ol class="menu__list" style="--rows:${Math.ceil(mainNav.length / 2)}">${mainNav.map((n, i) => `<li style="--i:${i}"><a class="menu__link" href="${n.url || href(n.target)}" data-menu-link>${esc(n.label)}<span class="menu__num">${PV.pad(i + 1)}</span></a></li>`).join('')}</ol>
     </nav>
     <div class="menu__cta">${btn(S.navCta, { to: href('rezervace'), cls: 'btn--primary btn--block', attrs: 'data-book data-menu-link data-track="cta_menu"' })}</div>
     <div class="menu__contacts">${contacts}</div>
@@ -1136,7 +1143,7 @@
   if (isHome) {
     $('#main').innerHTML = [
       renderHero(), renderServices(), renderWhy(), renderAbout(), renderTeam(),
-      renderProcess(), renderTools(), renderBooking(), renderInsta(), renderTestimonials(), renderFaq(), renderContact(),
+      renderProcess(), renderTools(), renderBooking(), renderInsta(), renderBlogTeaser(), renderTestimonials(), renderFaq(), renderContact(),
     ].join('');
   }
   mount('[data-render="footer"]', renderFooter() + renderOverlays());

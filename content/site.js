@@ -21,7 +21,7 @@ window.SITE = {
     showTools: true,         // kalkulačka splátky + hlídání konce fixace
     showTestimonials: true,  // reference
     showFaq: true,           // časté otázky a slovníček
-    prototype: true,         // false = skryje odznak „Prototyp“ a poznámky k návrhu
+    prototype: false,        // true = zobrazí odznak „Prototyp“ a poznámky k návrhu
   },
 
   /* ---------- Měření a marketing (načte se až po souhlasu s cookies) ---------- */
@@ -88,6 +88,7 @@ window.SITE = {
     { label: 'Kalkulačka', target: 'kalkulacka', main: true },
     { label: 'Rezervace', target: 'rezervace' },
     { label: 'Ze života poradkyně', target: 'ze-zivota' },
+    { label: 'Blog', target: 'blog', url: 'blog.html', main: true, needsPosts: true },
     { label: 'Reference', target: 'reference' },
     { label: 'FAQ', target: 'otazky', main: true },
     { label: 'Kontakt', target: 'kontakt', main: true },
@@ -254,7 +255,7 @@ window.SITE = {
     text: 'Napište mi, kdy vám končí fixace, a já se vám včas ozvu. Budete mít dost času porovnat nabídku své banky s dalšími možnostmi.',
     consent: 'Souhlasím, aby mě poradkyně kontaktovala ohledně konce mé fixace. Souhlas mohu kdykoli odvolat.',
     cta: 'Hlídat moji fixaci',
-    success: 'Toto je ukázka – nic nebylo uloženo ani odesláno. V ostré verzi by vám přišlo potvrzení e-mailem a poradkyně by se ozvala před koncem fixace.',
+    success: 'Děkuji, ozvu se vám s dostatečným předstihem před koncem fixace.',
   },
 
   /* ---------- Rezervace schůzky ---------- */
@@ -276,7 +277,6 @@ window.SITE = {
     provider: 'demo',
     externalUrl: '',         // např. 'https://cal.com/jmeno/konzultace'
     daysAhead: 45,           // kolik dní dopředu lze rezervovat
-    demoNote: 'Ukázka rezervačního systému – termíny nejsou skutečné a nic se neodešle.',
 
     // Typy schůzek a jejich délka jsou návrh – potvrdit s klientkou.
     types: [
@@ -285,6 +285,27 @@ window.SITE = {
       { id: 'phone', title: 'Telefonický hovor', text: 'Rychlé zorientování v situaci a první otázky.', duration: 30, icon: 'phone' },
     ],
     note: 'Typy schůzek, jejich délka a pracovní doba jsou návrh. Ostrá verze se napojí na skutečný kalendář (Cal.com, Calendly nebo Google/Outlook kalendář).',
+  },
+
+  /* ---------- Blog ----------
+     Články se píšou ve správě webu (admin.html) a ukládají se do content/blog/posts.js.
+     repo = GitHub repozitář webu, do kterého správa články zapisuje. */
+  blog: {
+    repo: 'PetaHolec/petra-kilianova-web',
+    branch: 'main',
+    dataFile: 'content/blog/posts.js',
+    imageDir: 'assets/blog',
+    eyebrow: 'Blog',
+    title: 'Srozumitelně o *hypotékách*.',
+    intro: 'Praktické tipy, vysvětlení a odpovědi na otázky, které se kolem financování bydlení opakují nejčastěji.',
+    emptyTitle: 'Články se připravují',
+    emptyText: 'První texty přibudou brzy. Mezitím se mi klidně ozvěte, ráda poradím osobně.',
+    teaserEyebrow: 'Blog',
+    teaserTitle: 'Nejnovější *články*.',
+    teaserText: 'Tipy a vysvětlení, které vám pomohou při rozhodování o hypotéce.',
+    allLabel: 'Všechny články',
+    ctaTitle: 'Chcete to probrat osobně?',
+    ctaText: 'Ráda vám pomůžu zorientovat se a najít řešení, které sedí vaší situaci.',
   },
 
   /* ---------- Ze života poradkyně – odkaz na Instagram (videa jsou jen tam) ---------- */

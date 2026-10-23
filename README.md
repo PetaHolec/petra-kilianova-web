@@ -1,4 +1,4 @@
-# Petra Kilianová – hypoteční poradkyně · interaktivní prototyp webu
+# Petra Kilianová – hypoteční poradkyně · web
 
 Responzivní prototyp osobního webu hypoteční poradkyně Petry Kilianové (partnerská společnost Gepard Finance). Slouží jako návrh budoucí realizace: design, texty, struktura i klíčové funkce (rezervace schůzky, kalkulačka, hlídání konce fixace, cookies) jsou funkční, ale **běží v ukázkovém režimu**.
 
@@ -49,14 +49,19 @@ Pak otevřete http://localhost:5173.
 ```
 index.html                    šablona hlavní stránky (obsah se vykreslí z content/)
 ochrana-osobnich-udaju.html   šablona zásad ochrany osobních údajů
+blog.html, clanek.html        výpis blogu a detail článku
+admin.html                    správa blogu (psaní článků)
 robots.txt                    prototyp je zablokovaný pro vyhledávače
 content/
   site.js                     VŠECHNY texty, kontakty, služby, kanceláře, odkazy, nastavení
+  blog/posts.js               články blogu (zapisuje správa, ručně needitovat)
 assets/
   css/styles.css              designový systém (barvy, písma, rozvržení, animace)
   js/core.js                  sdílené nástroje (ikony, fotografie, validace, měření)
   js/app.js                   vykreslení sekcí a interakce (kalkulačka, hlídání fixace…)
   js/booking.js               rezervační widget (vyměnitelný „poskytovatel termínů“)
+  js/blog.js                  výpis a detail článků, čištění HTML
+  js/admin.js, css/admin.css  správa blogu
   js/consent.js               souhlas s cookies + Google Consent Mode v2
   fonts/                      písmo hostované lokálně (Outfit – OFL)
   img/favicon.svg
@@ -90,6 +95,23 @@ Sekce lze vypnout v `settings` (hodnota `false`):
 Barvy a písma se mění na jednom místě – proměnné na začátku `assets/css/styles.css` (`--paper`, `--ink`, `--copper`…).
 
 ---
+
+## Blog a správa webu
+
+Blog se spravuje přímo na webu, na adrese **`admin.html`** (např. `https://petaholec.github.io/petra-kilianova-web/admin.html`). Klientka tam bez programování píše, upravuje, skrývá (koncept) a maže články.
+
+**Jak to funguje:** web je statický (GitHub Pages), takže správa ukládá články přímo do GitHub repozitáře (`content/blog/posts.js`, obrázky do `assets/blog/`). GitHub web sám přegeneruje, změna je vidět za 1–2 minuty. Žádný server ani další služba není potřeba.
+
+**Jednorázové nastavení přístupu** (návod je i na přihlašovací stránce správy):
+1. Klientka musí mít účet na github.com a práva k repozitáři (Settings → Collaborators, nebo repozitář převést na její účet; pak upravte `blog.repo` v `content/site.js`).
+2. Na github.com/settings/personal-access-tokens/new vytvoří klíč: jen pro tento repozitář, oprávnění **Contents: Read and write**, platnost 1 rok.
+3. Klíč vloží na přihlašovací stránce správy. Uloží se jen v jejím prohlížeči. Po roce se vytvoří nový.
+
+**Psaní článku:** nadpis, datum, krátký úvod, titulní obrázek a text s tlačítky (nadpis, tučně, seznam, citace, odkaz, obrázek). Vložený text se automaticky vyčistí. Fotky se před nahráním zmenší na max. 1600 px. Přepínač „Zveřejněno / Koncept“ určuje, zda se článek na webu ukáže.
+
+**Na webu:** výpis `blog.html`, detail `clanek.html?c=adresa-clanku`, ukázka tří nejnovějších na úvodní stránce. Dokud není zveřejněný žádný článek, odkaz „Blog“ v menu i ukázka na úvodní stránce se skryjí. Texty blogu (nadpisy, úvod) jsou v `content/site.js` v části `blog`.
+
+**Omezení:** články se vykreslují skriptem, takže vyhledávače je indexují hůř než klasické stránky. Pro SEO blogu do budoucna zvažte generování statických stránek. Správa nemá historii verzí, zálohou je historie commitů v repozitáři.
 
 ## Fotografie – seznam pro focení
 

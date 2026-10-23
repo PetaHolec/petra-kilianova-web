@@ -109,8 +109,7 @@
         <button class="btn btn--primary btn--noicon" type="button" data-consent="reject">Jen nezbytné</button>
         <button class="btn btn--primary btn--noicon" type="button" data-consent="accept">Přijmout vše</button>
         <button class="consent__more" type="button" data-consent="settings" aria-expanded="false">Nastavení</button>
-      </div>
-      <p class="consent__demo">${icon('info')}<span>Prototyp: zatím se nenačítají žádné analytické ani marketingové skripty.</span></p>`;
+      </div>`;
     document.body.appendChild(el);
 
     const prefs = el.querySelector('[data-prefs]');

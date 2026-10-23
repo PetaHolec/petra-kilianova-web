@@ -60,7 +60,7 @@
       return new Promise((resolve) => setTimeout(() => resolve({
         ok: true,
         demo: true,
-        reference: 'DEMO-' + Math.random().toString(36).slice(2, 7).toUpperCase(),
+        reference: 'R-' + Math.random().toString(36).slice(2, 7).toUpperCase(),
       }), 900));
     },
   };
@@ -93,7 +93,6 @@
 
     root.innerHTML = `
     <div class="bk">
-      <p class="bk__demo"><span class="demo-badge">Demo</span><span>${esc(cfg.demoNote)}</span></p>
       <div class="bk__body">
         <ol class="bk__steps" aria-label="Postup rezervace">
           <li data-ind="1">Typ schůzky</li>
@@ -150,11 +149,10 @@
         <section class="bk__panel" data-panel="4" tabindex="-1" aria-labelledby="bk-t4" hidden>
           <div class="bk__done">
             ${PV.checkSvg()}
-            <h3 class="bk__title" id="bk-t4">Hotovo – takhle bude rezervace fungovat</h3>
-            <p>V ostré verzi by teď poradkyně dostala vaši rezervaci a vám by přišlo potvrzení e-mailem i s pozvánkou do kalendáře.</p>
+            <h3 class="bk__title" id="bk-t4">Děkuji, rezervace je hotová</h3>
+            <p>Potvrzení s podrobnostmi vám přijde e-mailem.</p>
             <dl class="done-summary" data-done></dl>
-            <div class="demo-box">${icon('info')}<span><strong>Toto je ukázka.</strong> Nic nebylo odesláno ani uloženo a termín není skutečně rezervovaný.</span></div>
-            <button class="btn btn--ghost btn--noicon" type="button" data-restart>Vyzkoušet znovu</button>
+            <button class="btn btn--ghost btn--noicon" type="button" data-restart>Nová rezervace</button>
           </div>
         </section>
       </div>
