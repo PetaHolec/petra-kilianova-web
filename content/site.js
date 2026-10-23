@@ -91,6 +91,7 @@ window.SITE = {
     { label: 'Blog', target: 'blog', url: 'blog.html', main: true, needsPosts: true },
     { label: 'Reference', target: 'reference' },
     { label: 'FAQ', target: 'otazky', main: true },
+    { label: 'Slovníček pojmů', target: 'slovnicek', url: 'slovnicek.html' },
     { label: 'Kontakt', target: 'kontakt', main: true },
   ],
   navCta: 'Domluvit schůzku',
@@ -155,7 +156,7 @@ window.SITE = {
         points: ['Na jaké financování můžete dosáhnout', 'Co ovlivňuje schválení hypotéky', 'Co udělat dřív, než začnete hledat nemovitost'],
       },
     ],
-    situationsTitle: 'Poradím si i s méně obvyklými situacemi',
+    situationsTitle: 'Pomohu i s dalšími situacemi',
     situations: ['Podnikání (OSVČ)', 'Příjmy ze zahraničí', 'Rodičovská dovolená', 'Hypotéka pro mladé', 'Předhypoteční úvěr', 'Družstevní byt'],
     situationsNote: 'Návrh – ponechat jen situace, které klientka skutečně řeší.',
   },
@@ -199,11 +200,6 @@ window.SITE = {
     signature: 'Petra Kilianová',
     cta: 'Poznejme se osobně',
     portrait: { src: '', alt: 'Petra Kilianová, hypoteční poradkyně', label: 'Portrét – osobní představení', hint: 'Přirozené světlo · 3 : 4 · min. 1500 × 2000 px' },
-    partner: {
-      label: 'Partnerská společnost',
-      text: 'Působím pod hlavičkou společnosti Gepard Finance. [Postavení poradkyně a údaje o registraci doplníme po ověření.]',
-      logo: { src: '', alt: 'Gepard Finance', label: 'Logo Gepard Finance' },
-    },
     note: 'Návrh textu – finální podobu upravíme po rozhovoru s klientkou. Neobsahuje žádné vymyšlené údaje o praxi, oprávněních ani úspěších. Logo a prezentaci partnera ověřit podle pravidel Gepard Finance.',
   },
 
@@ -354,6 +350,9 @@ window.SITE = {
       { q: 'Dá se všechno vyřešit online?', a: 'Většinu kroků zvládneme online nebo po telefonu. Pokud dáváte přednost osobnímu setkání, potkáme se v kanceláři.' },
     ],
     glossaryTitle: 'Slovníček pojmů',
+    glossaryText: 'Fixace, LTV, RPSN… Co která slova znamenají, vysvětlená lidsky a na jednom místě.',
+    glossaryCta: 'Slovníček pojmů',
+    glossaryIntro: 'Hypotéky mají svůj vlastní jazyk. Tady najdete nejčastější pojmy vysvětlené srozumitelně.',
     glossary: [
       { term: 'Fixace', def: 'Období, po které se nemění úroková sazba. Po jejím skončení dostanete novou nabídku – nebo můžete hypotéku převést jinam.' },
       { term: 'LTV', def: 'Poměr výše úvěru k hodnotě nemovitosti. Čím je nižší, tím menší riziko pro banku.' },

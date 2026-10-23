@@ -169,7 +169,7 @@
     const situations = s.situations && s.situations.length ? `
     <div class="situations" data-reveal>
       <p class="situations__title">${esc(s.situationsTitle)}</p>
-      <ul class="situations__list" role="list">${s.situations.map((x) => `<li class="situations__chip">${icon('check')}${esc(x)}</li>`).join('')}</ul>
+      <ul class="situations__list" role="list">${s.situations.map((x) => `<li class="situations__chip">${esc(x)}</li>`).join('')}</ul>
     </div>
     ${note(s.situationsNote)}` : '';
     return `
@@ -179,7 +179,7 @@
     ${note(s.note)}
     <div class="services__grid">
       ${s.items.map((it, i) => `
-      <article class="service-card" data-reveal data-spotlight style="--d:${(i % 2) * 120}ms">
+      <article class="service-card" data-reveal data-spotlight data-stack style="--d:${(i % 2) * 120}ms;--n:${i}">
         <div class="service-card__top"><span class="service-card__num">${PV.pad(i + 1)}</span><span class="service-card__line" aria-hidden="true"></span>${it.tag ? `<span class="service-card__tag">${esc(it.tag)}</span>` : ''}</div>
         <h3 class="service-card__title">${fmt(it.title)}</h3>
         <p class="service-card__text">${fmt(it.text)}</p>
@@ -218,6 +218,19 @@
         <tbody>${rows}</tbody>
       </table>
     </div>
+    <div class="why__cards" data-reveal data-why-cards>
+      <ul class="why__track" role="list" aria-label="Srovnání: ${esc(w.selfLabel)} a ${esc(w.meLabel)}">
+        ${w.rows.map((r) => `
+        <li class="why-card">
+          <p class="why-card__label">${esc(r.label)}</p>
+          <div class="why-card__cols">
+            <div class="why-card__col why-card__col--self"><p class="why-card__who">${esc(w.selfLabel)}</p><p class="why-card__text">${fmt(r.self)}</p></div>
+            <div class="why-card__col why-card__col--me"><p class="why-card__who">${PV.archMark('why__mark')}${esc(w.meLabel)}</p><p class="why-card__text">${fmt(r.me)}</p></div>
+          </div>
+        </li>`).join('')}
+      </ul>
+      <div class="why__dots" aria-hidden="true">${w.rows.map((_, i) => `<span class="why__dot${i === 0 ? ' is-on' : ''}"></span>`).join('')}</div>
+    </div>
     <div class="banks" data-reveal>
       <p class="banks__title">${esc(w.banksTitle)}</p>
       <ul class="banks__list" role="list">${w.banks.map((b) => `<li class="banks__logo">${esc(b)}</li>`).join('')}</ul>
@@ -230,9 +243,6 @@
   /* ---------- O mně ---------- */
   function renderAbout() {
     const a = S.about;
-    const partnerLogo = PV.safeUrl(a.partner.logo.src)
-      ? `<img src="${esc(a.partner.logo.src)}" alt="${esc(a.partner.logo.alt || '')}" loading="lazy">`
-      : esc(a.partner.logo.label);
     return `
 <section class="section section--sand about" id="o-mne" aria-labelledby="about-title">
   <div class="container about__grid">
@@ -254,12 +264,6 @@
         ${btn(a.cta, { to: href('rezervace'), cls: 'btn--ghost', attrs: 'data-book data-track="cta_about"' })}
       </div>
       ${note(a.note)}
-    </div>
-  </div>
-  <div class="container">
-    <div class="partner" data-reveal>
-      <div class="partner__logo">${partnerLogo}</div>
-      <div><p class="partner__label">${esc(a.partner.label)}</p><p class="partner__text">${fmt(a.partner.text)}</p></div>
     </div>
   </div>
 </section>`;
@@ -490,18 +494,21 @@
   <div class="container">
     ${sectionHead(t.eyebrow, t.title, t.intro, 't-title')}
     ${note(t.note)}
-    <div class="t-grid">
-      ${t.items.map((it, i) => `
-      <figure class="t-card" data-reveal style="--d:${i * 110}ms">
+  </div>
+  <div class="t-marquee" data-marquee data-reveal role="region" aria-label="Reference klientů – posouvejte do stran, najetím myší se pás zastaví" tabindex="0">
+    <div class="t-track">
+      ${t.items.map((it) => `
+      <figure class="t-card">
         ${mark}
         <blockquote class="t-card__text"><p>${PV.text(it.text || t.placeholder)}</p></blockquote>
         <figcaption class="t-card__meta">
-          <span class="t-card__avatar" aria-hidden="true"></span>
           <span class="t-card__who"><span class="t-card__name">${fmt(it.name)}</span><span class="t-card__context">${fmt(it.context)}</span></span>
           <span class="t-card__source">${fmt(it.source)}</span>
         </figcaption>
       </figure>`).join('')}
     </div>
+  </div>
+  <div class="container">
     <div class="testimonials__foot" data-reveal>
       <p class="testimonials__ask">${fmt(t.ask)}</p>
       ${reviewLink(t.reviewLink)}
@@ -536,9 +543,33 @@
     </div>
   </div>
   <div class="container">
-    <div class="glossary" data-reveal>
-      <h3 class="glossary__title">${esc(f.glossaryTitle)}</h3>
-      <dl class="glossary__list">${f.glossary.map((g) => `<div class="glossary__item"><dt>${esc(g.term)}</dt><dd>${PV.text(g.def)}</dd></div>`).join('')}</dl>
+    <div class="glossary-teaser" data-reveal>
+      <div>
+        <h3 class="glossary-teaser__title">${esc(f.glossaryTitle)}</h3>
+        <p class="glossary-teaser__text">${fmt(f.glossaryText)}</p>
+      </div>
+      ${btn(f.glossaryCta, { to: 'slovnicek.html', cls: 'btn--ghost', attrs: 'data-track="glossary_open"' })}
+    </div>
+  </div>
+</section>`;
+  }
+
+  /* ---------- Slovníček pojmů (podstránka) ---------- */
+  function renderGlossaryPage() {
+    const f = S.faq || { glossary: [] };
+    return `
+<section class="blog-page">
+  <div class="container">
+    <a class="link-arrow link-arrow--back" href="index.html#otazky"><span class="link-arrow__icon" aria-hidden="true">${icon('arrow-left')}</span><span class="link-arrow__text">Zpět na časté otázky</span></a>
+    <header class="blog-head">
+      <p class="eyebrow"><span class="eyebrow__line" aria-hidden="true"></span><span>Srozumitelně</span></p>
+      <h1 class="h2" data-reveal>${esc(f.glossaryTitle)}</h1>
+      <p class="blog-head__intro" data-reveal style="--d:100ms">${fmt(f.glossaryIntro || '')}</p>
+    </header>
+    <dl class="glossary__list glossary__list--page">${f.glossary.map((g, i) => `<div class="glossary__item" data-reveal style="--d:${Math.min(i, 5) * 60}ms"><dt>${esc(g.term)}</dt><dd>${PV.text(g.def)}</dd></div>`).join('')}</dl>
+    <div class="post__cta">
+      <div><h2>Něco tu chybí?</h2><p>Zeptejte se mě, vysvětlím vám to osobně a bez zkratek.</p></div>
+      ${btn(S.navCta, { to: href('rezervace'), attrs: 'data-book data-track="cta_glossary"' })}
     </div>
   </div>
 </section>`;
@@ -849,6 +880,127 @@
     }));
   }
 
+  /* ---------- Služby na mobilu: karty se skládají na sebe ---------- */
+  function initServiceStack() {
+    const cards = $$('[data-stack]');
+    const mq = window.matchMedia('(max-width: 920px)');
+    if (cards.length < 2 || PV.reducedMotion.matches) return;
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      cards.forEach((card, i) => {
+        const next = cards[i + 1];
+        if (!mq.matches || !next) { card.style.removeProperty('--sc'); return; }
+        const stick = parseFloat(window.getComputedStyle(card).top) || 0;
+        const h = card.offsetHeight || 1;
+        const pinned = card.getBoundingClientRect().top <= stick + 1;
+        const p = pinned ? Math.min(1, Math.max(0, 1 - (next.getBoundingClientRect().top - stick) / h)) : 0;
+        card.style.setProperty('--sc', (1 - p * 0.06).toFixed(4));
+      });
+    };
+    const req = () => { if (!ticking) { ticking = true; window.requestAnimationFrame(update); } };
+    window.addEventListener('scroll', req, { passive: true });
+    window.addEventListener('resize', req);
+    update();
+  }
+
+  /* ---------- Proč se mnou na mobilu: posuvné karty banka / já ---------- */
+  function initWhyCards() {
+    const root = $('[data-why-cards]');
+    if (!root) return;
+    const track = $('.why__track', root);
+    const dots = $$('.why__dot', root);
+    const cards = Array.from(track.children);
+    const sync = () => {
+      const first = cards[0];
+      const step = cards.length > 1 ? cards[1].offsetLeft - first.offsetLeft : first.offsetWidth;
+      const i = Math.min(cards.length - 1, Math.max(0, Math.round(track.scrollLeft / (step || 1))));
+      dots.forEach((d, k) => d.classList.toggle('is-on', k === i));
+    };
+    track.addEventListener('scroll', PV.debounce(sync, 40), { passive: true });
+  }
+
+  /* ---------- Reference: pás, který pomalu jede zleva doprava ---------- */
+  function initMarquee() {
+    const m = $('[data-marquee]');
+    if (!m) return;
+    const track = $('.t-track', m);
+    const items = Array.from(track.children);
+    if (!items.length) return;
+    const reduce = PV.reducedMotion.matches;
+
+    // Kopie karet, aby pás nikdy nedojel na konec
+    const addSet = () => items.forEach((it) => {
+      const c = it.cloneNode(true);
+      c.setAttribute('aria-hidden', 'true');
+      track.appendChild(c);
+    });
+    addSet();
+    const setW = () => track.children[items.length].offsetLeft - items[0].offsetLeft;
+    let W = setW();
+    const fill = () => {
+      W = setW();
+      const need = Math.ceil(m.clientWidth / (W || 1)) + 2;
+      while (track.children.length < items.length * need) addSet();
+    };
+    fill();
+
+    let pos = W;
+    m.scrollLeft = pos;
+    let hover = false;
+    let userUntil = 0;
+    let visible = true;
+    let last = performance.now();
+    const speed = 36; // px za vteřinu; obsah jede doprava
+
+    const wrap = () => {
+      if (m.scrollLeft < 1) { m.scrollLeft += W; pos = m.scrollLeft; }
+      else if (m.scrollLeft > W * 2) { m.scrollLeft -= W; pos = m.scrollLeft; }
+    };
+    m.addEventListener('scroll', () => {
+      if (Math.abs(m.scrollLeft - Math.round(pos)) > 1) { pos = m.scrollLeft; userUntil = performance.now() + 2200; }
+      wrap();
+    }, { passive: true });
+
+    m.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') hover = true; });
+    m.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') hover = false; });
+    m.addEventListener('focusin', () => { hover = true; });
+    m.addEventListener('focusout', () => { hover = false; });
+    ['touchstart', 'wheel'].forEach((ev) => m.addEventListener(ev, () => { userUntil = performance.now() + 2600; }, { passive: true }));
+
+    // Tažení myší
+    let drag = null;
+    m.addEventListener('pointerdown', (e) => {
+      if (e.pointerType !== 'mouse' || e.button !== 0) return;
+      drag = { x: e.clientX, left: m.scrollLeft };
+      m.classList.add('is-drag');
+    });
+    window.addEventListener('pointermove', (e) => { if (drag) { m.scrollLeft = drag.left - (e.clientX - drag.x); pos = m.scrollLeft; } });
+    window.addEventListener('pointerup', () => { drag = null; m.classList.remove('is-drag'); });
+
+    // Šipky na klávesnici
+    m.addEventListener('keydown', (e) => {
+      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+      e.preventDefault();
+      m.scrollBy({ left: (e.key === 'ArrowRight' ? 1 : -1) * 320, behavior: 'smooth' });
+    });
+
+    if ('IntersectionObserver' in window) new IntersectionObserver((en) => { visible = en[0].isIntersecting; }).observe(m);
+    window.addEventListener('resize', PV.debounce(fill, 200));
+
+    if (reduce) return;
+    const tick = (now) => {
+      const dt = Math.min(0.1, (now - last) / 1000);
+      last = now;
+      if (visible && !hover && !drag && now > userUntil && !document.hidden) {
+        pos -= speed * dt;
+        m.scrollLeft = Math.round(pos);
+      }
+      window.requestAnimationFrame(tick);
+    };
+    window.requestAnimationFrame(tick);
+  }
+
   function initProcess() {
     const list = $('[data-process]');
     if (!list) return;
@@ -1146,6 +1298,7 @@
       renderProcess(), renderTools(), renderBooking(), renderInsta(), renderBlogTeaser(), renderTestimonials(), renderFaq(), renderContact(),
     ].join('');
   }
+  if (page === 'glossary') $('#main').innerHTML = renderGlossaryPage();
   mount('[data-render="footer"]', renderFooter() + renderOverlays());
 
   if (isHome) PV.booking.init(document.getElementById('booking-widget'), S.booking, S);
@@ -1156,6 +1309,9 @@
   initIntro();
   initRotator();
   initServices();
+  initServiceStack();
+  initWhyCards();
+  initMarquee();
   initProcess();
   initCalculator();
   initFixWatch();
