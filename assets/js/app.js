@@ -278,7 +278,7 @@
   <div class="container"><div class="team__inner">
     ${sectionHead(t.eyebrow, t.title, t.intro, 'team-title')}
     ${note(t.note)}
-    <div class="team__grid">
+    <div class="team__grid${t.members.length === 1 ? ' team__grid--single' : ''}">
       ${t.members.map((m, i) => `
       <article class="member" data-reveal style="--d:${i * 110}ms">
         ${media(m.photo, { ratio: '4/5' })}
@@ -578,16 +578,16 @@
   /* ---------- Kancelář a kontakt ---------- */
   const mapArt = `
     <svg class="map__art" viewBox="0 0 800 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-      <rect width="800" height="400" fill="#E8DDCC"/>
-      <g fill="#DED0BA">
+      <rect width="800" height="400" fill="#E4EBD8"/>
+      <g fill="#D8E2C8">
         <rect x="30" y="24" width="180" height="120" rx="12"/><rect x="250" y="24" width="140" height="78" rx="12"/>
         <rect x="500" y="20" width="230" height="96" rx="12"/><rect x="40" y="246" width="210" height="126" rx="12"/>
         <rect x="300" y="236" width="150" height="150" rx="12"/><rect x="610" y="232" width="170" height="146" rx="12"/>
         <rect x="250" y="126" width="120" height="50" rx="10"/>
       </g>
-      <path d="M470 140c44-22 120-12 140 22s-12 74-64 74-118-12-118-44 0-36 42-52z" fill="#D7CDB0"/>
+      <path d="M470 140c44-22 120-12 140 22s-12 74-64 74-118-12-118-44 0-36 42-52z" fill="#CFDDB6"/>
       <path d="M-20 334C120 302 186 372 324 352S566 262 820 304" stroke="#CBD3D2" stroke-width="22" fill="none" stroke-linecap="round"/>
-      <g stroke="#FBF8F3" stroke-linecap="round" fill="none">
+      <g stroke="#FDFEFC" stroke-linecap="round" fill="none">
         <path d="M0 200H800" stroke-width="16"/><path d="M432 0V400" stroke-width="14"/>
         <path d="M228 0 300 400" stroke-width="9"/><path d="M0 116c200 22 300-30 432 4s268 48 368 28" stroke-width="8"/>
         <path d="M560 200 720 400" stroke-width="7"/><path d="M110 200 86 400" stroke-width="6"/>

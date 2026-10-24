@@ -93,7 +93,7 @@
 
   // Logotypová značka – dvojitý oblouk (dveře domova)
   PV.archMark = (cls = '') =>
-    `<svg class="${cls}" viewBox="0 0 22 30" fill="none" aria-hidden="true" focusable="false"><path d="M1.75 29V11a9.25 9.25 0 0 1 18.5 0v18" stroke="currentColor" stroke-width="1.5"/><path d="M6.75 29V12.75a4.25 4.25 0 0 1 8.5 0V29" stroke="#B7774F" stroke-width="1.5"/></svg>`;
+    `<svg class="${cls}" viewBox="0 0 22 30" fill="none" aria-hidden="true" focusable="false"><path d="M1.75 29V11a9.25 9.25 0 0 1 18.5 0v18" stroke="currentColor" stroke-width="1.5"/><path d="M6.75 29V12.75a4.25 4.25 0 0 1 8.5 0V29" stroke="#8EC63F" stroke-width="1.5"/></svg>`;
 
   /* ---------- Fotografie a zástupné plochy ----------
      Pokud je vyplněné src, vykreslí se obrázek. Jinak designový placeholder

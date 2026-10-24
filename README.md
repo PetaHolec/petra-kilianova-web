@@ -1,6 +1,6 @@
 # Petra Kilianová – hypoteční poradkyně · web
 
-Responzivní prototyp osobního webu hypoteční poradkyně Petry Kilianové (partnerská společnost Gepard Finance). Slouží jako návrh budoucí realizace: design, texty, struktura i klíčové funkce (rezervace schůzky, kalkulačka, hlídání konce fixace, cookies) jsou funkční, ale **běží v ukázkovém režimu**.
+Responzivní prototyp osobního webu hypoteční poradkyně Petry Kilianové (franšízová značka Gepard Finance, barvy webu jsou odvozené z gpf.cz). Slouží jako návrh budoucí realizace: design, texty, struktura i klíčové funkce (rezervace schůzky, kalkulačka, hlídání konce fixace, cookies) jsou funkční, ale **běží v ukázkovém režimu**.
 
 - Fotografie a neznámé údaje jsou nahrazené zástupnými plochami a `[zvýrazněnými]` údaji.
 - Nic není vymyšlené: žádné reference, hodnocení, počty klientů, oprávnění, registrace ani zaměstnanci.
@@ -32,7 +32,7 @@ Pak otevřete http://localhost:5173.
 | Úvod | Hlavní sdělení se střídajícím se slovem (*domov → byt → dům*), portrét (oblouk), dvě výzvy k akci, způsoby schůzky |
 | S čím mohu pomoci | 4 rozbalovací karty služeb + „méně obvyklé situace“ (OSVČ, příjmy ze zahraničí…) |
 | Proč se mnou | Srovnání „sami v bance × se mnou“ a místo pro loga spolupracujících bank |
-| O mně (+ tým) | Osobní představení, hodnoty, motto, partnerská společnost Gepard Finance; tým lze skrýt |
+| O mně (+ tým) | Osobní představení, hodnoty, motto; tým lze skrýt |
 | Jak probíhá spolupráce | 4 kroky s animací při posunu |
 | Kalkulačka a hlídání fixace | Orientační splátka (posuvníky) + formulář „Pohlídám vám konec fixace“ (sběr kontaktů) |
 | Rezervace schůzky | Jediný formulář na webu: typ schůzky (kancelář / online / telefon) → kalendář a čas → kontakt a vzkaz → potvrzení (demo) |
@@ -122,7 +122,6 @@ Fotku vložíte tak, že ji uložíte do `assets/img/` a do pole `src` v `conten
 | Hlavní portrét (úvod) | `hero.portrait` | 4 : 5, na výšku | 1600 × 2000 px |
 | Portrét v sekci O mně | `about.portrait` | 3 : 4 | 1500 × 2000 px |
 | Portréty týmu (pokud zůstane) | `team.members[].photo` | 4 : 5 | 1200 × 1500 px |
-| Logo Gepard Finance | `about.partner.logo` | SVG / PNG | – |
 | Obrázek pro sdílení (Facebook, LinkedIn) | `assets/img/og-image.jpg` | 1,91 : 1 | 1200 × 630 px |
 
 Fotky kanceláře na webu nejsou. Doporučení: formát WebP nebo AVIF, do ~300 kB na fotku, vždy vyplnit popis `alt`. Portréty jsou ořezané do tvaru oblouku (motiv „dveří domova“), proto je dobré nechat nad hlavou trochu prostoru.

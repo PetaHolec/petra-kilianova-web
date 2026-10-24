@@ -177,8 +177,8 @@ window.SITE = {
     ],
     banksTitle: 'Banky, se kterými spolupracuji',
     banks: ['Logo banky', 'Logo banky', 'Logo banky', 'Logo banky', 'Logo banky', 'Logo banky'],
-    banksNote: 'Doplnit jen banky, které jsou skutečně v nabídce přes Gepard Finance.',
-    note: 'Srovnání je návrh. Počet bank a formulace potvrdit s klientkou a se společností Gepard Finance.',
+    banksNote: 'Doplnit jen banky, které jsou skutečně v nabídce.',
+    note: 'Srovnání je návrh. Počet bank a formulace potvrdit s klientkou a podle pravidel značky Gepard Finance.',
   },
 
   /* ---------- O mně ---------- */
@@ -206,14 +206,12 @@ window.SITE = {
   /* ---------- Tým (volitelná sekce – viz settings.showTeam) ---------- */
   team: {
     eyebrow: 'Tým',
-    title: 'Lidé, se kterými se můžete *potkat*.',
-    intro: '[Volitelné: krátké představení kolegů a toho, s čím vám pomohou.]',
+    title: 'Při práci mi pomáhá *asistentka*.',
+    intro: '[Volitelné: krátké představení asistentky a toho, s čím vám pomůže.]',
     members: [
-      { name: '[Jméno a příjmení]', role: '[Role – např. hypoteční specialista]', text: '[Jednou větou: s čím klientům pomáhá]', photo: { src: '', alt: '', label: 'Portrét člena týmu' } },
-      { name: '[Jméno a příjmení]', role: '[Role – např. asistentka kanceláře]', text: '[Jednou větou: s čím klientům pomáhá]', photo: { src: '', alt: '', label: 'Portrét člena týmu' } },
-      { name: '[Jméno a příjmení]', role: '[Role]', text: '[Jednou větou: s čím klientům pomáhá]', photo: { src: '', alt: '', label: 'Portrét člena týmu' } },
+      { name: '[Jméno a příjmení]', role: 'Asistentka', text: '[Jednou větou: s čím klientům pomáhá]', photo: { src: '', alt: '', label: 'Portrét asistentky' } },
     ],
-    note: 'Volitelná sekce. Vypnete ji v souboru content/site.js (settings.showTeam: false). Neuvádíme žádné skutečné kolegy ani zaměstnance.',
+    note: 'Volitelná sekce. Vypnete ji v souboru content/site.js (settings.showTeam: false). Neuvádíme žádné skutečné zaměstnance.',
   },
 
   /* ---------- Jak probíhá spolupráce ---------- */
@@ -404,7 +402,7 @@ window.SITE = {
     // Regulatorní a identifikační údaje – NEVYMÝŠLET, doplnit až po ověření.
     legal: [
       { label: 'Identifikační údaje', value: 'Petra Kilianová · [IČO a sídlo – doplnit]' },
-      { label: 'Partnerská společnost', value: 'Gepard Finance · [IČO a sídlo – doplnit]' },
+      { label: 'Značka', value: 'Působím jako franšízová poradkyně značky Gepard Finance. [Údaje o franšízové smlouvě a sídle značky – doplnit]' },
       { label: 'Postavení a registrace', value: '[Postavení zprostředkovatele a údaje o registraci – doplnit po ověření]' },
       { label: 'Stížnosti a spory', value: '[Informace o vyřizování stížností a mimosoudním řešení sporů – doplnit po ověření]' },
       { label: 'Reprezentativní příklad', value: '[Doplnit, pokud web uvádí úrokové sazby nebo náklady úvěru – podle pokynů Gepard Finance]' },
