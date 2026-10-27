@@ -3,7 +3,7 @@
    ========================================================================== */
 body[data-page="admin"] { background: var(--paper); min-height: 100vh; }
 
-.adm-top { position: sticky; top: 0; z-index: 30; background: rgba(253, 254, 252, .97); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); box-shadow: 0 1px 0 var(--line-strong); }
+.adm-top { position: sticky; top: 0; z-index: 30; background: var(--paper-2); box-shadow: 0 1px 0 var(--line-strong); }
 .adm-top__in { display: flex; align-items: center; gap: 1.25rem; width: min(100% - 2 * var(--gutter), 1100px); height: 68px; margin-inline: auto; }
 .adm-top__space { flex: 1; }
 .adm-link { padding: .5rem .15rem; background: none; border: 0; font: inherit; font-size: .9375rem; font-weight: 500; color: var(--ink-soft); text-decoration: underline; text-decoration-color: var(--line-strong); text-underline-offset: 4px; cursor: pointer; }

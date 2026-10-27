@@ -139,7 +139,7 @@
       <h1 class="hero__title" id="hero-title">${splitWords(h.title, h.rotate)}</h1>
       <p class="hero__text hero__fade" style="--d:520ms">${fmt(h.text)}</p>
       <div class="hero__actions hero__fade" style="--d:660ms">
-        ${btn(h.primaryCta, { to: href('rezervace'), attrs: 'data-book data-magnetic data-track="cta_hero_primary"' })}
+        ${btn(h.primaryCta, { to: href('rezervace'), attrs: 'data-book data-track="cta_hero_primary"' })}
         ${linkArrow(h.secondaryCta, href('sluzby'), 'data-track="cta_hero_secondary"', 'arrow-down')}
       </div>
     </div>
@@ -179,7 +179,7 @@
     ${note(s.note)}
     <div class="services__grid">
       ${s.items.map((it, i) => `
-      <article class="service-card" data-reveal data-spotlight data-stack style="--d:${(i % 2) * 120}ms;--n:${i}">
+      <article class="service-card" data-reveal data-stack style="--d:${(i % 2) * 120}ms;--n:${i}">
         <div class="service-card__top"><span class="service-card__num">${PV.pad(i + 1)}</span><span class="service-card__line" aria-hidden="true"></span>${it.tag ? `<span class="service-card__tag">${esc(it.tag)}</span>` : ''}</div>
         <h3 class="service-card__title">${fmt(it.title)}</h3>
         <p class="service-card__text">${fmt(it.text)}</p>
@@ -233,7 +233,7 @@
     </div>
     <div class="banks" data-reveal>
       <p class="banks__title">${esc(w.banksTitle)}</p>
-      <ul class="banks__list" role="list">${w.banks.map((b) => `<li class="banks__logo">${esc(b)}</li>`).join('')}</ul>
+      <ul class="banks__list" role="list">${w.banks.map((b) => `<li class="banks__logo"><img src="${esc(b.logo)}" alt="${esc(b.name)}" loading="lazy" decoding="async"></li>`).join('')}</ul>
       ${w.banksNote ? `<p class="banks__note"><span class="ph">${PV.text(w.banksNote)}</span></p>` : ''}
     </div>
   </div>
