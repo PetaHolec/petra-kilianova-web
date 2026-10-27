@@ -822,8 +822,8 @@ a.alt-contact:hover .alt-contact__icon { background: var(--copper-light); color:
 
 .banks { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 1rem 2.5rem; margin-top: clamp(2.5rem, 5vw, 4rem); }
 .banks__title { max-width: 13ch; margin: 0; font-size: .6875rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--copper-light); line-height: 1.6; }
-.banks__list { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: .75rem; margin: 0; padding: 0; list-style: none; }
-.banks__logo { display: grid; place-items: center; height: 64px; padding: .5rem; border: 1px dashed rgba(242, 247, 234, .26); border-radius: 14px; font-size: .5938rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; text-align: center; color: var(--on-dark-muted); }
+.banks__list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .75rem; margin: 0; padding: 0; list-style: none; }
+.banks__logo { display: grid; place-items: center; min-height: 64px; padding: .6rem .7rem; border: 1px solid var(--line-dark); border-radius: 14px; background: rgba(255, 255, 255, .03); font-size: .8125rem; font-weight: 600; line-height: 1.3; text-align: center; color: var(--on-dark); }
 .banks__note { grid-column: 2; margin: 0; font-size: .8125rem; color: var(--on-dark-muted); }
 
 /* ---------- Kalkulačka a hlídání fixace ---------- */
@@ -1199,7 +1199,7 @@ a.alt-contact:hover .alt-contact__icon { background: var(--copper-light); color:
   .faq__intro { position: relative; top: 0; }
   .ig-card { justify-self: start; }
   .banks { grid-template-columns: 1fr; }
-  .banks__list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .banks__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .banks__note { grid-column: auto; }
   .glossary__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .footer__top { grid-template-columns: repeat(3, minmax(0, 1fr)); }

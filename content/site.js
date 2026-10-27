@@ -135,6 +135,13 @@ window.SITE = {
         points: ['Kolik si můžete půjčit a jaká bude splátka', 'Vlastní prostředky a jak s nimi naložit', 'Postup od rezervace nemovitosti po čerpání'],
       },
       {
+        id: 'prvni-bydleni',
+        tag: 'První bydlení',
+        title: 'Hypotéka na první bydlení',
+        text: 'Chcete být konečně ve svém? Provedu vás celým procesem krok za krokem – od první úvahy přes výběr financování až po podpis a čerpání.',
+        points: ['Na co si dát pozor u první hypotéky', 'Vlastní prostředky a podklady pro banku', 'Co vás čeká po schválení a při čerpání'],
+      },
+      {
         id: 'refinancovani',
         tag: 'Konec fixace',
         title: 'Refinancování hypotéky',
@@ -147,6 +154,27 @@ window.SITE = {
         title: 'Financování stavby nebo rekonstrukce',
         text: 'Stavíte dům, nebo chcete z bytu udělat domov podle svých představ? Najdeme financování, které počítá s průběžným čerpáním, rozpočtem i tím, že ne všechno půjde přesně podle plánu.',
         points: ['Čerpání peněz podle postupu stavby', 'Jaké podklady bude banka chtít vidět', 'Rezerva pro nečekané výdaje'],
+      },
+      {
+        id: 'hypoteka-50',
+        tag: 'Hypotéka 50+',
+        title: 'Hypotéka po padesátce',
+        text: 'Pořizujete bydlení, rekonstruujete to současné, nebo chcete pomoci dětem? I v pozdějším věku se dá hypotéka řešit. Projdeme, jaké máte možnosti a co banky posuzují.',
+        points: ['Jak věk ovlivňuje délku splácení', 'Financování pro sebe i pro děti', 'Co banky u starších žadatelů zvažují'],
+      },
+      {
+        id: 'stavebni-sporeni',
+        tag: 'Stavební spoření',
+        title: 'Stavební spoření',
+        text: 'Spořit na bydlení se dá i chytře, ať už na rekonstrukci, nebo jako doplněk financování. Vysvětlím, jak stavební spoření funguje a jestli se vám hodí.',
+        points: ['Jak stavební spoření funguje', 'Kdy dává smysl a kdy ne', 'Využití na rekonstrukci nebo bydlení'],
+      },
+      {
+        id: 'fotovoltaika',
+        tag: 'Fotovoltaika',
+        title: 'Financování fotovoltaiky',
+        text: 'Chcete snížit náklady na energie a postavit si vlastní fotovoltaiku? Pomůžu vám zorientovat se v možnostech, jak ji financovat.',
+        points: ['Možnosti financování fotovoltaiky', 'Jaké podklady budete potřebovat', 'Jak financování zapadne do vašeho rozpočtu'],
       },
       {
         id: 'konzultace',
@@ -169,15 +197,19 @@ window.SITE = {
     selfLabel: 'Sami v bance',
     meLabel: 'Se mnou',
     rows: [
-      { label: 'Výběr', self: 'Nabídka jedné banky', me: 'Porovnání nabídek [počet] bank' },
+      { label: 'Výběr', self: 'Nabídka jedné banky', me: 'Porovnání nabídek více bank a spořitelen' },
       { label: 'Podklady', self: 'Zjišťujete a zařizujete sami', me: 'Řeknu vám přesně, co je potřeba, a pomohu s přípravou' },
       { label: 'Jednání s bankou', self: 'Na vás', me: 'Komunikaci s bankou pohlídám za vás' },
       { label: 'Schůzky', self: 'Na pobočce v otevírací době', me: 'Osobně, online i po telefonu' },
       { label: 'Po podpisu', self: 'Konec fixace si hlídáte sami', me: 'Ozvu se, když se blíží konec fixace' },
     ],
-    banksTitle: 'Banky, se kterými spolupracuji',
-    banks: ['Logo banky', 'Logo banky', 'Logo banky', 'Logo banky', 'Logo banky', 'Logo banky'],
-    banksNote: 'Doplnit jen banky, které jsou skutečně v nabídce.',
+    banksTitle: 'Partneři, se kterými spolupracuji',
+    banks: [
+      'Česká spořitelna', 'Komerční banka', 'ČSOB Hypoteční banka', 'Raiffeisenbank', 'UniCredit Bank', 'mBank',
+      'Oberbank', 'Partners banka', 'Stavební spořitelna České spořitelny', 'Modrá pyramida', 'Raiffeisen stavební spořitelna', 'Essox',
+      'ČSOB Leasing', 'Cofidis', 'Inbank', 'Artesa',
+    ],
+    banksNote: '',
     note: 'Srovnání je návrh. Počet bank a formulace potvrdit s klientkou a podle pravidel značky Gepard Finance.',
   },
 
@@ -387,8 +419,12 @@ window.SITE = {
   /* ---------- Témata pro rezervační formulář ---------- */
   topics: [
     { id: 'nove-bydleni', label: 'Hypotéka na nové bydlení' },
+    { id: 'prvni-bydleni', label: 'Hypotéka na první bydlení' },
     { id: 'refinancovani', label: 'Refinancování hypotéky' },
     { id: 'stavba-rekonstrukce', label: 'Stavba nebo rekonstrukce' },
+    { id: 'hypoteka-50', label: 'Hypotéka po padesátce' },
+    { id: 'stavebni-sporeni', label: 'Stavební spoření' },
+    { id: 'fotovoltaika', label: 'Financování fotovoltaiky' },
     { id: 'konzultace', label: 'Konzultace možností' },
     { id: 'jine', label: 'Něco jiného' },
   ],

@@ -234,7 +234,7 @@
     <div class="banks" data-reveal>
       <p class="banks__title">${esc(w.banksTitle)}</p>
       <ul class="banks__list" role="list">${w.banks.map((b) => `<li class="banks__logo">${esc(b)}</li>`).join('')}</ul>
-      <p class="banks__note"><span class="ph">${PV.text(w.banksNote)}</span></p>
+      ${w.banksNote ? `<p class="banks__note"><span class="ph">${PV.text(w.banksNote)}</span></p>` : ''}
     </div>
   </div>
 </section>`;
