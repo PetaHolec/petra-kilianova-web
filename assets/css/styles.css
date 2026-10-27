@@ -782,8 +782,8 @@ a.alt-contact:hover .alt-contact__icon { background: var(--copper-light); color:
 
 .banks { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 1rem 2.5rem; margin-top: clamp(2.5rem, 5vw, 4rem); }
 .banks__title { max-width: 13ch; margin: 0; font-size: .6875rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--copper-light); line-height: 1.6; }
-.banks__list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .75rem; margin: 0; padding: 0; list-style: none; }
-.banks__logo { height: 72px; padding: .7rem 1rem; border-radius: 14px; background: #fff; overflow: hidden; }
+.banks__list { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: .5rem; margin: 0; padding: 0; list-style: none; }
+.banks__logo { height: 44px; padding: .5rem .7rem; border-radius: 10px; background: #fff; overflow: hidden; }
 .banks__logo img { display: block; width: 100%; height: 100%; object-fit: contain; }
 .banks__note { grid-column: 2; margin: 0; font-size: .8125rem; color: var(--on-dark-muted); }
 
@@ -1155,7 +1155,7 @@ a.alt-contact:hover .alt-contact__icon { background: var(--copper-light); color:
   .faq__intro { position: relative; top: 0; }
   .ig-card { justify-self: start; }
   .banks { grid-template-columns: 1fr; }
-  .banks__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .banks__list { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .banks__note { grid-column: auto; }
   .glossary__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .footer__top { grid-template-columns: repeat(3, minmax(0, 1fr)); }

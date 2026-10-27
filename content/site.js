@@ -110,6 +110,12 @@ window.SITE = {
       label: 'Portrét poradkyně',
       hint: 'Profesionální fotografie · 4 : 5 · min. 1600 × 2000 px',
     },
+    // Tři krátké údaje pod úvodním textem
+    facts: [
+      { label: 'Schůzky', text: 'Osobně v kanceláři, online i po telefonu' },
+      { label: 'Partneři', text: 'Banky, stavební spořitelny a další instituce' },
+      { label: 'Značka', text: 'Franšízová poradkyně Gepard Finance' },
+    ],
     card: {
       title: 'První krok je jednoduchý',
       text: 'Vyberte si termín schůzky – osobně, online, nebo po telefonu.',
