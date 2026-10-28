@@ -1,7 +1,7 @@
 Písma jsou hostovaná lokálně (bez načítání z Google Fonts – kvůli GDPR).
 
-Source Serif 4 – Copyright 2014–2023 Adobe (http://www.adobe.com/), with Reserved Font Name 'Source'.
-Source Sans 3 – Copyright 2010–2023 Adobe (http://www.adobe.com/), with Reserved Font Name 'Source'.
+Outfit – Copyright 2021 The Outfit Project Authors (https://github.com/Outfitio/Outfit-Fonts)
+Caveat – Copyright 2014 The Caveat Project Authors (https://github.com/googlefonts/caveat)
 
 Šířeno pod licencí SIL Open Font License 1.1:
 https://openfontlicense.org

@@ -31,14 +31,25 @@
   /* ---------- Malé šablony ---------- */
   const note = (t) => (proto && t ? `<aside class="proto-note">${icon('edit')}<span><strong>Poznámka k návrhu:</strong> ${fmt(t)}</span></aside>` : '');
 
-  // Název sekce v levém sloupci (jako rubrika v časopise)
-  const eyebrow = (label) => `<p class="label">${esc(label)}</p>`;
+  // Krátký nadpis nad nadpisem sekce
+  const eyebrow = (label) => `<p class="kicker">${esc(label)}</p>`;
 
-  const btn = (label, { to = '#', cls = 'btn--primary', attrs = '' } = {}) =>
-    `<a class="btn ${cls}" href="${to}" ${attrs}>${esc(label)}</a>`;
+  const btn = (label, { to = '#', cls = 'btn--primary', attrs = '', iconName = 'arrow-right' } = {}) =>
+    `<a class="btn ${cls}" href="${to}" ${attrs}><span>${esc(label)}</span>${iconName ? icon(iconName, 'btn__arrow') : ''}</a>`;
 
   const linkArrow = (label, to, attrs = '', iconName = 'arrow-right') =>
     `<a class="link-arrow" href="${to}" ${attrs}><span class="link-arrow__text">${esc(label)}</span><span class="link-arrow__icon" aria-hidden="true">${icon(iconName)}</span></a>`;
+
+  // Ručně psaná poznámka se šipkou (dir = kam šipka míří)
+  const ARROWS = {
+    down: '<path d="M14 4c-6 10-7 22 2 34"/><path d="M8 31l8 8 5-10"/>',
+    right: '<path d="M4 22c12-14 28-16 44-8"/><path d="M39 7l10 7-9 7"/>',
+    left: '<path d="M52 22C40 8 24 6 8 14"/><path d="M17 7 7 14l9 7"/>',
+    downleft: '<path d="M48 4C46 22 34 34 10 36"/><path d="M19 28l-9 8 11 4"/>',
+  };
+  const hand = (text, dir = 'down', cls = '') => (text
+    ? `<p class="hand hand--${dir}${cls ? ' ' + cls : ''}"><span>${esc(text)}</span><svg class="hand__arrow" viewBox="0 0 56 44" aria-hidden="true">${ARROWS[dir]}</svg></p>`
+    : '');
 
   // Odkaz, který zatím nemá cíl → po kliknutí vysvětlí, co se doplní
   const extLink = (url, phMessage) => {
@@ -53,23 +64,21 @@
   const emailValue = () => (C.emailHref ? `<a href="mailto:${esc(C.emailHref)}" data-track="contact_email">${fmt(C.email)}</a>` : fmt(C.email));
 
   const logo = () =>
-    `<a class="logo" href="${isHome ? '#uvod' : 'index.html'}" aria-label="${esc(S.brand.name)}, ${esc(S.brand.role.toLowerCase())} – na úvod"><span class="logo__name">${esc(S.brand.name)}</span><span class="logo__role">${esc(S.brand.role)}</span></a>`;
+    `<a class="logo" href="${isHome ? '#uvod' : 'index.html'}" aria-label="${esc(S.brand.name)}, ${esc(S.brand.role.toLowerCase())} – na úvod"><span class="logo__mark" aria-hidden="true">${esc(S.brand.name.split(' ').map((w) => w[0]).join(''))}</span><span class="logo__text"><span class="logo__name">${esc(S.brand.name)}</span><span class="logo__role">${esc(S.brand.role)}</span></span></a>`;
 
   const phBlock = (t) => (PV.isPh(t)
     ? `<div class="ph-block">${icon('edit')}<p>${PV.text(PV.stripPh(t))}</p></div>`
     : `<p>${fmt(t)}</p>`);
 
-  // Hlavička sekce: rubrika vlevo, nadpis a úvod vpravo
-  const sectionHead = (label, title, intro, id) => `
+  const sectionHead = (label, title, intro, id, extra = '') => `
     <header class="sec-head">
       ${eyebrow(label)}
-      <div class="sec-head__main">
-        <h2 class="h2" id="${id}">${fmt(title)}</h2>
-        ${intro ? `<p class="sec-head__intro">${fmt(intro)}</p>` : ''}
-      </div>
+      <h2 class="h2" id="${id}">${fmt(title)}</h2>
+      ${intro ? `<p class="sec-head__intro">${fmt(intro)}</p>` : ''}
+      ${extra}
     </header>`;
 
-  // Nadpis s jedním střídajícím se slovem (domov → byt → dům)
+  // Nadpis s jedním střídajícím se slovem (domov → byt → dům) podbarveným zvýrazňovačem
   function heroTitle(title, rotate) {
     let used = false;
     return String(title).split(/(\*[^*]+\*)/g).filter(Boolean).map((part) => {
@@ -84,6 +93,24 @@
     }).join('');
   }
 
+  // Kresba domu bílou linkou (jako na gpf.cz)
+  const houseArt = `
+    <svg class="house-art" viewBox="0 0 480 560" fill="none" aria-hidden="true">
+      <g stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 470h444"/>
+        <path d="M60 470V250l150-118 150 118v220"/>
+        <path d="M34 270 210 128l176 142"/>
+        <path d="M290 186v-54h34v80"/>
+        <path d="M172 470V372a38 38 0 0 1 76 0v98"/>
+        <path d="M98 300h52v52H98zM124 300v52M98 326h52"/>
+        <path d="M270 300h52v52h-52zM296 300v52M270 326h52"/>
+        <path d="M186 232a24 24 0 1 1 48 0 24 24 0 0 1-48 0zM210 208v48M186 232h48"/>
+        <path d="M410 470V378"/><path d="M410 400c-30-8-38-46-14-66-10-30 22-52 44-34 26-12 50 16 34 40 18 24-2 56-30 52-8 8-22 10-34 8z"/>
+        <path d="M60 64c18-10 38-10 52 4 12-10 34-8 40 8" opacity=".7"/>
+        <path d="M330 52c14-8 30-8 40 2 10-8 26-6 32 6" opacity=".7"/>
+      </g>
+    </svg>`;
+
   /* ---------- Hlavička ---------- */
   function renderHeader() {
     const links = mainNav.map((n) => `<li><a class="nav__link${n.target === 'blog' && (page === 'blog' || page === 'post') ? ' is-active' : ''}" href="${n.url || href(n.target)}" data-nav="${esc(n.target)}">${esc(n.label)}</a></li>`).join('');
@@ -93,8 +120,8 @@
   <div class="container header__inner">
     ${logo()}
     <nav class="nav" aria-label="Hlavní navigace"><ul class="nav__list">${links}</ul></nav>
-    ${btn(S.navCta, { to: href('rezervace'), cls: 'btn--outline btn--sm header__cta', attrs: 'data-book data-track="cta_header"' })}
-    <button class="menu-toggle" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="mobile-menu">Menu</button>
+    ${btn(S.navCta, { to: href('rezervace'), cls: 'btn--primary btn--sm header__cta', attrs: 'data-book data-track="cta_header"', iconName: 'calendar' })}
+    <button class="menu-toggle" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="mobile-menu"><span class="menu-toggle__lines" aria-hidden="true"><span></span><span></span></span>Menu</button>
   </div>
 </header>`;
   }
@@ -102,34 +129,54 @@
   /* ---------- Úvod ---------- */
   function renderHero() {
     const h = S.hero;
-    const facts = (h.facts || []).map((f) => `<div class="fact"><dt>${esc(f.label)}</dt><dd>${fmt(f.text)}</dd></div>`).join('');
+    const stickers = (h.stickers || []).map((t, i) => `<p class="sticker sticker--${i + 1}">${icon(i ? 'check' : 'calendar')}<span>${fmt(t)}</span></p>`).join('');
     return `
 <section class="hero" id="uvod" aria-labelledby="hero-title">
   <div class="container hero__grid">
     <div class="hero__copy">
+      ${hand(h.hand, 'right', 'hero__hand')}
       <p class="hero__kicker">${fmt(h.eyebrow)}</p>
       <h1 class="hero__title" id="hero-title">${heroTitle(h.title, h.rotate)}</h1>
       <p class="hero__text">${fmt(h.text)}</p>
       <div class="hero__actions">
-        ${btn(h.primaryCta, { to: href('rezervace'), attrs: 'data-book data-track="cta_hero_primary"' })}
+        ${btn(h.primaryCta, { to: href('rezervace'), cls: 'btn--primary btn--lg', attrs: 'data-book data-track="cta_hero_primary"' })}
         ${linkArrow(h.secondaryCta, href('sluzby'), 'data-track="cta_hero_secondary"', 'arrow-down')}
       </div>
     </div>
-    <figure class="hero__visual">
-      ${media(h.portrait, { ratio: '4/5', className: 'hero__portrait', eager: true })}
-      <figcaption class="caption">${esc(S.brand.name)} · ${esc(S.brand.role.toLowerCase())}, ${fmt(S.brand.city)}</figcaption>
-    </figure>
+    <div class="hero__visual">
+      <div class="hero__panel">
+        ${houseArt}
+        ${media(h.portrait, { ratio: '4/5', className: 'hero__portrait', eager: true })}
+      </div>
+      ${stickers}
+    </div>
   </div>
-  ${facts ? `<div class="container"><dl class="facts">${facts}<div class="fact fact--cta"><dt>${esc(h.card.title)}</dt><dd>${linkArrow(h.card.cta, href('rezervace'), 'data-book data-track="cta_hero_card"')}</dd></div></dl></div>` : ''}
   <div class="container">${note(h.note)}</div>
+</section>
+${renderPartners()}`;
+  }
+
+  /* ---------- Partneři – barevná loga ---------- */
+  function renderPartners() {
+    const w = S.why;
+    if (!w || !w.banks || !w.banks.length) return '';
+    return `
+<section class="partners" aria-labelledby="partners-title">
+  <div class="container partners__inner">
+    <p class="partners__title" id="partners-title">${esc(w.banksTitle)}</p>
+    <ul class="partners__list" role="list">${w.banks.map((b) => (typeof b === 'string'
+      ? `<li class="partners__item partners__item--text">${esc(b)}</li>`
+      : `<li class="partners__item"><img src="${esc(b.logo)}" alt="${esc(b.name)}" title="${esc(b.name)}" loading="lazy" decoding="async"></li>`)).join('')}</ul>
+    ${w.banksNote ? `<p class="partners__note"><span class="ph">${PV.text(w.banksNote)}</span></p>` : ''}
+  </div>
 </section>`;
   }
 
-  /* ---------- Služby ---------- */
+  /* ---------- Služby: výběr situace ---------- */
   function renderServices() {
     const s = S.services;
     const situations = s.situations && s.situations.length ? `
-    <div class="offset situations">
+    <div class="situations">
       <p class="situations__title">${esc(s.situationsTitle)}</p>
       <ul class="situations__list" role="list">${s.situations.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>
       ${note(s.situationsNote)}
@@ -137,24 +184,26 @@
     return `
 <section class="section services" id="sluzby" aria-labelledby="services-title">
   <div class="container">
-    ${sectionHead(s.eyebrow, s.title, s.intro, 'services-title')}
+    ${sectionHead(s.eyebrow, s.title, s.intro, 'services-title', hand(s.hand, 'downleft', 'services__hand'))}
     ${note(s.note)}
-    <ul class="svc-list" role="list">
-      ${s.items.map((it) => `
-      <li class="svc">
-        <p class="svc__tag">${esc(it.tag || '')}</p>
-        <div class="svc__main">
-          <h3 class="svc__title">${fmt(it.title)}</h3>
-          <p class="svc__text">${fmt(it.text)}</p>
-          <div class="svc__details" id="svc-${esc(it.id)}" hidden>
-            <p class="svc__details-title">${esc(s.detailsLabel)}</p>
-            <ul>${it.points.map((p) => `<li>${fmt(p)}</li>`).join('')}</ul>
-            ${linkArrow(s.cta, href('rezervace'), `data-book data-book-topic="${esc(it.id)}" data-track="cta_service" aria-label="${esc(s.cta)}: ${esc(it.title)}"`)}
-          </div>
-        </div>
-        <button class="svc__toggle" type="button" aria-expanded="false" aria-controls="svc-${esc(it.id)}"><span class="visually-hidden">${esc(s.detailsLabel)}: ${esc(it.title)}</span><span class="svc__sign" aria-hidden="true"></span></button>
-      </li>`).join('')}
-    </ul>
+    <div class="picker" data-picker>
+      <div class="picker__tabs" role="tablist" aria-label="${esc(s.eyebrow)}" aria-orientation="vertical">
+        ${s.items.map((it, i) => `
+        <button class="picker__tab" type="button" role="tab" id="svc-tab-${esc(it.id)}" aria-controls="svc-${esc(it.id)}" aria-selected="${i === 0}" tabindex="${i === 0 ? 0 : -1}">
+          <span class="picker__icon" aria-hidden="true">${icon(it.icon || 'home')}</span>
+          <span class="picker__label">${esc(it.tag || it.title)}</span>
+        </button>`).join('')}
+      </div>
+      ${s.items.map((it, i) => `
+      <div class="picker__panel" role="tabpanel" id="svc-${esc(it.id)}" aria-labelledby="svc-tab-${esc(it.id)}" tabindex="0"${i ? ' hidden' : ''}>
+        <span class="picker__big-icon" aria-hidden="true">${icon(it.icon || 'home')}</span>
+        <h3 class="picker__title">${fmt(it.title)}</h3>
+        <p class="picker__text">${fmt(it.text)}</p>
+        <p class="picker__sub">${esc(s.detailsLabel)}</p>
+        <ul class="ticks">${it.points.map((p) => `<li>${icon('check')}<span>${fmt(p)}</span></li>`).join('')}</ul>
+        ${btn(s.cta, { to: href('rezervace'), attrs: `data-book data-book-topic="${esc(it.id)}" data-track="cta_service"` })}
+      </div>`).join('')}
+    </div>
     ${situations}
   </div>
 </section>`;
@@ -164,29 +213,25 @@
   function renderWhy() {
     if (!on('showWhy') || !S.why) return '';
     const w = S.why;
-    const rows = w.rows.map((r) => `
-          <tr>
-            <th scope="row">${esc(r.label)}</th>
-            <td class="why__self" data-who="${esc(w.selfLabel)}">${fmt(r.self)}</td>
-            <td class="why__me" data-who="${esc(w.meLabel)}">${fmt(r.me)}</td>
-          </tr>`).join('');
+    const col = (who, key, iconName) => `
+        <ul class="versus__list" role="list">${w.rows.map((r) => `
+          <li><span class="versus__icon" aria-hidden="true">${icon(iconName)}</span><span><span class="versus__label">${esc(r.label)}</span>${fmt(r[key])}</span></li>`).join('')}
+        </ul>`;
     return `
-<section class="section section--tint why" id="proc-se-mnou" aria-labelledby="why-title">
+<section class="section section--soft why" id="proc-se-mnou" aria-labelledby="why-title">
   <div class="container">
     ${sectionHead(w.eyebrow, w.title, w.intro, 'why-title')}
     ${note(w.note)}
-    <div class="offset">
-      <table class="why__table">
-        <caption class="visually-hidden">Srovnání: ${esc(w.selfLabel)} a ${esc(w.meLabel)}</caption>
-        <thead><tr><td></td><th scope="col">${esc(w.selfLabel)}</th><th scope="col" class="why__me-head">${esc(w.meLabel)}</th></tr></thead>
-        <tbody>${rows}</tbody>
-      </table>
-      <div class="banks">
-        <p class="banks__title">${esc(w.banksTitle)}</p>
-        <ul class="banks__list" role="list">${w.banks.map((b) => (typeof b === 'string'
-          ? `<li class="banks__item">${esc(b)}</li>`
-          : `<li class="banks__item"><img src="${esc(b.logo)}" alt="${esc(b.name)}" title="${esc(b.name)}" loading="lazy" decoding="async"></li>`)).join('')}</ul>
-        ${w.banksNote ? `<p class="banks__note"><span class="ph">${PV.text(w.banksNote)}</span></p>` : ''}
+    <div class="versus">
+      <div class="versus__card versus__card--self">
+        <h3 class="versus__who">${esc(w.selfLabel)}</h3>
+        ${col(w.selfLabel, 'self', 'minus')}
+      </div>
+      <div class="versus__card versus__card--me">
+        ${hand(w.hand, 'downleft', 'versus__hand')}
+        <h3 class="versus__who">${esc(w.meLabel)}</h3>
+        ${col(w.meLabel, 'me', 'check')}
+        ${btn(S.navCta, { to: href('rezervace'), cls: 'btn--lime', attrs: 'data-book data-track="cta_why"' })}
       </div>
     </div>
   </div>
@@ -198,27 +243,28 @@
     const a = S.about;
     return `
 <section class="section about" id="o-mne" aria-labelledby="about-title">
-  <div class="container">
-    <header class="sec-head sec-head--bare">${eyebrow(a.eyebrow)}</header>
-    <div class="about__grid">
-      <figure class="about__visual">
-        ${media(a.portrait, { ratio: '3/4', className: 'about__portrait' })}
-      </figure>
-      <div class="about__content">
-        <h2 class="h2" id="about-title">${fmt(a.title)}</h2>
-        <p class="about__lead">${fmt(a.lead)}</p>
-        <div class="about__body">
-          ${a.paragraphs.map((p) => `<p>${fmt(p)}</p>`).join('')}
-          ${phBlock(a.story)}
-        </div>
-        <blockquote class="about__quote"><p>${PV.text(a.quote)}</p></blockquote>
+  <div class="container about__grid">
+    <div class="about__visual">
+      <div class="about__frame">${media(a.portrait, { ratio: '4/5', className: 'about__portrait' })}</div>
+      ${hand(a.photoNote, 'left', 'about__hand')}
+    </div>
+    <div class="about__content">
+      ${eyebrow(a.eyebrow)}
+      <h2 class="h2" id="about-title">${fmt(a.title)}</h2>
+      <p class="about__lead">${fmt(a.lead)}</p>
+      ${a.paragraphs.map((p) => `<p>${fmt(p)}</p>`).join('')}
+      ${phBlock(a.story)}
+      <blockquote class="about__quote"><p><mark>${PV.text(a.quote)}</mark></p></blockquote>
+      <div class="about__sign">
         <p class="signature">${esc(a.signature)}</p>
         ${btn(a.cta, { to: href('rezervace'), cls: 'btn--outline', attrs: 'data-book data-track="cta_about"' })}
-        ${note(a.note)}
       </div>
+      ${note(a.note)}
     </div>
-    <ol class="values offset" role="list">
-      ${a.values.map((v) => `<li class="value"><h3 class="value__title">${fmt(v.title)}</h3><p class="value__text">${fmt(v.text)}</p></li>`).join('')}
+  </div>
+  <div class="container">
+    <ol class="values" role="list">
+      ${a.values.map((v, i) => `<li class="value"><span class="value__num" aria-hidden="true">${i + 1}</span><h3 class="value__title">${fmt(v.title)}</h3><p class="value__text">${fmt(v.text)}</p></li>`).join('')}
     </ol>
   </div>
 </section>`;
@@ -230,41 +276,47 @@
     const t = S.team;
     return `
 <section class="section section--slim team" id="tym" aria-labelledby="team-title">
-  <div class="container">
-    ${sectionHead(t.eyebrow, t.title, t.intro, 'team-title')}
-    ${note(t.note)}
-    <div class="offset team__list">
-      ${t.members.map((m) => `
-      <article class="member">
-        ${media(m.photo, { ratio: '1/1' })}
-        <div>
-          <h3 class="member__name">${fmt(m.name)}</h3>
-          <p class="member__role">${fmt(m.role)}</p>
-          <p class="member__text">${fmt(m.text)}</p>
-        </div>
-      </article>`).join('')}
+  <div class="container team__inner">
+    <div>
+      ${eyebrow(t.eyebrow)}
+      <h2 class="h3" id="team-title">${fmt(t.title)}</h2>
+      <p class="team__intro">${fmt(t.intro)}</p>
+      ${note(t.note)}
     </div>
+    ${t.members.map((m) => `
+    <article class="member">
+      ${media(m.photo, { ratio: '1/1' })}
+      <div>
+        <h3 class="member__name">${fmt(m.name)}</h3>
+        <p class="member__role">${fmt(m.role)}</p>
+        <p class="member__text">${fmt(m.text)}</p>
+      </div>
+    </article>`).join('')}
   </div>
 </section>`;
   }
 
-  /* ---------- Spolupráce ---------- */
+  /* ---------- Spolupráce: cesta k domovu ---------- */
   function renderProcess() {
     const p = S.process;
     return `
-<section class="section section--tint process" id="spoluprace" aria-labelledby="process-title">
+<section class="section section--lime process" id="spoluprace" aria-labelledby="process-title">
   <div class="container">
     ${sectionHead(p.eyebrow, p.title, p.intro, 'process-title')}
-    <ol class="steps offset" role="list">
+    <ol class="road" role="list" data-road>
       ${p.steps.map((s, i) => `
-      <li class="step">
-        <p class="step__num">Krok ${i + 1}</p>
-        <h3 class="step__title">${fmt(s.title)}</h3>
-        <p class="step__text">${fmt(s.text)}</p>
-        <p class="step__tip">${fmt(s.tip)}</p>
+      <li class="road__step">
+        <span class="road__dot" aria-hidden="true">${i + 1}</span>
+        <h3 class="road__title"><span class="visually-hidden">Krok ${i + 1}: </span>${fmt(s.title)}</h3>
+        <p class="road__text">${fmt(s.text)}</p>
+        <p class="road__tip">${fmt(s.tip)}</p>
       </li>`).join('')}
+      <li class="road__step road__step--finish">
+        <span class="road__dot" aria-hidden="true">${icon('key')}</span>
+        <p class="road__finish">${esc(p.finish || '')}</p>
+        ${btn(p.cta, { to: href('rezervace'), attrs: 'data-book data-track="cta_process"' })}
+      </li>
     </ol>
-    <div class="offset process__cta">${btn(p.cta, { to: href('rezervace'), attrs: 'data-book data-track="cta_process"' })}</div>
   </div>
 </section>`;
   }
@@ -292,10 +344,12 @@
   <div class="container">
     ${sectionHead(c.eyebrow, c.title, c.intro, 'tools-title')}
     ${note(c.note)}
-    <div class="offset tools__grid">
+    <div class="tools__grid">
       <div class="calc" data-calculator>
-        <h3 class="box-title">${esc(c.cardTitle)}</h3>
-        ${slider('amount')}${slider('years')}${slider('rate')}
+        <div class="calc__inputs">
+          <h3 class="card-title">${icon('calculator')}${esc(c.cardTitle)}</h3>
+          ${slider('amount')}${slider('years')}${slider('rate')}
+        </div>
         <div class="calc__result">
           <p class="calc__result-label">Měsíční splátka</p>
           <p class="calc__payment" data-out="payment">–</p>
@@ -306,7 +360,7 @@
           <div class="calc__bar" aria-hidden="true"><span class="calc__bar-principal" data-bar="principal"></span><span class="calc__bar-interest" data-bar="interest"></span></div>
           <p class="calc__legend" aria-hidden="true"><span><i class="calc__dot calc__dot--principal"></i>Jistina</span><span><i class="calc__dot calc__dot--interest"></i>Úroky</span></p>
           <p class="calc__sens" data-out="sens"></p>
-          ${btn(c.cta, { to: href('rezervace'), attrs: 'data-book data-track="cta_calculator"' })}
+          ${btn(c.cta, { to: href('rezervace'), cls: 'btn--lime btn--block', attrs: 'data-book data-track="cta_calculator"' })}
           <p class="calc__disclaimer">${fmt(c.disclaimer)}</p>
           <p class="visually-hidden" aria-live="polite" data-calc-live></p>
         </div>
@@ -325,7 +379,8 @@
     return `
       <div class="fixwatch">
         <div data-fw-body>
-          <h3 class="box-title">${fmt(f.title)}</h3>
+          <span class="fixwatch__bell" aria-hidden="true">${icon('bell')}</span>
+          <h3 class="card-title">${fmt(f.title)}</h3>
           <p class="fixwatch__text">${fmt(f.text)}</p>
           <form class="fixwatch__form" novalidate data-fw-form>
             ${PV.field({ id: 'fw-email', name: 'email', label: 'E-mail', type: 'email', required: true, autocomplete: 'email', validate: 'email' })}
@@ -338,13 +393,14 @@
               <p class="field__error" id="fw-consent-error"></p>
             </div>
             <div class="hp-field" aria-hidden="true"><label for="fw-company">Toto pole nevyplňujte</label><input id="fw-company" name="company" tabindex="-1" autocomplete="off"></div>
-            <button class="btn btn--primary btn--block" type="submit">${esc(f.cta)}</button>
+            <button class="btn btn--primary btn--block" type="submit"><span>${esc(f.cta)}</span></button>
           </form>
         </div>
         <div class="fixwatch__success" data-fw-success tabindex="-1" hidden>
-          <h3 class="box-title">Fixaci máme pod dohledem</h3>
+          ${PV.checkSvg()}
+          <h3 class="card-title">Fixaci máme pod dohledem</h3>
           <p>${esc(f.success)}</p>
-          <button class="btn btn--outline btn--sm" type="button" data-fw-reset>Zadat další fixaci</button>
+          <button class="btn btn--outline btn--sm" type="button" data-fw-reset><span>Zadat další fixaci</span></button>
         </div>
       </div>`;
   }
@@ -355,25 +411,28 @@
     const row = (kind) => {
       const isPhone = kind === 'phone';
       const hasHref = isPhone ? C.phoneHref : C.emailHref;
-      const label = isPhone ? 'Telefon' : 'E-mail';
-      const value = fmt(isPhone ? C.phone : C.email);
-      const inner = hasHref ? `<a href="${isPhone ? 'tel:' : 'mailto:'}${esc(hasHref)}" data-track="contact_${kind}">${value}</a>` : value;
-      return `<div><dt>${label}</dt><dd>${inner}</dd></div>`;
+      const inner = `<span class="alt-contact__icon" aria-hidden="true">${icon(isPhone ? 'phone' : 'mail')}</span><span>${fmt(isPhone ? C.phone : C.email)}</span>`;
+      return hasHref
+        ? `<a class="alt-contact" href="${isPhone ? 'tel:' : 'mailto:'}${esc(hasHref)}" data-track="contact_${kind}">${inner}</a>`
+        : `<p class="alt-contact">${inner}</p>`;
     };
     return `
-<section class="section section--green booking-section" id="rezervace" aria-labelledby="booking-title">
-  <div class="container">
-    ${sectionHead(b.eyebrow, b.title, b.intro, 'booking-title')}
-    <div class="offset booking-section__grid">
-      <div class="booking-section__widget"><div id="booking-widget"></div></div>
-      <aside class="booking-section__aside">
-        <p class="aside-title">${esc(b.expectTitle)}</p>
-        <ol class="expect">${b.expect.map((e) => `<li>${fmt(e)}</li>`).join('')}</ol>
+<section class="section section--soft booking-section" id="rezervace" aria-labelledby="booking-title">
+  <div class="container booking-section__grid">
+    <div class="booking-section__intro">
+      ${eyebrow(b.eyebrow)}
+      <h2 class="h2" id="booking-title">${fmt(b.title)}</h2>
+      <p class="booking-section__lead">${fmt(b.intro)}</p>
+      <p class="aside-title">${esc(b.expectTitle)}</p>
+      <ul class="ticks">${b.expect.map((e) => `<li>${icon('check')}<span>${fmt(e)}</span></li>`).join('')}</ul>
+      <div class="alt-contacts">
         <p class="aside-title">${esc(b.altTitle)}</p>
-        <dl class="alt-contacts">${row('phone')}${row('mail')}</dl>
-        ${note(b.note)}
-      </aside>
+        ${row('phone')}
+        ${row('mail')}
+      </div>
+      ${note(b.note)}
     </div>
+    <div class="booking-section__widget"><div id="booking-widget"></div></div>
   </div>
 </section>`;
   }
@@ -384,16 +443,22 @@
     if (!i) return '';
     return `
 <section class="section section--slim insta" id="ze-zivota" aria-labelledby="insta-title">
-  <div class="container">
-    ${sectionHead(i.eyebrow, i.title, i.text, 'insta-title')}
-    ${note(i.note)}
-    <ul class="channels offset" role="list">
+  <div class="container insta__grid">
+    <div>
+      ${eyebrow(i.eyebrow)}
+      <h2 class="h2" id="insta-title">${fmt(i.title)}</h2>
+      <p class="insta__text">${fmt(i.text)}</p>
+      ${note(i.note)}
+    </div>
+    <ul class="channels" role="list">
       ${S.social.map((s) => `
-      <li><a class="channel" ${socialLink(s)} data-track="social_${esc(s.id)}">
-        <span class="channel__name">${esc(s.label)}</span>
-        <span class="channel__handle">${fmt(s.handle)}</span>
-        <span class="channel__text">${esc(s.text)}</span>
-        <span class="channel__go">${esc(s.cta)}${icon('arrow-up-right')}</span>
+      <li><a class="channel channel--${esc(s.id)}" ${socialLink(s)} data-track="social_${esc(s.id)}">
+        <span class="channel__icon" aria-hidden="true">${icon(s.id)}</span>
+        <span class="channel__body">
+          <span class="channel__name">${esc(s.label)} <span class="channel__handle">${fmt(s.handle)}</span></span>
+          <span class="channel__text">${esc(s.text)}</span>
+        </span>
+        <span class="channel__go" aria-hidden="true">${icon('arrow-up-right')}</span>
       </a></li>`).join('')}
     </ul>
   </div>
@@ -414,18 +479,18 @@
     if (!on('showTestimonials')) return '';
     const t = S.testimonials;
     return `
-<section class="section section--tint testimonials" id="reference" aria-labelledby="t-title">
+<section class="section testimonials" id="reference" aria-labelledby="t-title">
   <div class="container">
     ${sectionHead(t.eyebrow, t.title, t.intro, 't-title')}
     ${note(t.note)}
-    <div class="offset quotes">
-      ${t.items.map((it) => `
-      <figure class="quote${it.text ? '' : ' quote--empty'}">
+    <div class="quotes">
+      ${t.items.map((it, i) => `
+      <figure class="quote quote--${(i % 3) + 1}${it.text ? '' : ' quote--empty'}">
         <blockquote><p>${PV.text(it.text || t.placeholder)}</p></blockquote>
-        <figcaption><span class="quote__name">${fmt(it.name)}</span><span class="quote__meta">${fmt(it.context)} · ${fmt(it.source)}</span></figcaption>
+        <figcaption><span class="quote__avatar" aria-hidden="true">${esc((PV.stripPh(it.name) || '?').trim().charAt(0))}</span><span><span class="quote__name">${fmt(it.name)}</span><span class="quote__meta">${fmt(it.context)} · ${fmt(it.source)}</span></span></figcaption>
       </figure>`).join('')}
     </div>
-    <div class="offset testimonials__foot">
+    <div class="testimonials__foot">
       <p>${fmt(t.ask)}</p>
       ${reviewLink(t.reviewLink)}
     </div>
@@ -438,19 +503,25 @@
     if (!on('showFaq') || !S.faq) return '';
     const f = S.faq;
     return `
-<section class="section faq" id="otazky" aria-labelledby="faq-title">
-  <div class="container">
-    ${sectionHead(f.eyebrow, f.title, f.intro, 'faq-title')}
-    ${note(f.note)}
-    <div class="offset">
-      <div class="faq__list">
-        ${f.items.map((it) => `
-        <details class="faq__item" name="faq">
-          <summary class="faq__q"><span>${fmt(it.q)}</span><span class="faq__sign" aria-hidden="true"></span></summary>
-          <div class="faq__a">${PV.isPh(it.a) ? `<p><span class="ph">${PV.text(PV.stripPh(it.a))}</span></p>` : `<p>${fmt(it.a)}</p>`}</div>
-        </details>`).join('')}
-      </div>
-      <p class="faq__more">${esc(f.glossaryText)} ${linkArrow(f.glossaryCta, 'slovnicek.html', 'data-track="glossary_open"')}</p>
+<section class="section section--soft faq" id="otazky" aria-labelledby="faq-title">
+  <div class="container faq__grid">
+    <div class="faq__intro">
+      ${eyebrow(f.eyebrow)}
+      <h2 class="h2" id="faq-title">${fmt(f.title)}</h2>
+      <p>${fmt(f.intro)}</p>
+      ${hand(f.hand, 'right', 'faq__hand')}
+      <a class="glossary-card" href="slovnicek.html" data-track="glossary_open">
+        <span class="glossary-card__icon" aria-hidden="true">${icon('info')}</span>
+        <span><strong>${esc(f.glossaryTitle)}</strong><span>${fmt(f.glossaryText)}</span></span>
+      </a>
+      ${note(f.note)}
+    </div>
+    <div class="faq__list">
+      ${f.items.map((it) => `
+      <details class="faq__item" name="faq">
+        <summary class="faq__q"><span>${fmt(it.q)}</span><span class="faq__sign" aria-hidden="true"></span></summary>
+        <div class="faq__a">${PV.isPh(it.a) ? `<p><span class="ph">${PV.text(PV.stripPh(it.a))}</span></p>` : `<p>${fmt(it.a)}</p>`}</div>
+      </details>`).join('')}
     </div>
   </div>
 </section>`;
@@ -464,7 +535,7 @@
   <div class="container">
     <a class="link-arrow link-arrow--back" href="index.html#otazky"><span class="link-arrow__icon" aria-hidden="true">${icon('arrow-left')}</span><span class="link-arrow__text">Zpět na časté otázky</span></a>
     <header class="blog-head">
-      <p class="eyebrow">Srozumitelně</p>
+      <p class="kicker">Srozumitelně</p>
       <h1 class="h2">${esc(f.glossaryTitle)}</h1>
       <p class="blog-head__intro">${fmt(f.glossaryIntro || '')}</p>
     </header>
@@ -478,21 +549,38 @@
   }
 
   /* ---------- Kancelář a kontakt ---------- */
+  const mapArt = `
+    <svg class="map__art" viewBox="0 0 800 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <rect width="800" height="400" fill="#E9F2DA"/>
+      <g fill="#DCEAC6">
+        <rect x="30" y="24" width="180" height="120" rx="14"/><rect x="250" y="24" width="140" height="78" rx="14"/>
+        <rect x="500" y="20" width="230" height="96" rx="14"/><rect x="40" y="246" width="210" height="126" rx="14"/>
+        <rect x="300" y="236" width="150" height="150" rx="14"/><rect x="610" y="232" width="170" height="146" rx="14"/>
+      </g>
+      <path d="M470 140c44-22 120-12 140 22s-12 74-64 74-118-12-118-44 0-36 42-52z" fill="#C8E0A4"/>
+      <path d="M-20 334C120 302 186 372 324 352S566 262 820 304" stroke="#BFD9E6" stroke-width="22" fill="none" stroke-linecap="round"/>
+      <g stroke="#fff" stroke-linecap="round" fill="none">
+        <path d="M0 200H800" stroke-width="16"/><path d="M432 0V400" stroke-width="14"/>
+        <path d="M228 0 300 400" stroke-width="9"/><path d="M0 116c200 22 300-30 432 4s268 48 368 28" stroke-width="8"/>
+      </g>
+    </svg>`;
+
   function renderContact() {
     const c = S.contactSection;
     const o = (S.offices || [])[0] || {};
     const call = C.phoneHref ? linkArrow(c.callCta, `tel:${esc(C.phoneHref)}`, 'data-track="contact_phone_cta"', 'phone') : '';
+    const detail = (iconName, label, value) => `<div class="detail"><span class="detail__icon" aria-hidden="true">${icon(iconName)}</span><div><dt>${esc(label)}</dt><dd>${value}</dd></div></div>`;
     return `
 <section class="section contact" id="kontakt" aria-labelledby="contact-title">
   <div class="container">
     ${sectionHead(c.eyebrow, c.title, c.intro, 'contact-title')}
-    <div class="offset contact__grid">
-      <div>
+    <div class="contact__grid">
+      <div class="contact__card">
         <dl class="details">
-          <div><dt>${esc(o.name ? PV.stripPh(o.name) : c.officeTitle)}</dt><dd>${fmt(o.street)}<br>${fmt(o.city)}<br><span class="muted">${fmt(o.access)}</span></dd></div>
-          <div><dt>Schůzky</dt><dd>${fmt(o.hours)}</dd></div>
-          <div><dt>Telefon</dt><dd>${phoneValue()}</dd></div>
-          <div><dt>E-mail</dt><dd>${emailValue()}</dd></div>
+          ${detail('pin', o.name ? PV.stripPh(o.name) : c.officeTitle, `${fmt(o.street)}<br>${fmt(o.city)}<br><span class="muted">${fmt(o.access)}</span>`)}
+          ${detail('clock', 'Schůzky', fmt(o.hours))}
+          ${detail('phone', 'Telefon', phoneValue())}
+          ${detail('mail', 'E-mail', emailValue())}
         </dl>
         <div class="contact__actions">
           ${btn(S.navCta, { to: href('rezervace'), attrs: 'data-book data-track="cta_contact"' })}
@@ -500,10 +588,14 @@
         </div>
       </div>
       <div class="map">
-        <p class="map__note">${esc(c.mapNote)}</p>
-        <div class="map__actions">
-          <button class="btn btn--outline btn--sm" type="button" data-map-load>Načíst mapu</button>
-          <a class="link-arrow" ${extLink(o.mapUrl, 'Odkaz do Mapy.cz doplníme po potvrzení adresy kanceláře.')}><span class="link-arrow__text">Otevřít v Mapy.cz</span><span class="link-arrow__icon" aria-hidden="true">${icon('arrow-up-right')}</span></a>
+        ${mapArt}
+        <span class="map__pin" aria-hidden="true">${icon('home')}</span>
+        <div class="map__overlay">
+          <p>${esc(c.mapNote)}</p>
+          <div class="map__actions">
+            <button class="btn btn--primary btn--sm" type="button" data-map-load><span>Načíst mapu</span></button>
+            <a class="link-arrow" ${extLink(o.mapUrl, 'Odkaz do Mapy.cz doplníme po potvrzení adresy kanceláře.')}><span class="link-arrow__text">Otevřít v Mapy.cz</span><span class="link-arrow__icon" aria-hidden="true">${icon('arrow-up-right')}</span></a>
+          </div>
         </div>
       </div>
     </div>
@@ -520,10 +612,14 @@
     return `
 <footer class="site-footer">
   <div class="container">
+    <div class="footer__cta">
+      <p class="footer__claim">${esc(S.brand.claim)}</p>
+      ${btn(S.navCta, { to: href('rezervace'), cls: 'btn--lime btn--lg', attrs: 'data-book data-track="cta_footer"' })}
+    </div>
     <div class="footer__top">
       <div class="footer__brand">
         ${logo()}
-        <p class="footer__claim">${esc(S.brand.claim)}</p>
+        <div class="footer__social">${S.social.map((s) => `<a ${socialLink(s)} aria-label="${esc(s.label)}" data-track="social_${esc(s.id)}">${icon(s.id)}</a>`).join('')}</div>
       </div>
       <div>
         <p class="footer__title">Na webu</p>
@@ -532,7 +628,6 @@
       <div>
         <p class="footer__title">Kontakt</p>
         <ul class="footer__links"><li>${phoneValue()}</li><li>${emailValue()}</li><li>${fmt(C.hours)}</li></ul>
-        <ul class="footer__links footer__social">${S.social.map((s) => `<li><a ${socialLink(s)} data-track="social_${esc(s.id)}">${esc(s.label)}</a></li>`).join('')}</ul>
       </div>
       <div>
         <p class="footer__title">Informace</p>
@@ -542,7 +637,7 @@
     <dl class="footer__legal">${f.legal.map((l) => `<div><dt>${esc(l.label)}</dt><dd>${fmt(l.value)}</dd></div>`).join('')}</dl>
     <div class="footer__bottom">
       <p>© ${new Date().getFullYear()} ${esc(S.brand.name)}${proto ? ` · ${esc(f.prototypeNote)}` : ''}</p>
-      <button class="to-top" type="button" data-to-top>Zpět nahoru</button>
+      <button class="to-top" type="button" data-to-top>Zpět nahoru ${icon('arrow-up')}</button>
     </div>
   </div>
 </footer>`;
@@ -551,23 +646,23 @@
   /* ---------- Překryvné prvky ---------- */
   function renderOverlays() {
     const contacts = [
-      `<div><dt>Telefon</dt><dd>${phoneValue()}</dd></div>`,
-      `<div><dt>E-mail</dt><dd>${emailValue()}</dd></div>`,
+      `<p>${icon('phone')}${phoneValue()}</p>`,
+      `<p>${icon('mail')}${emailValue()}</p>`,
     ].join('');
     return `
 <dialog class="menu" id="mobile-menu" aria-label="Menu">
   <div class="menu__inner">
-    <div class="menu__top">${logo()}<button class="menu__close" type="button" data-menu-close autofocus>Zavřít</button></div>
+    <div class="menu__top">${logo()}<button class="menu__close" type="button" data-menu-close autofocus aria-label="Zavřít menu">${icon('close')}</button></div>
     <nav aria-label="Mobilní navigace">
-      <ul class="menu__list">${mainNav.map((n) => `<li><a class="menu__link" href="${n.url || href(n.target)}" data-menu-link>${esc(n.label)}</a></li>`).join('')}</ul>
+      <ul class="menu__list">${mainNav.map((n) => `<li><a class="menu__link" href="${n.url || href(n.target)}" data-menu-link>${esc(n.label)}${icon('arrow-right')}</a></li>`).join('')}</ul>
     </nav>
-    ${btn(S.navCta, { to: href('rezervace'), cls: 'btn--primary btn--block', attrs: 'data-book data-menu-link data-track="cta_menu"' })}
-    <dl class="menu__contacts">${contacts}</dl>
+    ${btn(S.navCta, { to: href('rezervace'), cls: 'btn--primary btn--block btn--lg', attrs: 'data-book data-menu-link data-track="cta_menu"' })}
+    <div class="menu__contacts">${contacts}</div>
   </div>
 </dialog>
 <div class="mobile-cta" data-mobile-cta>
-  ${btn(S.navCta, { to: href('rezervace'), cls: 'btn--primary', attrs: 'data-book data-track="cta_mobile_bar"' })}
-  ${C.phoneHref ? `<a class="mobile-cta__call" href="tel:${esc(C.phoneHref)}" data-track="call_mobile_bar">Zavolat</a>` : ''}
+  ${btn(S.navCta, { to: href('rezervace'), cls: 'btn--primary', attrs: 'data-book data-track="cta_mobile_bar"', iconName: 'calendar' })}
+  ${C.phoneHref ? `<a class="mobile-cta__call" href="tel:${esc(C.phoneHref)}" aria-label="Zavolat" data-track="call_mobile_bar">${icon('phone')}</a>` : ''}
 </div>`;
   }
 
@@ -681,22 +776,43 @@
     window.setInterval(next, 3000);
   }
 
-  // Služby: řádek se rozbalí kliknutím na tlačítko nebo kamkoli do řádku
+  // Služby: přepínání situací (záložky, ovládání i šipkami)
   function initServices() {
-    const toggle = (b) => {
-      const open = b.getAttribute('aria-expanded') !== 'true';
-      b.setAttribute('aria-expanded', String(open));
-      b.closest('.svc').classList.toggle('is-open', open);
-      document.getElementById(b.getAttribute('aria-controls')).hidden = !open;
-      if (open) PV.track('service_details_open', { service: b.getAttribute('aria-controls') });
+    const root = $('[data-picker]');
+    if (!root) return;
+    const tabs = $$('[role="tab"]', root);
+    const vertical = () => window.matchMedia('(min-width: 901px)').matches;
+    const select = (i, focus) => {
+      tabs.forEach((t, k) => {
+        const on = k === i;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+        document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+      });
+      if (focus) tabs[i].focus();
+      if (!vertical()) tabs[i].scrollIntoView({ block: 'nearest', inline: 'center', behavior: PV.reducedMotion.matches ? 'auto' : 'smooth' });
+      PV.track('service_select', { service: tabs[i].getAttribute('aria-controls') });
     };
-    $$('.svc').forEach((row) => {
-      const b = $('.svc__toggle', row);
-      row.addEventListener('click', (e) => {
-        if (e.target.closest('a') || e.target.closest('.svc__details')) return;
-        toggle(b);
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => select(i, false));
+      t.addEventListener('keydown', (e) => {
+        const map = { ArrowDown: i + 1, ArrowRight: i + 1, ArrowUp: i - 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 };
+        if (!(e.key in map)) return;
+        e.preventDefault();
+        select((map[e.key] + tabs.length) % tabs.length, true);
       });
     });
+  }
+
+  // Jemné objevení prvků a nakreslení cesty při rolování
+  function initReveal() {
+    const els = $$('.road, .versus, .quotes, .values');
+    if (!('IntersectionObserver' in window) || PV.reducedMotion.matches) { els.forEach((el) => el.classList.add('is-in')); return; }
+    document.documentElement.classList.add('can-reveal');
+    const io = new IntersectionObserver((entries) => entries.forEach((en) => {
+      if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); }
+    }), { rootMargin: '0px 0px -12% 0px' });
+    els.forEach((el) => io.observe(el));
   }
 
   // Orientační kalkulačka splátky (anuitní splácení)
@@ -959,6 +1075,7 @@
   initScrollSpy();
   initRotator();
   initServices();
+  initReveal();
   initCalculator();
   initFixWatch();
   initFaq();

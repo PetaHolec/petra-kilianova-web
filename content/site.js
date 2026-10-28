@@ -99,6 +99,8 @@ window.SITE = {
   /* ---------- Úvodní obrazovka ---------- */
   hero: {
     eyebrow: 'Hypoteční poradkyně · [Město a okolí]',
+    hand: 'Ahoj, jsem Petra',            // ručně psaná poznámka nad nadpisem
+    stickers: ['Osobně, online i po telefonu', 'První schůzka nezávazně'],
     title: 'Váš nový *domov* začíná správným rozhodnutím.',
     rotate: ['domov', 'byt', 'dům'],   // slovo v *hvězdičkách* se na webu střídá s těmito slovy
     text: 'Pomohu vám zorientovat se v hypotékách a najít financování, které sedí vašim plánům. Vysvětlím vám každou možnost a provedu vás celým procesem – od první otázky až po podpis.',
@@ -110,12 +112,6 @@ window.SITE = {
       label: 'Portrét poradkyně',
       hint: 'Profesionální fotografie · 4 : 5 · min. 1600 × 2000 px',
     },
-    // Tři krátké údaje pod úvodním textem
-    facts: [
-      { label: 'Schůzky', text: 'Osobně v kanceláři, online i po telefonu' },
-      { label: 'Partneři', text: 'Banky, stavební spořitelny a další instituce' },
-      { label: 'Značka', text: 'Franšízová poradkyně Gepard Finance' },
-    ],
     card: {
       title: 'První krok je jednoduchý',
       text: 'Vyberte si termín schůzky – osobně, online, nebo po telefonu.',
@@ -130,11 +126,13 @@ window.SITE = {
     title: 'Ať teprve začínáte, nebo vám *končí fixace*.',
     intro: 'Vyberte si, co právě řešíte. Na první schůzce si ujasníme vaši situaci a já vám ukážu, jaké máte možnosti – bez zbytečných odborných pojmů.',
     detailsLabel: 'Co spolu vyřešíme',
+    hand: 'Klikněte na to, co právě řešíte',
     cta: 'Probrat na schůzce',
     note: 'Rozsah a názvy služeb jsou návrh – je potřeba je potvrdit s klientkou.',
     items: [
       {
         id: 'nove-bydleni',
+        icon: 'home',
         tag: 'Koupě bydlení',
         title: 'Hypotéka na nové bydlení',
         text: 'Kupujete první byt, stěhujete se do většího, nebo pořizujete dům? Spočítáme, na jaké financování dosáhnete, kolik budete potřebovat vlastních prostředků a jak bude vypadat splátka.',
@@ -142,6 +140,7 @@ window.SITE = {
       },
       {
         id: 'prvni-bydleni',
+        icon: 'key',
         tag: 'První bydlení',
         title: 'Hypotéka na první bydlení',
         text: 'Chcete být konečně ve svém? Provedu vás celým procesem krok za krokem – od první úvahy přes výběr financování až po podpis a čerpání.',
@@ -149,6 +148,7 @@ window.SITE = {
       },
       {
         id: 'refinancovani',
+        icon: 'refresh',
         tag: 'Konec fixace',
         title: 'Refinancování hypotéky',
         text: 'Blíží se konec fixace, nebo máte pocit, že vaše hypotéka už neodpovídá vašemu životu? Porovnáme nabídku vaší banky s dalšími možnostmi a společně zvážíme, co dává smysl.',
@@ -156,6 +156,7 @@ window.SITE = {
       },
       {
         id: 'stavba-rekonstrukce',
+        icon: 'hammer',
         tag: 'Stavba · rekonstrukce',
         title: 'Financování stavby nebo rekonstrukce',
         text: 'Stavíte dům, nebo chcete z bytu udělat domov podle svých představ? Najdeme financování, které počítá s průběžným čerpáním, rozpočtem i tím, že ne všechno půjde přesně podle plánu.',
@@ -163,6 +164,7 @@ window.SITE = {
       },
       {
         id: 'hypoteka-50',
+        icon: 'users',
         tag: 'Hypotéka 50+',
         title: 'Hypotéka po padesátce',
         text: 'Pořizujete bydlení, rekonstruujete to současné, nebo chcete pomoci dětem? I v pozdějším věku se dá hypotéka řešit. Projdeme, jaké máte možnosti a co banky posuzují.',
@@ -170,6 +172,7 @@ window.SITE = {
       },
       {
         id: 'stavebni-sporeni',
+        icon: 'piggy',
         tag: 'Stavební spoření',
         title: 'Stavební spoření',
         text: 'Spořit na bydlení se dá i chytře, ať už na rekonstrukci, nebo jako doplněk financování. Vysvětlím, jak stavební spoření funguje a jestli se vám hodí.',
@@ -177,6 +180,7 @@ window.SITE = {
       },
       {
         id: 'fotovoltaika',
+        icon: 'sun',
         tag: 'Fotovoltaika',
         title: 'Financování fotovoltaiky',
         text: 'Chcete snížit náklady na energie a postavit si vlastní fotovoltaiku? Pomůžu vám zorientovat se v možnostech, jak ji financovat.',
@@ -184,6 +188,7 @@ window.SITE = {
       },
       {
         id: 'konzultace',
+        icon: 'chat',
         tag: 'První krok',
         title: 'Konzultace možností financování',
         text: 'Ještě nevíte, jestli je hypotéka pro vás, nebo kdy je ten správný čas? Projdeme vaši situaci a odejdete s jasnou představou, jaké máte možnosti a co udělat jako první.',
@@ -202,6 +207,7 @@ window.SITE = {
     intro: 'Do banky můžete jít i sami. Rozdíl je v tom, kolik nabídek uvidíte, kolik času strávíte papírováním a jestli vám po podpisu někdo pohlídá další kroky.',
     selfLabel: 'Sami v bance',
     meLabel: 'Se mnou',
+    hand: 'Tohle je ten rozdíl',
     rows: [
       { label: 'Výběr', self: 'Nabídka jedné banky', me: 'Porovnání nabídek více bank a spořitelen' },
       { label: 'Podklady', self: 'Zjišťujete a zařizujete sami', me: 'Řeknu vám přesně, co je potřeba, a pomohu s přípravou' },
@@ -249,6 +255,7 @@ window.SITE = {
       { title: 'Podpisem to nekončí', text: 'Hypotéka vás bude provázet roky. Když se blíží konec fixace nebo se změní vaše situace, můžete se na mě obrátit.' },
     ],
     signature: 'Petra Kilianová',
+    photoNote: 'To jsem já',
     cta: 'Poznejme se osobně',
     portrait: { src: '', alt: 'Petra Kilianová, hypoteční poradkyně', label: 'Portrét – osobní představení', hint: 'Přirozené světlo · 3 : 4 · min. 1500 × 2000 px' },
     note: 'Návrh textu – finální podobu upravíme po rozhovoru s klientkou. Neobsahuje žádné vymyšlené údaje o praxi, oprávněních ani úspěších. Logo a prezentaci partnera ověřit podle pravidel Gepard Finance.',
@@ -271,6 +278,7 @@ window.SITE = {
     title: 'Víte, co vás čeká. *Krok za krokem.*',
     intro: 'Celý proces má jasný postup. U každého kroku vám řeknu, co se bude dít, co budu potřebovat od vás a co zařídím já.',
     cta: 'Začněme prvním krokem',
+    finish: 'Klíče od vašeho domova',
     steps: [
       { title: 'Seznámíme se a probereme vaše plány', text: 'Osobně, online nebo po telefonu. Řeknete mi, co chcete financovat, v jakém časovém horizontu a co je pro vás důležité. Já vám vysvětlím, jak celý proces probíhá.', tip: 'Stačí vaše představa – podklady řešíme až později.' },
       { title: 'Společně projdeme dostupné možnosti', text: 'Porovnáme varianty, které pro vás připadají v úvahu. Nejen podle úrokové sazby, ale i podle délky fixace, výše splátky a podmínek, které budou důležité za pár let.', tip: 'Rozhodnutí je vždy na vás.' },
@@ -398,6 +406,7 @@ window.SITE = {
       { q: 'Musím mít vlastní úspory?', a: 'Banky obvykle financují jen část hodnoty nemovitosti, zbytek je potřeba pokrýt z vlastních zdrojů. Kolik to bude ve vašem případě a jaké máte možnosti, spočítáme spolu.' },
       { q: 'Dá se všechno vyřešit online?', a: 'Většinu kroků zvládneme online nebo po telefonu. Pokud dáváte přednost osobnímu setkání, potkáme se v kanceláři.' },
     ],
+    hand: 'Hloupé otázky neexistují',
     glossaryTitle: 'Slovníček pojmů',
     glossaryText: 'Fixace, LTV, RPSN… Co která slova znamenají, vysvětlená lidsky a na jednom místě.',
     glossaryCta: 'Slovníček pojmů',
