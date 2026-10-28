@@ -1000,6 +1000,8 @@ a.alt-contact:hover .alt-contact__icon { background: var(--copper-light); color:
 .footer__wordmark span { display: inline-block; font-family: var(--font-display); font-size: var(--wm-size, 14vw); letter-spacing: -.035em; white-space: nowrap; color: transparent; -webkit-text-stroke: 1px rgba(242, 247, 234, .2); transform: translateY(14%); }
 .footer__bottom { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem 1.5rem; padding: 1.5rem 0 calc(1.5rem + env(safe-area-inset-bottom)); border-top: 1px solid var(--line-dark); font-size: .8125rem; color: var(--on-dark-muted); }
 .footer__bottom p { margin: 0; }
+.footer__credit { margin-left: 1.25rem; opacity: .7; }
+.footer__credit::before { content: "·"; margin-right: 1.25rem; }
 .to-top { display: inline-flex; align-items: center; gap: .5rem; padding: 0; border: 0; background: none; font-size: .8125rem; font-weight: 600; color: var(--on-dark); cursor: pointer; }
 .to-top .i { width: 16px; height: 16px; transition: transform .4s var(--ease-out); }
 .to-top:hover .i { transform: translateY(-3px); }

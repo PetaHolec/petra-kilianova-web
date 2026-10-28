@@ -682,9 +682,8 @@
     </div>
     <dl class="footer__legal">${f.legal.map((l) => `<div class="legal-item"><dt>${esc(l.label)}</dt><dd>${fmt(l.value)}</dd></div>`).join('')}</dl>
   </div>
-  <div class="footer__wordmark" aria-hidden="true"><span>${esc(S.brand.name)}</span></div>
   <div class="container footer__bottom">
-    <p>© ${new Date().getFullYear()} ${esc(S.brand.name)}${proto ? ` · ${esc(f.prototypeNote)}` : ''}</p>
+    <p>© ${new Date().getFullYear()} ${esc(S.brand.name)}${proto ? ` · ${esc(f.prototypeNote)}` : ''}<span class="footer__credit">Tvorba webu: Skočdal</span></p>
     <button class="to-top" type="button" data-to-top>Zpět nahoru${icon('arrow-up')}</button>
   </div>
 </footer>`;
