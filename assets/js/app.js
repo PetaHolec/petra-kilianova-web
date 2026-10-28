@@ -231,6 +231,10 @@
       </ul>
       <div class="why__dots" aria-hidden="true">${w.rows.map((_, i) => `<span class="why__dot${i === 0 ? ' is-on' : ''}"></span>`).join('')}</div>
     </div>
+  </div>
+</section>
+<section class="section banks-section" aria-label="${esc(w.banksTitle)}">
+  <div class="container">
     <div class="banks" data-reveal>
       <p class="banks__title">${esc(w.banksTitle)}</p>
       <ul class="banks__list" role="list">${w.banks.map((b) => `<li class="banks__logo"><img src="${esc(b.logo)}" alt="${esc(b.name)}" loading="lazy" decoding="async"></li>`).join('')}</ul>

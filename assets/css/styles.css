@@ -780,12 +780,13 @@ a.alt-contact:hover .alt-contact__icon { background: var(--copper-light); color:
 .why__legend { display: none; }
 .why__cards { display: none; }
 
-.banks { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 1rem 2.5rem; margin-top: clamp(2.5rem, 5vw, 4rem); }
-.banks__title { max-width: 13ch; margin: 0; font-size: .6875rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--copper-light); line-height: 1.6; }
+.banks { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 1rem 2.5rem; }
+.banks__title { max-width: 13ch; margin: 0; font-size: .6875rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--copper-ink); line-height: 1.6; }
 .banks__list { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: .5rem; margin: 0; padding: 0; list-style: none; }
-.banks__logo { height: 36px; padding: .15rem .4rem; }
-.banks__logo img { display: block; width: 100%; height: 100%; object-fit: contain; filter: brightness(0) invert(1); opacity: .85; }
-.banks__note { grid-column: 2; margin: 0; font-size: .8125rem; color: var(--on-dark-muted); }
+.banks-section { padding-block: clamp(2.25rem, 5vw, 3.5rem); background: var(--paper); }
+.banks__logo { height: 34px; padding: 0 .25rem; }
+.banks__logo img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.banks__note { grid-column: 2; margin: 0; font-size: .8125rem; color: var(--ink-muted); }
 
 /* ---------- Kalkulačka a hlídání fixace ---------- */
 .tools__grid { display: grid; grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr); align-items: stretch; gap: 1.5rem; }
