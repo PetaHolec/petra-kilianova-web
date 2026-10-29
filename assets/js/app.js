@@ -850,7 +850,11 @@ ${renderPartners()}`;
         document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
       });
       if (focus) tabs[i].focus();
-      if (!vertical()) tabs[i].scrollIntoView({ block: 'nearest', inline: 'center', behavior: PV.reducedMotion.matches ? 'auto' : 'smooth' });
+      // na mobilu je detail pod mřížkou – po klepnutí k němu stránka sjede, pokud není vidět
+      const panel = document.getElementById(tabs[i].getAttribute('aria-controls'));
+      if (!vertical() && !focus && panel.getBoundingClientRect().top > window.innerHeight * .6) {
+        panel.scrollIntoView({ block: 'start', behavior: PV.reducedMotion.matches ? 'auto' : 'smooth' });
+      }
       PV.track('service_select', { service: tabs[i].getAttribute('aria-controls') });
     };
     tabs.forEach((t, i) => {

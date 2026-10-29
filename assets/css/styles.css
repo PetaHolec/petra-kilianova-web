@@ -806,12 +806,14 @@ a.alt-contact:hover { color: var(--lime-deep); }
   .partners__item { height: 26px; }
 
   .picker { grid-template-columns: 1fr; }
-  .picker__tabs { display: flex; gap: .5rem; margin-inline: calc(-1 * var(--gutter)); padding: 0 var(--gutter) .25rem; overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: none; }
-  .picker__tabs::-webkit-scrollbar { display: none; }
-  .picker__tab { flex: none; width: auto; padding: .45rem .9rem .45rem .45rem; border: 2px solid var(--line); border-radius: 999px; font-size: .9375rem; scroll-snap-align: center; }
+  /* na mobilu jsou vidět všechny situace najednou: mřížka dvou sloupců */
+  .picker__tabs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; }
+  .picker__tab { gap: .55rem; min-height: 56px; padding: .45rem .6rem .45rem .45rem; border: 2px solid var(--line); border-radius: 16px; font-size: .9375rem; line-height: 1.2; }
   .picker__tab[aria-selected="true"] { border-color: var(--forest); }
-  .picker__icon { width: 34px; height: 34px; border-radius: 50%; }
-  .picker__icon .i { width: 18px; height: 18px; }
+  .picker__icon { width: 36px; height: 36px; border-radius: 12px; }
+  .picker__icon .i { width: 19px; height: 19px; }
+  .picker__panel { scroll-margin-top: calc(var(--header-h) + 12px); }
+  .services__hand .hand__arrow { display: none; }
   .picker__big-icon .i { width: 160px; height: 160px; }
 
   .versus { grid-template-columns: 1fr; gap: 3.75rem; }
