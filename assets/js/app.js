@@ -636,7 +636,7 @@ ${renderPartners()}`;
     </div>
     <dl class="footer__legal">${f.legal.map((l) => `<div><dt>${esc(l.label)}</dt><dd>${fmt(l.value)}</dd></div>`).join('')}</dl>
     <div class="footer__bottom">
-      <p>© ${new Date().getFullYear()} ${esc(S.brand.name)}${proto ? ` · ${esc(f.prototypeNote)}` : ''}</p>
+      <p>© ${new Date().getFullYear()} ${esc(S.brand.name)}${proto ? ` · ${esc(f.prototypeNote)}` : ''}<span class="footer__credit">Tvorba webu: Skočdal</span></p>
       <button class="to-top" type="button" data-to-top>Zpět nahoru ${icon('arrow-up')}</button>
     </div>
   </div>

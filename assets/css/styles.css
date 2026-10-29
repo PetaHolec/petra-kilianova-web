@@ -636,6 +636,7 @@ a.alt-contact:hover { color: var(--lime-deep); }
 .footer__legal dd { margin: 0; color: rgba(255, 255, 255, .6); }
 .footer__bottom { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem; margin-top: 2rem; font-size: .8125rem; color: rgba(255, 255, 255, .55); }
 .footer__bottom p { margin: 0; }
+.footer__credit { margin-left: 1rem; padding-left: 1rem; border-left: 1px solid rgba(255, 255, 255, .2); }
 .to-top { display: inline-flex; align-items: center; gap: .4rem; padding: .45rem .9rem; border: 1px solid rgba(255, 255, 255, .25); border-radius: 999px; background: none; color: #fff; cursor: pointer; }
 .to-top:hover { background: var(--lime); border-color: var(--lime); color: var(--forest); }
 .to-top .i { width: 16px; height: 16px; }
