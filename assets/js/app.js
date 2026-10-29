@@ -662,7 +662,7 @@ ${renderPartners()}`;
     <div class="contact__grid">
       <div class="contact__card">
         <dl class="details">
-          ${detail('pin', o.name ? PV.stripPh(o.name) : c.officeTitle, `${fmt(o.street)}<br>${fmt(o.city)}<br><span class="muted">${fmt(o.access)}</span>`)}
+          ${detail('pin', o.name ? PV.stripPh(o.name) : c.officeTitle, `${fmt(o.street)}<br>${fmt(o.city)}${o.access ? `<br><span class="muted">${fmt(o.access)}</span>` : ''}`)}
           ${detail('clock', 'Schůzky', fmt(o.hours))}
           ${detail('phone', 'Telefon', phoneValue())}
           ${detail('mail', 'E-mail', emailValue())}

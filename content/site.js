@@ -454,7 +454,7 @@ window.SITE = {
       street: 'Husova 594/6',
       city: '602 00 Brno',
       hours: 'Po předchozí domluvě',
-      access: '[Parkování a MHD – doplnit]',
+      access: '',            // nepovinné, např. parkování a MHD
       mapQuery: 'Husova 594/6, 602 00 Brno',   // co se vyhledá v Google Maps (mapa na webu i odkaz)
       mapUrl: '',            // vlastní odkaz na mapu; prázdné = vyhledá se mapQuery v Google Maps
     },
