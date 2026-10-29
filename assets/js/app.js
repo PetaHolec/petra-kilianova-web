@@ -625,6 +625,31 @@ ${renderPartners()}`;
       </g>
     </svg>`;
 
+  // Mapa Google se načte hned; bez adresy zůstane jen ilustrace s odkazem
+  function renderMap(o, c) {
+    const q = o.mapQuery ? encodeURIComponent(o.mapQuery) : '';
+    const openUrl = PV.safeUrl(o.mapUrl) || (q ? `https://www.google.com/maps/search/?api=1&query=${q}` : '');
+    const routeUrl = q ? `https://www.google.com/maps/dir/?api=1&destination=${q}` : '';
+    const links = `
+          <div class="map__actions">
+            ${openUrl ? `<a class="link-arrow" href="${esc(openUrl)}" target="_blank" rel="noopener" data-track="map_open"><span class="link-arrow__text">${esc(c.mapCta || 'Otevřít mapu')}</span><span class="link-arrow__icon" aria-hidden="true">${icon('arrow-up-right')}</span></a>` : ''}
+            ${routeUrl ? `<a class="link-arrow" href="${esc(routeUrl)}" target="_blank" rel="noopener" data-track="map_route"><span class="link-arrow__text">${esc(c.routeCta || 'Naplánovat trasu')}</span><span class="link-arrow__icon" aria-hidden="true">${icon('arrow-up-right')}</span></a>` : ''}
+          </div>`;
+    if (!q) {
+      return `
+      <div class="map">
+        ${mapArt}
+        <span class="map__pin" aria-hidden="true">${icon('home')}</span>
+        <div class="map__overlay"><p>${fmt(o.street)}, ${fmt(o.city)}</p>${links}</div>
+      </div>`;
+    }
+    return `
+      <div class="map map--live">
+        <iframe class="map__frame" src="https://www.google.com/maps?q=${q}&amp;hl=cs&amp;z=16&amp;output=embed" title="Mapa: ${esc(o.mapQuery)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+        <div class="map__overlay"><p><strong>${fmt(o.name || c.officeTitle)}</strong><br>${fmt(o.street)}, ${fmt(o.city)}</p>${links}</div>
+      </div>`;
+  }
+
   function renderContact() {
     const c = S.contactSection;
     const o = (S.offices || [])[0] || {};
@@ -647,17 +672,7 @@ ${renderPartners()}`;
           ${call}
         </div>
       </div>
-      <div class="map">
-        ${mapArt}
-        <span class="map__pin" aria-hidden="true">${icon('home')}</span>
-        <div class="map__overlay">
-          <p>${esc(c.mapNote)}</p>
-          <div class="map__actions">
-            <button class="btn btn--primary btn--sm" type="button" data-map-load><span>Načíst mapu</span></button>
-            <a class="link-arrow" ${extLink(o.mapUrl, 'Odkaz do Mapy.cz doplníme po potvrzení adresy kanceláře.')}><span class="link-arrow__text">Otevřít v Mapy.cz</span><span class="link-arrow__icon" aria-hidden="true">${icon('arrow-up-right')}</span></a>
-          </div>
-        </div>
-      </div>
+      ${renderMap(o, c)}
     </div>
   </div>
 </section>`;
@@ -1123,11 +1138,6 @@ ${renderPartners()}`;
       });
     });
 
-    document.addEventListener('click', (e) => {
-      if (e.target.closest('[data-map-load]')) {
-        PV.toast('Ukázka: v ostré verzi se po souhlasu s obsahem třetích stran načte interaktivní mapa (Mapy.cz).', 'map');
-      }
-    });
   }
 
   function initMobileCTA() {

@@ -155,6 +155,10 @@
         const v = params.get(k);
         if (v) utm[k] = v.slice(0, 120);
       });
+      // UTM parametry z kampaní si web pamatuje jen se souhlasem s analytickými nebo marketingovými cookies
+      const C = window.PVConsent;
+      const allowed = !!(C && (C.has('analytics') || C.has('marketing')));
+      if (!allowed) { sessionStorage.removeItem(KEY); return utm; }
       if (Object.keys(utm).length) sessionStorage.setItem(KEY, JSON.stringify(utm));
       return JSON.parse(sessionStorage.getItem(KEY) || '{}');
     } catch (e) {

@@ -34,23 +34,23 @@ window.SITE = {
   brand: {
     name: 'Petra Kilianová',
     role: 'Hypoteční poradkyně',
-    city: '[Město]',
+    city: 'Brno',
     claim: 'Dobrá hypotéka je ta, které rozumíte.',
   },
 
   /* ---------- SEO (titulek a popis ve vyhledávačích) ---------- */
   seo: {
-    title: 'Petra Kilianová – hypoteční poradkyně | [Město]',
+    title: 'Petra Kilianová – hypoteční poradkyně | Brno',
     description: 'Pomohu vám zorientovat se v hypotékách a najít financování, které sedí vašim plánům. Osobně v kanceláři, online i po telefonu. Domluvte si nezávaznou konzultaci.',
     url: 'https://www.[domena].cz/',
   },
 
   /* ---------- Kontakty ---------- */
   contact: {
-    phone: '[+420 000 000 000]',
-    phoneHref: '',           // číslo bez mezer pro proklik, např. '+420777123456'
-    email: '[e-mail]',
-    emailHref: '',           // e-mail pro proklik, např. 'petra@domena.cz'
+    phone: '+420 774 875 286',
+    phoneHref: '+420774875286',   // číslo bez mezer pro proklik
+    email: 'petra.kilianova@gpf.cz',
+    emailHref: 'petra.kilianova@gpf.cz',   // e-mail pro proklik
     hours: 'Schůzky po předchozí domluvě',
     response: 'Ozvu se vám do [24 hodin] v pracovní dny.',
   },
@@ -99,7 +99,7 @@ window.SITE = {
 
   /* ---------- Úvodní obrazovka ---------- */
   hero: {
-    eyebrow: 'Hypoteční poradkyně · [Město a okolí]',
+    eyebrow: 'Hypoteční poradkyně · Brno a okolí',
     hand: 'Ahoj, jsem Petra',            // ručně psaná poznámka nad nadpisem
     stickers: ['Osobně, online i po telefonu', 'První schůzka nezávazně'],
     title: 'Váš nový *domov* začíná správným rozhodnutím.',
@@ -243,7 +243,7 @@ window.SITE = {
   about: {
     eyebrow: 'O mně',
     title: 'Za každou hypotékou je jeden velký *životní krok*.',
-    lead: 'Jmenuji se Petra Kilianová a jsem hypoteční poradkyně v [Město]. Pomáhám lidem financovat bydlení tak, aby rozuměli tomu, co podepisují – a mohli se na nový domov těšit.',
+    lead: 'Jmenuji se Petra Kilianová a jsem hypoteční poradkyně v Brně. Pomáhám lidem financovat bydlení tak, aby rozuměli tomu, co podepisují – a mohli se na nový domov těšit.',
     paragraphs: [
       'Za každou žádostí o hypotéku vidím konkrétní příběh. Pár, který poprvé podepisuje kupní smlouvu. Rodinu, které je malý byt těsný. Nebo někoho, kdo konečně staví dům, o kterém roky mluvil.',
       'Mou prací je přeložit čísla, podmínky a bankovní jazyk do srozumitelných rozhodnutí. Abyste věděli, proč volíte právě tuhle variantu – a co pro vás bude znamenat za pět nebo deset let.',
@@ -442,18 +442,21 @@ window.SITE = {
     intro: 'Potkáme se v kanceláři, online, nebo po telefonu. Schůzky domlouvám vždy předem, abych na vás měla dost času.',
     officeTitle: 'Kancelář',
     callCta: 'Zavolat',
-    mapNote: 'Mapa se načte až po vašem souhlasu s obsahem třetích stran.',
+    mapCta: 'Otevřít v Google Maps',
+    routeCta: 'Naplánovat trasu',
   },
 
   // Kancelář. (Kdyby jich v budoucnu bylo víc, stačí přidat další položku – zobrazí se přepínač.)
   offices: [
     {
       id: 'kancelar',
-      street: '[Ulice a číslo popisné]',
-      city: '[PSČ Město]',
+      name: 'Kancelář Brno – Husova',
+      street: 'Husova 594/6',
+      city: '602 00 Brno',
       hours: 'Po předchozí domluvě',
       access: '[Parkování a MHD – doplnit]',
-      mapUrl: '',            // odkaz na Mapy.cz / Google Maps
+      mapQuery: 'Husova 594/6, 602 00 Brno',   // co se vyhledá v Google Maps (mapa na webu i odkaz)
+      mapUrl: '',            // vlastní odkaz na mapu; prázdné = vyhledá se mapQuery v Google Maps
     },
   ],
 

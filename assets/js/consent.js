@@ -4,6 +4,8 @@
    • Výchozí stav: vše kromě nezbytného je ZAMÍTNUTO (Google Consent Mode v2).
    • Skripty třetích stran (Google Tag Manager, Meta Pixel) se načtou až po
      souhlasu a jen pokud je v content/site.js vyplněné jejich ID.
+   • Odvolání souhlasu smaže cookies Google a Meta a stránku znovu načte.
+   • Souhlas platí 12 měsíců, pak se lišta zobrazí znovu.
    • Finální texty a kategorie je potřeba ověřit s právníkem.
    ========================================================================== */
 (function () {
@@ -11,6 +13,7 @@
 
   const KEY = 'pv_consent_v1';
   const VERSION = 1;
+  const MAX_AGE = 365 * 24 * 60 * 60 * 1000; // platnost souhlasu (12 měsíců)
   const PV = window.PV;
 
   window.dataLayer = window.dataLayer || [];
@@ -21,10 +24,12 @@
     ad_user_data: 'denied',
     ad_personalization: 'denied',
     analytics_storage: 'denied',
+    personalization_storage: 'denied',
     functionality_storage: 'granted',
     security_storage: 'granted',
     wait_for_update: 500,
   });
+  gtag('set', 'ads_data_redaction', true);
 
   const listeners = [];
   let state = read();
@@ -33,15 +38,39 @@
   function read() {
     try {
       const s = JSON.parse(localStorage.getItem(KEY));
-      return s && s.v === VERSION ? s : null;
+      if (!s || s.v !== VERSION) return null;
+      if (!s.date || Date.now() - new Date(s.date).getTime() > MAX_AGE) return null;
+      return s;
     } catch (e) {
       return null;
     }
   }
 
+  // Cookies měřicích nástrojů (Google Analytics, Google Ads, Meta) – smažou se při odvolání souhlasu
+  const COOKIES = { analytics: /^(_ga|_gid|_gat|_ga_)/, marketing: /^(_gcl|_fbp|_fbc|_gac|IDE|test_cookie)/ };
+  function clearCookies(category) {
+    const host = window.location.hostname;
+    const parts = host.split('.');
+    const domains = [''];
+    for (let i = 0; i < parts.length - 1; i++) domains.push('.' + parts.slice(i).join('.'));
+    document.cookie.split(';').map((c) => c.split('=')[0].trim()).filter((n) => COOKIES[category].test(n)).forEach((name) => {
+      domains.forEach((d) => {
+        document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/${d ? `; domain=${d}` : ''}`;
+      });
+    });
+  }
+
   function save(choice) {
+    const before = state;
     state = { v: VERSION, necessary: true, analytics: !!choice.analytics, marketing: !!choice.marketing, date: new Date().toISOString() };
     try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* soukromé okno */ }
+    // Odvolaný souhlas: smazat cookies a načíst stránku znovu, aby už žádný měřicí skript neběžel
+    const revoked = ['analytics', 'marketing'].filter((c) => before && before[c] && !state[c]);
+    if (revoked.length) {
+      revoked.forEach(clearCookies);
+      window.location.reload();
+      return;
+    }
     apply();
     hide();
   }
