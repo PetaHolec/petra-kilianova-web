@@ -475,24 +475,84 @@ ${renderPartners()}`;
     return `<a class="link-arrow" ${url ? `href="${esc(url)}" target="_blank" rel="noopener"` : 'href="#" data-ph-link="Odkaz na hodnocení (např. Google profil firmy) doplníme po jeho založení."'} data-track="review_link"><span class="link-arrow__text">${esc(link.label)}</span><span class="link-arrow__icon" aria-hidden="true">${icon('arrow-up-right')}</span></a>`;
   }
 
+  // Iniciála do kolečka (bez titulů typu Ing.)
+  const initial = (name) => (PV.stripPh(name).replace(/\b(Ing|Mgr|Bc|MUDr|JUDr|PhDr|RNDr|MBA)\.?\s*/g, '').trim().charAt(0) || '?').toUpperCase();
+
+  // Dlouhou recenzi v pásu zkrátíme na celá slova
+  const shorten = (text, max = 200) => {
+    if (text.length <= max) return text;
+    const cut = text.slice(0, max);
+    return `${cut.slice(0, cut.lastIndexOf(' ')).replace(/[\s,.;:–-]+$/, '')}…`;
+  };
+
+  const reviewAuthor = (it) => `<figcaption><span class="review__avatar" aria-hidden="true">${esc(initial(it.name))}</span><span><span class="review__name">${fmt(it.name)}</span>${it.source || it.context ? `<span class="review__meta">${[it.context, it.source].filter(Boolean).map(fmt).join(' · ')}</span>` : ''}</span></figcaption>`;
+
   function renderTestimonials() {
     if (!on('showTestimonials')) return '';
     const t = S.testimonials;
+    const items = (t.items || []).filter((it) => it.text);
+    if (!items.length) return '';
     return `
 <section class="section testimonials" id="reference" aria-labelledby="t-title">
-  <div class="container">
+  <div class="container testimonials__head">
     ${sectionHead(t.eyebrow, t.title, t.intro, 't-title')}
-    ${note(t.note)}
-    <div class="quotes">
-      ${t.items.map((it, i) => `
-      <figure class="quote quote--${(i % 3) + 1}${it.text ? '' : ' quote--empty'}">
-        <blockquote><p>${PV.text(it.text || t.placeholder)}</p></blockquote>
-        <figcaption><span class="quote__avatar" aria-hidden="true">${esc((PV.stripPh(it.name) || '?').trim().charAt(0))}</span><span><span class="quote__name">${fmt(it.name)}</span><span class="quote__meta">${fmt(it.context)} · ${fmt(it.source)}</span></span></figcaption>
-      </figure>`).join('')}
+    <div class="reviews__nav">
+      <button class="reviews__btn" type="button" data-reviews-prev aria-label="Předchozí recenze">${icon('arrow-left')}</button>
+      <button class="reviews__btn" type="button" data-reviews-next aria-label="Další recenze">${icon('arrow-right')}</button>
     </div>
+  </div>
+  <div class="container">${note(t.note)}</div>
+  <div class="reviews" data-reviews role="region" aria-roledescription="carousel" aria-label="Recenze klientů – pás se posouvá sám, najetím myší se zastaví" tabindex="0">
+    <ul class="reviews__track" role="list">
+      ${items.map((it, i) => {
+        const short = shorten(it.text);
+        return `
+      <li class="review review--${(i % 3) + 1}">
+        <figure>
+          <blockquote><p>${PV.text(short)}</p></blockquote>
+          ${short !== it.text ? `<a class="review__more" href="recenze.html#recenze-${i + 1}" aria-label="Číst celou recenzi od: ${esc(PV.stripPh(it.name))}">Číst celou recenzi${icon('arrow-right')}</a>` : ''}
+          ${reviewAuthor(it)}
+        </figure>
+      </li>`;
+      }).join('')}
+    </ul>
+  </div>
+  <div class="container">
     <div class="testimonials__foot">
       <p>${fmt(t.ask)}</p>
-      ${reviewLink(t.reviewLink)}
+      <div class="testimonials__links">
+        ${linkArrow(t.allLabel || 'Všechny recenze', 'recenze.html', 'data-track="reviews_all"')}
+        ${reviewLink(t.reviewLink)}
+      </div>
+    </div>
+  </div>
+</section>`;
+  }
+
+  /* ---------- Všechny recenze (podstránka) – karty skládané do sloupců ---------- */
+  function renderReviewsPage() {
+    const t = S.testimonials || { items: [] };
+    const items = (t.items || []).filter((it) => it.text);
+    return `
+<section class="blog-page reviews-page">
+  <div class="container">
+    <a class="link-arrow link-arrow--back" href="index.html#reference"><span class="link-arrow__icon" aria-hidden="true">${icon('arrow-left')}</span><span class="link-arrow__text">Zpět na úvodní stránku</span></a>
+    <header class="blog-head">
+      <p class="kicker">${esc(t.eyebrow)}</p>
+      <h1 class="h2">${fmt(t.pageTitle || t.title)}</h1>
+      <p class="blog-head__intro">${fmt(t.intro)}</p>
+      <p class="reviews-page__count">${items.length} ${PV.plural(items.length, 'recenze', 'recenze', 'recenzí')}</p>
+    </header>
+    <div class="review-wall">
+      ${items.map((it, i) => `
+      <figure class="review review--${(i % 3) + 1}" id="recenze-${i + 1}">
+        <blockquote><p>${PV.text(it.text)}</p></blockquote>
+        ${reviewAuthor(it)}
+      </figure>`).join('')}
+    </div>
+    <div class="post__cta">
+      <div><h2>${esc(t.pageCtaTitle || 'Chcete taky v klidu k vlastnímu bydlení?')}</h2><p>${fmt(t.ask)}</p></div>
+      ${btn(S.navCta, { to: href('rezervace'), attrs: 'data-book data-track="cta_reviews_page"' })}
     </div>
   </div>
 </section>`;
@@ -804,9 +864,117 @@ ${renderPartners()}`;
     });
   }
 
+  // Reference: pás, který se pomalu posouvá doleva; jde i táhnout, šipkami a tlačítky
+  function initReviews() {
+    const m = $('[data-reviews]');
+    if (!m) return;
+    const track = $('.reviews__track', m);
+    const items = Array.from(track.children);
+    const reduce = PV.reducedMotion.matches;
+
+    // Kopie karet, aby pás nikdy nedojel na konec
+    const addSet = () => items.forEach((it) => {
+      const c = it.cloneNode(true);
+      c.setAttribute('aria-hidden', 'true');
+      $$('a, button', c).forEach((b) => { b.tabIndex = -1; });
+      track.appendChild(c);
+    });
+    addSet();
+    let W = 0;
+    const measure = () => { W = track.children[items.length].offsetLeft - items[0].offsetLeft; };
+    const fill = () => {
+      measure();
+      const need = Math.ceil(m.clientWidth / (W || 1)) + 2;
+      while (track.children.length < items.length * need) addSet();
+    };
+    fill();
+
+    let pos = 0;
+    let hover = false;
+    let focus = false;
+    let userUntil = 0;
+    let visible = true;
+    let drag = null;
+    let dragged = false;
+    let last = performance.now();
+    const speed = 32; // px za vteřinu
+
+    const wrap = () => {
+      if (m.scrollLeft >= W * 2) m.scrollLeft -= W;
+      else if (m.scrollLeft < 1 && W) m.scrollLeft += W;
+      pos = m.scrollLeft;
+    };
+    m.addEventListener('scroll', () => {
+      if (Math.abs(m.scrollLeft - Math.round(pos)) > 1) userUntil = performance.now() + 3000;
+      wrap();
+    }, { passive: true });
+
+    m.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') hover = true; });
+    m.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') hover = false; });
+    m.addEventListener('focusin', () => { focus = true; });
+    m.addEventListener('focusout', () => { focus = false; });
+    ['touchstart', 'wheel'].forEach((ev) => m.addEventListener(ev, () => { userUntil = performance.now() + 3000; }, { passive: true }));
+
+    m.addEventListener('pointerdown', (e) => {
+      if (e.pointerType !== 'mouse' || e.button !== 0 || e.target.closest('a, button')) return;
+      drag = { x: e.clientX, left: m.scrollLeft, moved: false };
+      m.classList.add('is-drag');
+    });
+    window.addEventListener('pointermove', (e) => {
+      if (!drag) return;
+      const dx = e.clientX - drag.x;
+      if (Math.abs(dx) > 3) drag.moved = true;
+      m.scrollLeft = drag.left - dx;
+    });
+    window.addEventListener('pointerup', () => {
+      if (!drag) return;
+      dragged = drag.moved;
+      drag = null;
+      m.classList.remove('is-drag');
+      userUntil = performance.now() + 2000;
+    });
+    // po tažení myší se odkaz v kartě neotevře
+    m.addEventListener('click', (e) => { if (dragged && e.target.closest('a')) e.preventDefault(); dragged = false; }, true);
+
+    const step = () => (items[1] ? items[1].offsetLeft - items[0].offsetLeft : 360);
+    const go = (dir) => {
+      userUntil = performance.now() + 4000;
+      m.scrollBy({ left: dir * step(), behavior: reduce ? 'auto' : 'smooth' });
+    };
+    m.addEventListener('keydown', (e) => {
+      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+      e.preventDefault();
+      go(e.key === 'ArrowRight' ? 1 : -1);
+    });
+    const prev = $('[data-reviews-prev]');
+    const next = $('[data-reviews-next]');
+    if (prev) prev.addEventListener('click', () => go(-1));
+    if (next) next.addEventListener('click', () => go(1));
+
+    if ('IntersectionObserver' in window) new IntersectionObserver((en) => { visible = en[0].isIntersecting; }).observe(m);
+    window.addEventListener('resize', PV.debounce(() => { fill(); wrap(); }, 200));
+    m.scrollLeft = W;
+    pos = W;
+
+    if (reduce) return;
+    const tick = (now) => {
+      const dt = Math.min(0.1, (now - last) / 1000);
+      last = now;
+      if (visible && !hover && !focus && !drag && now > userUntil && !document.hidden) {
+        pos += speed * dt;
+        m.scrollLeft = Math.round(pos);
+        if (m.scrollLeft >= W * 2) { m.scrollLeft -= W; pos -= W; }
+      } else {
+        pos = m.scrollLeft;
+      }
+      window.requestAnimationFrame(tick);
+    };
+    window.requestAnimationFrame(tick);
+  }
+
   // Jemné objevení prvků a nakreslení cesty při rolování
   function initReveal() {
-    const els = $$('.road, .versus, .quotes, .values');
+    const els = $$('.road, .versus, .values');
     if (!('IntersectionObserver' in window) || PV.reducedMotion.matches) { els.forEach((el) => el.classList.add('is-in')); return; }
     document.documentElement.classList.add('can-reveal');
     const io = new IntersectionObserver((entries) => entries.forEach((en) => {
@@ -1067,6 +1235,7 @@ ${renderPartners()}`;
     ].join('');
   }
   if (page === 'glossary') $('#main').innerHTML = renderGlossaryPage();
+  if (page === 'reviews') $('#main').innerHTML = renderReviewsPage();
   mount('[data-render="footer"]', renderFooter() + renderOverlays());
 
   if (isHome) PV.booking.init(document.getElementById('booking-widget'), S.booking, S);
@@ -1076,6 +1245,7 @@ ${renderPartners()}`;
   initRotator();
   initServices();
   initReveal();
+  initReviews();
   initCalculator();
   initFixWatch();
   initFaq();
@@ -1088,7 +1258,7 @@ ${renderPartners()}`;
   PV.attribution();
 
   // Po načtení se posuneme na kotvu z adresy (obsah se vykresluje skriptem)
-  if (isHome && window.location.hash.length > 1) {
+  if ((isHome || page === 'reviews') && window.location.hash.length > 1) {
     const target = document.getElementById(decodeURIComponent(window.location.hash.slice(1)));
     if (target) window.requestAnimationFrame(() => target.scrollIntoView({ behavior: 'auto', block: 'start' }));
   }

@@ -90,6 +90,7 @@ window.SITE = {
     { label: 'Ze života poradkyně', target: 'ze-zivota' },
     { label: 'Blog', target: 'blog', url: 'blog.html', main: true, needsPosts: true },
     { label: 'Reference', target: 'reference' },
+    { label: 'Všechny recenze', target: 'recenze', url: 'recenze.html' },
     { label: 'FAQ', target: 'otazky', main: true },
     { label: 'Slovníček pojmů', target: 'slovnicek', url: 'slovnicek.html' },
     { label: 'Kontakt', target: 'kontakt', main: true },
@@ -380,16 +381,28 @@ window.SITE = {
   testimonials: {
     eyebrow: 'Zkušenosti klientů',
     title: 'Slovo mají *klienti*.',
-    intro: 'Místo pro autentické zkušenosti klientů – vlastními slovy, bez úprav a vždy s jejich souhlasem.',
-    placeholder: 'Místo pro skutečnou recenzi klienta. Zveřejníme ji doslovně a jen se souhlasem.',
+    intro: 'Co o spolupráci napsali klienti v hodnoceních na webu Gepard Finance. Doslovně, bez úprav.',
+    // Nová recenze = nový řádek { text: '…', name: '…', source: '…' }. Na webu jedou v posuvném pásu.
     items: [
-      { text: '', name: '[Jméno klienta nebo iniciály]', context: '[Např. první hypotéka]', source: '[Google recenze]' },
-      { text: '', name: '[Jméno klienta nebo iniciály]', context: '[Např. refinancování]', source: '[Osobní doporučení]' },
-      { text: '', name: '[Jméno klienta nebo iniciály]', context: '[Např. stavba domu]', source: '[Google recenze]' },
+      { text: 'Jednička, co dodat?', name: 'Vladimír Kaleta', source: 'Gepard Finance' },
+      { text: 'Profesionální služby na vysoké úrovni.', name: 'Ing. Ľuboslav Ddrobáň', source: 'Gepard Finance' },
+      { text: 'Paní Kilianová je profesionál s lidským přístupem a nekonečnou ochotou.', name: 'Fajkus Marek', source: 'Gepard Finance' },
+      { text: 'Na cestě za naším vysněným domem jsme potkali na osobní doporučení paní Petru Kiliánovou. Asi se nedá vyjádřit poděkování jedním slovem. Naše cesta za financemi nebyla vůbec jednoduchá a s paní Petrou jsme strávili 5měsíců intenzivní práce, nervů, infarktových stavů, kdy hořely termíny rezervací,smluv atd. Paní Petra nikdy neztratila svůj optimistický pohled na věc, vždy podpořila vlídným slovem a patřičnou motivací, vždy byla na telefonu či mailu. Profesně je to člověk na svém místě, který lidsky dává neuvěřitelnou víru klientům, že společné dílo dopadne. Nám dopadlo a v pondělí se stáváme vlastníky nemovistosti. :-) Určitě budeme rádi, když nám paní Petra vydrží vitální a po našem boku celých dalších 20let trvání hypotéky. :-) Děkujeme! Silva Páčová a Luboš Dobšík', name: 'Libor F.', source: 'Gepard Finance' },
+      { text: 'Vše v pořádku! Děkuji za spolupráci!', name: 'Ing. Ľuboslav Ddrobáň', source: 'Gepard Finance' },
+      { text: 'Maximálně profesionální přístup a znalost daného finančního problému...rychlá a účelná domluva.', name: 'Nataliya Dukhnych', source: 'Gepard Finance' },
+      { text: 'Naprosto profesionální přístup, rychlost jednání, neopomenutí detailů. Naprostá spokojenost!', name: 'Chlup Rostislav', source: 'Gepard Finance' },
+      { text: 'Paní Kilianová, chtěli bychom Vám hrozně moc poděkovat za vaši naprosto neskutečně precizní a kvalitní práci. Máme s Vámi už druhou perfektní zkušenost a to prostě nemůže být náhoda. Navíc, tento prodej-koupě byl docela oříšek, ale vy jste nás tím martýriem provedla jako nic. Díky Vám jsme byli v pořád obraze. Možná i ve větším, než někteří pracovníci KB. Spolupracovat s Vámi je radost. Opravdu moc Vám za to děkujeme. Osobně doufám, že teď nějakou dobu žádnou nemovitost kupovat nebudeme. Nicméně až nějaká taková příležitost nastane, budete první, na koho se obrátíme. A buďte si jistá, že Vás budeme doporučovat každému, kdo se jen letmo zmíní, že uvažuje o hypotéce. Omlouvám se, že píšeme až cca po měsíci od předání domu, ale doteď jsme lítali s přepisy energií, po úřadech, domlouvali rekonstrukci...ale to už jsou takové ty příjemné starosti. V domě už bydlíme, sice máme jen stůl, židle a matrace, ale je to lepší, než v kdejakém pětihvězdičkovém hotelu. Ještě jednou děkujeme a rádi Vám napíšeme vynikající recenzi! Mějte se krásně a přejeme spoustu dalších spokojených klientů, jako jste udělala z nás. Jílkovi', name: 'Nataliya Dukhnych', source: 'Gepard Finance' },
+      { text: 'Paní Kilianová je člověk na svém místě a není to pro ni jen práce. Jsem moc rád že jsem s ní mohl spolupracovat.', name: 'Alena H.', source: 'Gepard Finance' },
+      { text: 'jednička!', name: 'Vladimír Kaleta', source: 'Gepard Finance' },
+      { text: 'Naprosto profesionální přístup, rychlost jednání, neopomenutí detailů. Naprostá spokojenost!', name: 'Čermák Daniel', source: 'Gepard Finance' },
+      { text: 'Paní Kilianova nejlepší specialista. Vždycky pomůže, nic není problém.', name: 'Ing. Ľuboslav Ddrobáň', source: 'Gepard Finance' },
+      { text: 'Paní Kiliánová je mistr ve svém oboru, je profesionální, má široký rozptyl vědomostí, dokáže skvěle poradit, je ochotná, usměvavá a moc nás těší spolupráce s ní.', name: 'Ing. Ľuboslav Ddrobáň', source: 'Gepard Finance' },
     ],
+    allLabel: 'Všechny recenze',
+    pageTitle: 'Co o spolupráci říkají *klienti*.',   // nadpis podstránky recenze.html
     ask: 'Už jsme spolu řešili vaši hypotéku? Vaše zkušenost pomůže dalším lidem v rozhodování.',
     reviewLink: { label: 'Napsat recenzi', url: '' },   // např. odkaz na Google recenze
-    note: 'Žádné recenze, jména ani hodnocení nejsou vymyšlené. Dokud nebudou k dispozici skutečné recenze, lze sekci skrýt (settings.showTestimonials: false).',
+    note: 'Recenze jsou převzaté doslovně z hodnocení na webu Gepard Finance. Jména jsou uvedená tak, jak jsou tam zveřejněná.',
   },
 
   /* ---------- Časté otázky a slovníček (viz settings.showFaq) ---------- */
