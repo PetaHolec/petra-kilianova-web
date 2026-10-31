@@ -113,7 +113,7 @@
 
   /* ---------- Hlavička ---------- */
   function renderHeader() {
-    const links = mainNav.map((n) => `<li><a class="nav__link${n.target === 'blog' && (page === 'blog' || page === 'post') ? ' is-active' : ''}" href="${n.url || href(n.target)}" data-nav="${esc(n.target)}">${esc(n.label)}</a></li>`).join('');
+    const links = mainNav.map((n) => `<li><a class="nav__link${(n.target === 'blog' && (page === 'blog' || page === 'post')) || (n.target === 'slovnicek' && page === 'glossary') ? ' is-active" aria-current="page' : ''}" href="${n.url || href(n.target)}" data-nav="${esc(n.target)}">${esc(n.label)}</a></li>`).join('');
     return `
 <a class="skip-link" href="#main">Přeskočit na obsah</a>
 <header class="site-header" data-header>
@@ -478,13 +478,6 @@ ${renderPartners()}`;
   // Iniciála do kolečka (bez titulů typu Ing.)
   const initial = (name) => (PV.stripPh(name).replace(/\b(Ing|Mgr|Bc|MUDr|JUDr|PhDr|RNDr|MBA)\.?\s*/g, '').trim().charAt(0) || '?').toUpperCase();
 
-  // Dlouhou recenzi v pásu zkrátíme na celá slova
-  const shorten = (text, max = 200) => {
-    if (text.length <= max) return text;
-    const cut = text.slice(0, max);
-    return `${cut.slice(0, cut.lastIndexOf(' ')).replace(/[\s,.;:–-]+$/, '')}…`;
-  };
-
   const reviewAuthor = (it) => `<figcaption><span class="review__avatar" aria-hidden="true">${esc(initial(it.name))}</span><span><span class="review__name">${fmt(it.name)}</span>${it.source || it.context ? `<span class="review__meta">${[it.context, it.source].filter(Boolean).map(fmt).join(' · ')}</span>` : ''}</span></figcaption>`;
 
   function renderTestimonials() {
@@ -505,13 +498,11 @@ ${renderPartners()}`;
   <div class="reviews" data-reviews role="region" aria-roledescription="carousel" aria-label="Recenze klientů – pás se posouvá sám, najetím myší se zastaví" tabindex="0">
     <ul class="reviews__track" role="list">
       ${items.map((it, i) => {
-        const short = shorten(it.text);
         return `
       <li class="review review--${(i % 3) + 1}">
         <figure>
-          <blockquote><p>${PV.text(short)}</p></blockquote>
-          ${short !== it.text ? `<a class="review__more" href="recenze.html#recenze-${i + 1}" aria-label="Číst celou recenzi od: ${esc(PV.stripPh(it.name))}">Číst celou recenzi${icon('arrow-right')}</a>` : ''}
-          ${reviewAuthor(it)}
+          <blockquote><p class="review__text">${PV.text(it.text)}</p></blockquote>
+          ${reviewAuthor(it).replace('</figcaption>', `<a class="review__more" href="recenze.html#recenze-${i + 1}" hidden aria-label="Číst celou recenzi od: ${esc(PV.stripPh(it.name))}">Celá recenze${icon('arrow-right')}</a></figcaption>`)}
         </figure>
       </li>`;
       }).join('')}
@@ -908,6 +899,15 @@ ${renderPartners()}`;
     };
     fill();
 
+    // „Číst celou recenzi“ jen u karet, kde se text do zkráceného prostoru nevejde
+    const markLong = () => $$('.review', track).forEach((card) => {
+      const p = $('.review__text', card);
+      const more = $('.review__more', card);
+      if (p && more) more.hidden = p.scrollHeight <= p.clientHeight + 2;
+    });
+    markLong();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(markLong);
+
     let pos = 0;
     let hover = false;
     let focus = false;
@@ -971,7 +971,7 @@ ${renderPartners()}`;
     if (next) next.addEventListener('click', () => go(1));
 
     if ('IntersectionObserver' in window) new IntersectionObserver((en) => { visible = en[0].isIntersecting; }).observe(m);
-    window.addEventListener('resize', PV.debounce(() => { fill(); wrap(); }, 200));
+    window.addEventListener('resize', PV.debounce(() => { fill(); markLong(); wrap(); }, 200));
     m.scrollLeft = W;
     pos = W;
 

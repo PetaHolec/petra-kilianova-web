@@ -92,7 +92,7 @@ window.SITE = {
     { label: 'Reference', target: 'reference' },
     { label: 'Všechny recenze', target: 'recenze', url: 'recenze.html' },
     { label: 'FAQ', target: 'otazky', main: true },
-    { label: 'Slovníček pojmů', target: 'slovnicek', url: 'slovnicek.html' },
+    { label: 'Slovníček', target: 'slovnicek', url: 'slovnicek.html', main: true },
     { label: 'Kontakt', target: 'kontakt', main: true },
   ],
   navCta: 'Domluvit schůzku',

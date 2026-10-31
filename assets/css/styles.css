@@ -560,8 +560,8 @@ a.alt-contact:hover { color: var(--lime-deep); }
 .reviews::-webkit-scrollbar { display: none; }
 .reviews:focus-visible { outline: 3px solid var(--lime); outline-offset: -3px; }
 .reviews.is-drag { cursor: grabbing; user-select: none; }
-.reviews__track { display: flex; align-items: stretch; gap: 1.25rem; width: max-content; margin: 0; padding: 1rem 1.25rem 1.5rem; list-style: none; }
-.reviews__track .review { width: clamp(272px, 80vw, 360px); flex: none; }
+.reviews__track { display: flex; align-items: stretch; gap: 1.1rem; width: max-content; margin: 0; padding: 1.5rem 1.25rem 1rem; list-style: none; }
+.reviews__track .review { width: clamp(260px, 78vw, 330px); flex: none; }
 .reviews__track .review figure { display: flex; flex-direction: column; height: 100%; margin: 0; }
 
 /* karta recenze (pás i podstránka) */
@@ -581,6 +581,17 @@ a.alt-contact:hover { color: var(--lime-deep); }
 .reviews__track .review:nth-child(even) blockquote { transform: rotate(.7deg); }
 .review blockquote { transition: transform .25s var(--ease); }
 .reviews__track .review:hover blockquote { transform: none; }
+/* v pásu: kompaktní karty, text na 3 řádky */
+.reviews__track .review blockquote { padding: 1.15rem 1.2rem 1rem; }
+.reviews__track .review blockquote::before { left: 1rem; top: -1.75rem; font-size: 3rem; }
+.review__text { margin: 0; }
+.reviews__track .review__text { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; line-clamp: 3; overflow: hidden; font-size: 1rem; line-height: 1.5; }
+.reviews__track .review__more { flex: none; margin: 0 0 0 auto; font-size: .875rem; }
+.reviews__track .review__more[hidden] { display: none; }
+.reviews__track .review figcaption { gap: .6rem; margin-top: 1rem; padding-right: .25rem; }
+.reviews__track .review figcaption > span:not(.review__avatar) { min-width: 0; }
+.reviews__track .review__avatar { width: 36px; height: 36px; font-size: .875rem; }
+.reviews__track .review__name { font-size: .9375rem; }
 .review__more { display: inline-flex; align-items: center; gap: .35rem; align-self: flex-start; margin: 1.6rem 0 0 .5rem; font-size: .9375rem; font-weight: 600; color: var(--forest); text-decoration: underline; text-decoration-color: var(--lime); text-decoration-thickness: 2px; text-underline-offset: .25em; }
 .review__more .i { width: 16px; height: 16px; transition: transform .2s var(--ease); }
 .review__more:hover .i { transform: translateX(3px); }
