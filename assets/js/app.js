@@ -42,12 +42,9 @@
 
   // Ručně psaná poznámka se šipkou (dir = kam šipka míří)
   const ARROWS = {
-    down: '<path d="M14 4c-6 10-7 22 2 34"/><path d="M8 31l8 8 5-10"/>',
-    right: '<path d="M4 22c12-14 28-16 44-8"/><path d="M39 7l10 7-9 7"/>',
     left: '<path d="M52 22C40 8 24 6 8 14"/><path d="M17 7 7 14l9 7"/>',
-    downleft: '<path d="M48 4C46 22 34 34 10 36"/><path d="M19 28l-9 8 11 4"/>',
   };
-  const hand = (text, dir = 'down', cls = '') => (text
+  const hand = (text, dir = 'left', cls = '') => (text
     ? `<p class="hand hand--${dir}${cls ? ' ' + cls : ''}"><span>${esc(text)}</span><svg class="hand__arrow" viewBox="0 0 56 44" aria-hidden="true">${ARROWS[dir]}</svg></p>`
     : '');
 
@@ -78,21 +75,6 @@
       ${extra}
     </header>`;
 
-  // Nadpis s jedním střídajícím se slovem (domov → byt → dům) podbarveným zvýrazňovačem
-  function heroTitle(title, rotate) {
-    let used = false;
-    return String(title).split(/(\*[^*]+\*)/g).filter(Boolean).map((part) => {
-      if (!(part.startsWith('*') && part.endsWith('*'))) return PV.text(part);
-      const word = part.slice(1, -1);
-      if (used || !rotate || !rotate.length) return `<em>${esc(word)}</em>`;
-      used = true;
-      const words = [word].concat(rotate.filter((w) => w && w !== word));
-      if (words.length < 2) return `<em>${esc(word)}</em>`;
-      const list = words.concat(words[0]).map((w) => `<em>${esc(w)}</em>`).join('');
-      return `<span class="rot-wrap"><span class="visually-hidden">${esc(word)}</span><span class="rot" aria-hidden="true"><span class="rot__track" data-rot="${words.length}">${list}</span></span></span>`;
-    }).join('');
-  }
-
   // Kresba domu bílou linkou (jako na gpf.cz)
   const houseArt = `
     <svg class="house-art" viewBox="0 0 480 560" fill="none" aria-hidden="true">
@@ -120,7 +102,7 @@
   <div class="container header__inner">
     ${logo()}
     <nav class="nav" aria-label="Hlavní navigace"><ul class="nav__list">${links}</ul></nav>
-    ${btn(S.navCta, { to: href('rezervace'), cls: 'btn--primary btn--sm header__cta', attrs: 'data-book data-track="cta_header"', iconName: 'calendar' })}
+    ${btn(S.navCta, { to: href('rezervace'), cls: 'btn--primary btn--sm header__cta', attrs: 'data-book data-track="cta_header"' })}
     <button class="menu-toggle" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="mobile-menu"><span class="menu-toggle__lines" aria-hidden="true"><span></span><span></span></span>Menu</button>
   </div>
 </header>`;
@@ -129,26 +111,24 @@
   /* ---------- Úvod ---------- */
   function renderHero() {
     const h = S.hero;
-    const stickers = (h.stickers || []).map((t, i) => `<p class="sticker sticker--${i + 1}">${icon(i ? 'check' : 'calendar')}<span>${fmt(t)}</span></p>`).join('');
     return `
 <section class="hero" id="uvod" aria-labelledby="hero-title">
   <div class="container hero__grid">
     <div class="hero__copy">
-      ${hand(h.hand, 'right', 'hero__hand')}
       ${h.eyebrow ? `<p class="hero__kicker">${fmt(h.eyebrow)}</p>` : ''}
-      <h1 class="hero__title" id="hero-title">${heroTitle(h.title, h.rotate)}</h1>
+      <h1 class="hero__title" id="hero-title">${fmt(h.title)}</h1>
       <p class="hero__text">${fmt(h.text)}</p>
       <div class="hero__actions">
         ${btn(h.primaryCta, { to: href('rezervace'), cls: 'btn--primary btn--lg', attrs: 'data-book data-track="cta_hero_primary"' })}
         ${linkArrow(h.secondaryCta, href('sluzby'), 'data-track="cta_hero_secondary"', 'arrow-down')}
       </div>
+      ${h.reassure ? `<p class="hero__reassure">${fmt(h.reassure)}</p>` : ''}
     </div>
     <div class="hero__visual">
       <div class="hero__panel">
         ${houseArt}
         ${media(h.portrait, { ratio: '4/5', className: 'hero__portrait', eager: true })}
       </div>
-      ${stickers}
     </div>
   </div>
   <div class="container">${note(h.note)}</div>
@@ -184,7 +164,7 @@ ${renderPartners()}`;
     return `
 <section class="section services" id="sluzby" aria-labelledby="services-title">
   <div class="container">
-    ${sectionHead(s.eyebrow, s.title, s.intro, 'services-title', hand(s.hand, 'downleft', 'services__hand'))}
+    ${sectionHead(s.eyebrow, s.title, s.intro, 'services-title')}
     ${note(s.note)}
     <div class="picker" data-picker>
       <div class="picker__tabs" role="tablist" aria-label="${esc(s.eyebrow)}" aria-orientation="vertical">
@@ -228,7 +208,6 @@ ${renderPartners()}`;
         ${col(w.selfLabel, 'self', 'minus')}
       </div>
       <div class="versus__card versus__card--me">
-        ${hand(w.hand, 'downleft', 'versus__hand')}
         <h3 class="versus__who">${esc(w.meLabel)}</h3>
         ${col(w.meLabel, 'me', 'check')}
         ${btn(S.navCta, { to: href('rezervace'), cls: 'btn--lime', attrs: 'data-book data-track="cta_why"' })}
@@ -254,7 +233,7 @@ ${renderPartners()}`;
       <p class="about__lead">${fmt(a.lead)}</p>
       ${a.paragraphs.map((p) => `<p>${fmt(p)}</p>`).join('')}
       ${phBlock(a.story)}
-      <blockquote class="about__quote"><p><mark>${PV.text(a.quote)}</mark></p></blockquote>
+      <blockquote class="about__quote"><p>${fmt(a.quote)}</p></blockquote>
       <div class="about__sign">
         <p class="signature">${esc(a.signature)}</p>
         ${btn(a.cta, { to: href('rezervace'), cls: 'btn--outline', attrs: 'data-book data-track="cta_about"' })}
@@ -309,7 +288,6 @@ ${renderPartners()}`;
         <span class="road__dot" aria-hidden="true">${i + 1}</span>
         <h3 class="road__title"><span class="visually-hidden">Krok ${i + 1}: </span>${fmt(s.title)}</h3>
         <p class="road__text">${fmt(s.text)}</p>
-        <p class="road__tip">${fmt(s.tip)}</p>
       </li>`).join('')}
       <li class="road__step road__step--finish">
         <span class="road__dot" aria-hidden="true">${icon('key')}</span>
@@ -347,7 +325,7 @@ ${renderPartners()}`;
     <div class="tools__grid">
       <div class="calc" data-calculator>
         <div class="calc__inputs">
-          <h3 class="card-title">${icon('calculator')}${esc(c.cardTitle)}</h3>
+          <h3 class="card-title">${esc(c.cardTitle)}</h3>
           ${slider('amount')}${slider('years')}${slider('rate')}
         </div>
         <div class="calc__result">
@@ -379,7 +357,6 @@ ${renderPartners()}`;
     return `
       <div class="fixwatch">
         <div data-fw-body>
-          <span class="fixwatch__bell" aria-hidden="true">${icon('bell')}</span>
           <h3 class="card-title">${fmt(f.title)}</h3>
           <p class="fixwatch__text">${fmt(f.text)}</p>
           <form class="fixwatch__form" novalidate data-fw-form>
@@ -499,7 +476,7 @@ ${renderPartners()}`;
     <ul class="reviews__track" role="list">
       ${items.map((it, i) => {
         return `
-      <li class="review review--${(i % 3) + 1}">
+      <li class="review">
         <figure>
           <blockquote><p class="review__text">${PV.text(it.text)}</p></blockquote>
           ${reviewAuthor(it).replace('</figcaption>', `<a class="review__more" href="recenze.html#recenze-${i + 1}" hidden aria-label="Číst celou recenzi od: ${esc(PV.stripPh(it.name))}"><span class="review__more-text">Celá recenze</span>${icon('arrow-right')}</a></figcaption>`)}
@@ -536,7 +513,7 @@ ${renderPartners()}`;
     </header>
     <div class="review-wall">
       ${items.map((it, i) => `
-      <figure class="review review--${(i % 3) + 1}" id="recenze-${i + 1}">
+      <figure class="review" id="recenze-${i + 1}">
         <blockquote><p>${PV.text(it.text)}</p></blockquote>
         ${reviewAuthor(it)}
       </figure>`).join('')}
@@ -560,9 +537,7 @@ ${renderPartners()}`;
       ${eyebrow(f.eyebrow)}
       <h2 class="h2" id="faq-title">${fmt(f.title)}</h2>
       <p>${fmt(f.intro)}</p>
-      ${hand(f.hand, 'right', 'faq__hand')}
       <a class="glossary-card" href="slovnicek.html" data-track="glossary_open">
-        <span class="glossary-card__icon" aria-hidden="true">${icon('info')}</span>
         <span><strong>${esc(f.glossaryTitle)}</strong><span>${fmt(f.glossaryText)}</span></span>
       </a>
       ${note(f.note)}
@@ -727,7 +702,7 @@ ${renderPartners()}`;
   </div>
 </dialog>
 <div class="mobile-cta" data-mobile-cta>
-  ${btn(S.navCta, { to: href('rezervace'), cls: 'btn--primary', attrs: 'data-book data-track="cta_mobile_bar"', iconName: 'calendar' })}
+  ${btn(S.navCta, { to: href('rezervace'), cls: 'btn--primary', attrs: 'data-book data-track="cta_mobile_bar"' })}
   ${C.phoneHref ? `<a class="mobile-cta__call" href="tel:${esc(C.phoneHref)}" aria-label="Zavolat" data-track="call_mobile_bar">${icon('phone')}</a>` : ''}
 </div>`;
   }
@@ -800,46 +775,6 @@ ${renderPartners()}`;
       });
     }, { rootMargin: '-45% 0px -50% 0px' });
     sections.forEach((s) => io.observe(s));
-  }
-
-  // Střídání slov v hlavním nadpisu (domov → byt → dům); šířka se plynule přizpůsobí slovu
-  function initRotator() {
-    const track = $('[data-rot]');
-    if (!track) return;
-    const rot = track.closest('.rot');
-    const items = $$(':scope > em', track);
-    const count = Number(track.dataset.rot);
-    let i = 0;
-    let inView = true;
-
-    const fit = (animate) => {
-      if (!animate) rot.style.transition = 'none';
-      rot.style.width = `${items[i].getBoundingClientRect().width}px`;
-      if (!animate) { void rot.offsetWidth; rot.style.transition = ''; }
-    };
-    fit(false);
-    window.addEventListener('resize', PV.debounce(() => fit(false), 150));
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => fit(false));
-    if (PV.reducedMotion.matches || count < 2) return;
-
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(([en]) => { inView = en.isIntersecting; }).observe(rot);
-    }
-    const next = () => {
-      if (document.hidden || !inView) return;
-      i += 1;
-      track.style.transition = '';
-      track.style.transform = `translateY(${-i * 100 / (count + 1)}%)`;
-      fit(true);
-      if (i === count) {
-        window.setTimeout(() => {
-          track.style.transition = 'none';
-          track.style.transform = 'none';
-          i = 0;
-        }, 700);
-      }
-    };
-    window.setInterval(next, 3000);
   }
 
   // Služby: přepínání situací (záložky, ovládání i šipkami)
@@ -1222,7 +1157,6 @@ ${renderPartners()}`;
 
   initHeader();
   initScrollSpy();
-  initRotator();
   initServices();
   initReveal();
   initReviews();

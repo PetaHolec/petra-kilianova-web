@@ -5,7 +5,7 @@
    • Měňte jen text mezi apostrofy '…'. Apostrof uvnitř textu napište jako \'.
    • [Hranaté závorky] = zástupný údaj. Na webu se zvýrazní, aby bylo jasné,
      co je potřeba doplnit nebo ověřit s klientkou.
-   • *Hvězdičky* kolem slov = kurzíva s měděným akcentem (v nadpisech).
+   • *Hvězdičky* kolem slov = zvýraznění (používat střídmě, jen v úvodu, citátu a rezervaci).
    • Fotografie: do "src" napište cestu k souboru (např. 'assets/img/portret.jpg').
      Dokud je "src" prázdné, zobrazí se designový placeholder s popisem.
    • Struktura odpovídá kolekcím headless CMS (Decap CMS, Sanity, Storyblok…),
@@ -100,12 +100,10 @@ window.SITE = {
   /* ---------- Úvodní obrazovka ---------- */
   hero: {
     eyebrow: '',                         // nepovinný řádek nad nadpisem
-    hand: '',                            // nepovinná ručně psaná poznámka nad nadpisem
-    stickers: ['Osobně, online i po telefonu', 'První schůzka nezávazně'],
+    reassure: 'Osobně, online i po telefonu · První schůzka nezávazně',   // řádek pod tlačítky
     title: 'Váš nový *domov* v Brně začíná správným rozhodnutím.',
-    rotate: ['domov', 'byt', 'dům'],   // slovo v *hvězdičkách* se na webu střídá s těmito slovy
     text: 'Jsem hypoteční poradkyně v Brně. Pomohu vám zorientovat se v hypotékách a najít financování, které sedí vašim plánům. Vysvětlím vám každou možnost a provedu vás celým procesem – od první otázky až po podpis.',
-    primaryCta: 'Domluvit nezávaznou konzultaci',
+    primaryCta: 'Domluvit schůzku',
     secondaryCta: 'Jak vám mohu pomoci',
     portrait: {
       src: '',
@@ -124,11 +122,10 @@ window.SITE = {
   /* ---------- Služby ---------- */
   services: {
     eyebrow: 'S čím mohu pomoci',
-    title: 'Ať teprve začínáte, nebo vám *končí fixace*.',
+    title: 'Ať teprve začínáte, nebo vám končí fixace.',
     intro: 'Hypotéka, refinancování, stavba i rekonstrukce v Brně a okolí. Vyberte si, co právě řešíte. Na první schůzce si ujasníme vaši situaci a já vám ukážu, jaké máte možnosti – bez zbytečných odborných pojmů.',
     detailsLabel: 'Co spolu vyřešíme',
-    hand: 'Klikněte na to, co právě řešíte',
-    cta: 'Probrat na schůzce',
+    cta: 'Domluvit schůzku',
     note: 'Rozsah a názvy služeb jsou návrh – je potřeba je potvrdit s klientkou.',
     items: [
       {
@@ -204,11 +201,10 @@ window.SITE = {
   /* ---------- Proč se mnou: srovnání s bankou (viz settings.showWhy) ---------- */
   why: {
     eyebrow: 'Proč se mnou',
-    title: 'Sami v bance, nebo *s poradkyní?*',
+    title: 'Sami v bance, nebo s poradkyní?',
     intro: 'Do banky můžete jít i sami. Rozdíl je v tom, kolik nabídek uvidíte, kolik času strávíte papírováním a jestli vám po podpisu někdo pohlídá další kroky.',
     selfLabel: 'Sami v bance',
     meLabel: 'Se mnou',
-    hand: 'Tohle je ten rozdíl',
     rows: [
       { label: 'Výběr', self: 'Nabídka jedné banky', me: 'Porovnání nabídek více bank a spořitelen' },
       { label: 'Podklady', self: 'Zjišťujete a zařizujete sami', me: 'Řeknu vám přesně, co je potřeba, a pomohu s přípravou' },
@@ -242,14 +238,14 @@ window.SITE = {
   /* ---------- O mně ---------- */
   about: {
     eyebrow: 'O mně',
-    title: 'Za každou hypotékou je jeden velký *životní krok*.',
+    title: 'Za každou hypotékou je jeden velký životní krok.',
     lead: 'Jmenuji se Petra Kilianová a jsem hypoteční poradkyně v Brně. Pomáhám lidem financovat bydlení tak, aby rozuměli tomu, co podepisují – a mohli se na nový domov těšit.',
     paragraphs: [
       'Za každou žádostí o hypotéku vidím konkrétní příběh. Pár, který poprvé podepisuje kupní smlouvu. Rodinu, které je malý byt těsný. Nebo někoho, kdo konečně staví dům, o kterém roky mluvil.',
       'Mou prací je přeložit čísla, podmínky a bankovní jazyk do srozumitelných rozhodnutí. Abyste věděli, proč volíte právě tuhle variantu – a co pro vás bude znamenat za pět nebo deset let.',
     ],
     story: '[Osobní příběh: jak se Petra k hypotékám dostala, co ji na práci baví a proč jí na klientech záleží. Doplníme po společném rozhovoru – jejími vlastními slovy.]',
-    quote: 'Dobrá hypotéka je ta, které rozumíte.',
+    quote: 'Dobrá hypotéka je ta, které *rozumíte*.',
     values: [
       { title: 'Rozumíte každému kroku', text: 'Než cokoli podepíšete, víte, co to znamená. Vysvětluji bez zkratek a bankovního žargonu.' },
       { title: 'Díváme se dál než na sazbu', text: 'Úroková sazba je důležitá, ale není jediná. Řešíme i délku fixace, pojištění, mimořádné splátky a to, jak se hypotéka vejde do vašeho života.' },
@@ -257,7 +253,7 @@ window.SITE = {
     ],
     signature: 'Petra Kilianová',
     photoNote: 'To jsem já',
-    cta: 'Poznejme se osobně',
+    cta: 'Domluvit schůzku',
     portrait: { src: '', alt: 'Petra Kilianová, hypoteční poradkyně', label: 'Portrét – osobní představení', hint: 'Přirozené světlo · 3 : 4 · min. 1500 × 2000 px' },
     note: 'Návrh textu – finální podobu upravíme po rozhovoru s klientkou. Neobsahuje žádné vymyšlené údaje o praxi, oprávněních ani úspěších. Logo a prezentaci partnera ověřit podle pravidel Gepard Finance.',
   },
@@ -265,7 +261,7 @@ window.SITE = {
   /* ---------- Tým (volitelná sekce – viz settings.showTeam) ---------- */
   team: {
     eyebrow: 'Tým',
-    title: 'Při práci mi pomáhá *asistentka*.',
+    title: 'Při práci mi pomáhá asistentka.',
     intro: '[Volitelné: krátké představení asistentky a toho, s čím vám pomůže.]',
     members: [
       { name: '[Jméno a příjmení]', role: 'Asistentka', text: '[Jednou větou: s čím klientům pomáhá]', photo: { src: '', alt: '', label: 'Portrét asistentky' } },
@@ -278,20 +274,20 @@ window.SITE = {
     eyebrow: 'Jak probíhá spolupráce',
     title: 'Víte, co vás čeká. *Krok za krokem.*',
     intro: 'Celý proces má jasný postup. U každého kroku vám řeknu, co se bude dít, co budu potřebovat od vás a co zařídím já.',
-    cta: 'Začněme prvním krokem',
+    cta: 'Domluvit schůzku',
     finish: 'Klíče od vašeho domova',
     steps: [
-      { title: 'Seznámíme se a probereme vaše plány', text: 'Osobně, online nebo po telefonu. Řeknete mi, co chcete financovat, v jakém časovém horizontu a co je pro vás důležité. Já vám vysvětlím, jak celý proces probíhá.', tip: 'Stačí vaše představa – podklady řešíme až později.' },
-      { title: 'Společně projdeme dostupné možnosti', text: 'Porovnáme varianty, které pro vás připadají v úvahu. Nejen podle úrokové sazby, ale i podle délky fixace, výše splátky a podmínek, které budou důležité za pár let.', tip: 'Rozhodnutí je vždy na vás.' },
-      { title: 'Pomohu vám s dalším postupem a administrativou', text: 'Připravíme podklady, podáme žádost a já pohlídám termíny i komunikaci s bankou. Každý dokument vám před podpisem vysvětlím.', tip: 'Víte, co podepisujete – a proč.' },
-      { title: 'Zůstáváme v kontaktu', text: 'Hypotéka vás bude provázet roky. Když se blíží konec fixace nebo se změní vaše plány, ozvěte se – společně najdeme další krok.', tip: 'Jsem tu i po podpisu smlouvy.' },
+      { title: 'Seznámíme se a probereme vaše plány', text: 'Osobně, online nebo po telefonu. Řeknete mi, co chcete financovat, v jakém časovém horizontu a co je pro vás důležité. Já vám vysvětlím, jak celý proces probíhá.' },
+      { title: 'Společně projdeme dostupné možnosti', text: 'Porovnáme varianty, které pro vás připadají v úvahu. Nejen podle úrokové sazby, ale i podle délky fixace, výše splátky a podmínek, které budou důležité za pár let.' },
+      { title: 'Pomohu vám s dalším postupem a administrativou', text: 'Připravíme podklady, podáme žádost a já pohlídám termíny i komunikaci s bankou. Každý dokument vám před podpisem vysvětlím.' },
+      { title: 'Zůstáváme v kontaktu', text: 'Hypotéka vás bude provázet roky. Když se blíží konec fixace nebo se změní vaše plány, ozvěte se – společně najdeme další krok.' },
     ],
   },
 
   /* ---------- Kalkulačka splátky (viz settings.showTools) ---------- */
   calculator: {
     eyebrow: 'Kalkulačka a hlídání fixace',
-    title: 'Spočítejte si to. *Nebo si nechte pohlídat fixaci.*',
+    title: 'Jaká může být vaše splátka?',
     intro: 'Orientační výpočet vám dá první představu. Přesná čísla podle vaší situace a aktuálních nabídek bank připravím na schůzce.',
     cardTitle: 'Orientační splátka',
     amount: { label: 'Výše úvěru', min: 500000, max: 15000000, step: 50000, value: 4000000 },
@@ -299,13 +295,13 @@ window.SITE = {
     rate: { label: 'Úroková sazba', min: 2, max: 9, step: 0.05, value: 5 },  // ukázková hodnota, nejde o aktuální sazbu
     rateNote: 'ukázková hodnota',
     disclaimer: 'Výpočet je pouze orientační a nejde o nabídku úvěru ani o aktuální sazby bank. Nezahrnuje poplatky, pojištění ani další náklady.',
-    cta: 'Probrat přesný výpočet',
+    cta: 'Domluvit schůzku',
     note: 'Výchozí sazba je jen ukázková. Pokud bude web uvádět sazby nebo náklady úvěru, je potřeba ověřit povinné údaje (např. reprezentativní příklad) s Gepard Finance.',
   },
 
   /* ---------- Hlídání konce fixace – sběr kontaktů ---------- */
   fixWatch: {
-    title: 'Pohlídám vám *konec fixace*.',
+    title: 'Pohlídám vám konec fixace.',
     text: 'Napište mi, kdy vám končí fixace, a já se vám včas ozvu. Budete mít dost času porovnat nabídku své banky s dalšími možnostmi.',
     consent: 'Souhlasím, aby mě poradkyně kontaktovala ohledně konce mé fixace. Souhlas mohu kdykoli odvolat.',
     cta: 'Hlídat moji fixaci',
@@ -350,12 +346,12 @@ window.SITE = {
     dataFile: 'content/blog/posts.js',
     imageDir: 'assets/blog',
     eyebrow: 'Blog',
-    title: 'Srozumitelně o *hypotékách*.',
+    title: 'Srozumitelně o hypotékách.',
     intro: 'Praktické tipy, vysvětlení a odpovědi na otázky, které se kolem financování bydlení opakují nejčastěji.',
     emptyTitle: 'Články se připravují',
     emptyText: 'První texty přibudou brzy. Mezitím se mi klidně ozvěte, ráda poradím osobně.',
     teaserEyebrow: 'Blog',
-    teaserTitle: 'Nejnovější *články*.',
+    teaserTitle: 'Nejnovější články.',
     teaserText: 'Tipy a vysvětlení, které vám pomohou při rozhodování o hypotéce.',
     allLabel: 'Všechny články',
     ctaTitle: 'Chcete to probrat osobně?',
@@ -365,7 +361,7 @@ window.SITE = {
   /* ---------- Ze života poradkyně – odkaz na Instagram (videa jsou jen tam) ---------- */
   insta: {
     eyebrow: 'Ze života poradkyně',
-    title: 'Tipy a rady najdete *na Instagramu*.',
+    title: 'Tipy a rady najdete na Instagramu.',
     text: 'Krátká videa o hypotékách, praktické tipy a pohled do zákulisí. Jedno téma, jedno video, žádné složité pojmy.',
     bio: 'Hypotéky jednoduše a srozumitelně',
     highlights: [
@@ -380,7 +376,7 @@ window.SITE = {
   /* ---------- Reference (volitelná sekce – viz settings.showTestimonials) ---------- */
   testimonials: {
     eyebrow: 'Zkušenosti klientů',
-    title: 'Slovo mají *klienti*.',
+    title: 'Slovo mají klienti.',
     intro: 'Co o spolupráci napsali klienti v hodnoceních na webu Gepard Finance. Doslovně, bez úprav.',
     // Nová recenze = nový řádek { text: '…', name: '…' }. Na webu jedou v posuvném pásu i na podstránce recenze.html.
     items: [
@@ -399,7 +395,7 @@ window.SITE = {
       { text: 'Paní Kiliánová je mistr ve svém oboru, je profesionální, má široký rozptyl vědomostí, dokáže skvěle poradit, je ochotná, usměvavá a moc nás těší spolupráce s ní.', name: 'Ing. Ľuboslav Ddrobáň' },
     ],
     allLabel: 'Všechny recenze',
-    pageTitle: 'Co o spolupráci říkají *klienti*.',   // nadpis podstránky recenze.html
+    pageTitle: 'Co o spolupráci říkají klienti.',   // nadpis podstránky recenze.html
     ask: 'Už jsme spolu řešili vaši hypotéku? Vaše zkušenost pomůže dalším lidem v rozhodování.',
     reviewLink: { label: 'Napsat recenzi', url: '' },   // např. odkaz na Google recenze
     note: 'Recenze jsou převzaté doslovně z hodnocení na webu Gepard Finance. Jména jsou uvedená tak, jak jsou tam zveřejněná.',
@@ -408,7 +404,7 @@ window.SITE = {
   /* ---------- Časté otázky a slovníček (viz settings.showFaq) ---------- */
   faq: {
     eyebrow: 'Časté otázky',
-    title: 'Na co se lidé *ptají nejčastěji*.',
+    title: 'Na co se lidé ptají nejčastěji.',
     intro: 'Nenašli jste odpověď? Zavolejte mi, napište e-mail, nebo si rovnou domluvte schůzku. Hloupé otázky neexistují.',
     items: [
       { q: 'Kolik mě vaše služby stojí?', a: '[Doplnit podle skutečnosti – např. zda je konzultace zdarma a jak je poradkyně odměňována.]' },
@@ -420,7 +416,6 @@ window.SITE = {
       { q: 'Musím mít vlastní úspory?', a: 'Banky obvykle financují jen část hodnoty nemovitosti, zbytek je potřeba pokrýt z vlastních zdrojů. Kolik to bude ve vašem případě a jaké máte možnosti, spočítáme spolu.' },
       { q: 'Dá se všechno vyřešit online?', a: 'Většinu kroků zvládneme online nebo po telefonu. Pokud dáváte přednost osobnímu setkání, potkáme se v kanceláři.' },
     ],
-    hand: 'Hloupé otázky neexistují',
     glossaryTitle: 'Slovníček pojmů',
     glossaryText: 'Fixace, LTV, RPSN… Co která slova znamenají, vysvětlená lidsky a na jednom místě.',
     glossaryCta: 'Slovníček pojmů',
@@ -439,7 +434,7 @@ window.SITE = {
   /* ---------- Kancelář a kontakt ---------- */
   contactSection: {
     eyebrow: 'Kancelář a kontakt',
-    title: 'Pojďme probrat *vaše možnosti*.',
+    title: 'Pojďme probrat vaše možnosti.',
     intro: 'Potkáme se v kanceláři na Husově v Brně, online, nebo po telefonu. Schůzky domlouvám vždy předem, abych na vás měla dost času.',
     officeTitle: 'Kancelář',
     callCta: 'Zavolat',
