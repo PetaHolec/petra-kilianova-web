@@ -519,6 +519,9 @@ a.alt-contact:hover { color: var(--lime-deep); }
 .channel:hover .channel__go { background: var(--lime); }
 .channel__go .i { width: 20px; height: 20px; }
 
+/* menší mezera mezi recenzemi a sekcí O mně */
+.testimonials { padding-bottom: calc(var(--section-y) * .45); }
+.testimonials + .about { padding-top: calc(var(--section-y) * .45); }
 .testimonials__head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1rem 2rem; }
 .testimonials__head .sec-head { margin-bottom: 0; }
 .reviews__nav { display: flex; gap: .5rem; }
@@ -544,11 +547,11 @@ a.alt-contact:hover { color: var(--lime-deep); }
 .review blockquote p { position: relative; margin: 0; font-size: 1.0625rem; line-height: 1.55; }
 .reviews__track .review:nth-child(odd) blockquote { transform: rotate(-.8deg); }
 .reviews__track .review:nth-child(even) blockquote { transform: rotate(.7deg); }
-/* v pásu: kompaktní karty, text na 3 řádky */
+/* v pásu: kompaktní karty, text na 5 řádků */
 .reviews__track .review blockquote { padding: 1.15rem 1.2rem 1rem; }
 .reviews__track .review blockquote::before { left: 1rem; top: -1.75rem; font-size: 3rem; }
 .review__text { margin: 0; }
-.reviews__track .review__text { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; line-clamp: 3; overflow: hidden; font-size: 1rem; line-height: 1.5; }
+.reviews__track .review__text { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 5; line-clamp: 5; overflow: hidden; font-size: 1rem; line-height: 1.5; }
 .reviews__track .review__more { flex: none; margin: 0 0 0 auto; font-size: .875rem; }
 .reviews__track .review__more[hidden] { display: none; }
 .reviews__track .review figcaption { gap: .6rem; margin-top: 1rem; padding-right: .25rem; }
@@ -617,6 +620,7 @@ a.alt-contact:hover { color: var(--lime-deep); }
 .map--live { display: flex; flex-direction: column; background: var(--cream); }
 .map__stage { position: relative; flex: 1; min-height: 380px; overflow: hidden; }
 .map__fallback { position: absolute; left: 1rem; right: 1rem; bottom: 1rem; max-width: 22rem; margin: 0; padding: .6rem .85rem; border-radius: var(--r-sm); background: #fff; font-size: .875rem; color: var(--ink-soft); }
+.map__fallback a { font-weight: 600; color: var(--forest); text-decoration-color: var(--lime); text-decoration-thickness: 2px; text-underline-offset: .25em; }
 .map__frame { position: absolute; inset: 0; display: block; width: 100%; height: 100%; border: 0; }
 .map--live .map__overlay { top: 1rem; bottom: auto; max-width: 320px; }
 .map__overlay strong { color: var(--ink); }

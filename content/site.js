@@ -211,7 +211,7 @@ window.SITE = {
       { label: 'Podklady', self: 'Zjišťujete a zařizujete sami', me: 'Řeknu vám přesně, co je potřeba, a pomohu s přípravou' },
       { label: 'Jednání s bankou', self: 'Na vás', me: 'Komunikaci s bankou pohlídám za vás' },
       { label: 'Schůzky', self: 'Na pobočce v otevírací době', me: 'Osobně, online i po telefonu' },
-      { label: 'Po podpisu', self: 'Konec fixace si hlídáte sami', me: 'Ozvu se, když se blíží konec fixace' },
+      { label: 'Po podpisu', self: 'Konec fixace si hlídáte sami', me: 'Před koncem fixace se vám ozvu' },
     ],
     banksTitle: 'Partneři, se kterými spolupracuji',
     banks: [
@@ -275,7 +275,7 @@ window.SITE = {
       { title: 'Probereme vaše plány', text: 'Osobně, online nebo po telefonu. Řeknete mi, co chcete financovat a kdy. Podklady zatím nepotřebujete, stačí vaše představa.' },
       { title: 'Porovnáme možnosti', text: 'Porovnáme varianty podle sazby, délky fixace a výše splátky. Vy si vyberete tu, která vám sedí.' },
       { title: 'Vyřídíme žádost a podklady', text: 'Dostanete ode mě seznam podkladů. Až je připravíte, podáme žádost a před podpisem vám každý dokument vysvětlím.' },
-      { title: 'Zůstaneme v kontaktu', text: 'Když se blíží konec fixace nebo se změní vaše plány, ozvěte se a domluvíme další krok.' },
+      { title: 'Zůstaneme v kontaktu', text: 'Před koncem fixace se vám ozvu. A když se změní vaše plány, napište mi a domluvíme další krok.' },
     ],
   },
 
@@ -434,7 +434,8 @@ window.SITE = {
     officeTitle: 'Kancelář',
     callCta: 'Zavolat',
     mapCta: 'Otevřít v Google Maps',
-    mapFallback: 'Mapa se načítá. Pokud se nezobrazí, otevřete ji přímo v Google Maps.',
+    mapFallback: 'Mapa se načítá…',
+    mapFallbackCta: 'Otevřít mapu kanceláře',   // ukáže se, když se mapa do 8 sekund nenačte
     routeCta: 'Naplánovat trasu',
   },
 

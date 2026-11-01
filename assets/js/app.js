@@ -613,7 +613,7 @@ ${renderPartners()}`;
       <div class="map map--live">
         <div class="map__stage">
           ${mapArt}
-          <p class="map__fallback">${esc(c.mapFallback || '')}</p>
+          <p class="map__fallback" data-map-fallback data-url="${esc(openUrl)}" data-cta="${esc(c.mapFallbackCta || 'Otevřít mapu')}">${esc(c.mapFallback || '')}</p>
           <iframe class="map__frame" src="https://www.google.com/maps?q=${q}&amp;hl=cs&amp;z=16&amp;output=embed" title="Mapa: ${esc(o.mapQuery)}" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
         </div>
         <div class="map__overlay"><p><strong>${fmt(o.name || c.officeTitle)}</strong><br>${fmt(o.street)}, ${fmt(o.city)}</p>${links}</div>
@@ -996,6 +996,21 @@ ${renderPartners()}`;
     });
   }
 
+  // Mapa: když se do 8 sekund nenačte, místo „Mapa se načítá“ nabídneme odkaz
+  function initMap() {
+    const frame = $('.map__frame');
+    const note = $('[data-map-fallback]');
+    if (!frame || !note) return;
+    const timer = window.setTimeout(() => {
+      frame.style.visibility = 'hidden';
+      note.innerHTML = `<a href="${esc(note.dataset.url)}" target="_blank" rel="noopener" data-track="map_fallback">${esc(note.dataset.cta)}</a>`;
+    }, 8000);
+    frame.addEventListener('load', () => {
+      window.clearTimeout(timer);
+      frame.style.visibility = '';
+    });
+  }
+
   function initContact() {
     const tabs = $$('.office-tab');
     const select = (i, focus) => {
@@ -1109,6 +1124,7 @@ ${renderPartners()}`;
   initFaq();
   initBookLinks();
   initContact();
+  initMap();
   initMobileCTA();
   initProto();
   initGlobalClicks();
