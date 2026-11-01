@@ -502,7 +502,7 @@ ${renderPartners()}`;
       <li class="review review--${(i % 3) + 1}">
         <figure>
           <blockquote><p class="review__text">${PV.text(it.text)}</p></blockquote>
-          ${reviewAuthor(it).replace('</figcaption>', `<a class="review__more" href="recenze.html#recenze-${i + 1}" hidden aria-label="Číst celou recenzi od: ${esc(PV.stripPh(it.name))}">Celá recenze${icon('arrow-right')}</a></figcaption>`)}
+          ${reviewAuthor(it).replace('</figcaption>', `<a class="review__more" href="recenze.html#recenze-${i + 1}" hidden aria-label="Číst celou recenzi od: ${esc(PV.stripPh(it.name))}"><span class="review__more-text">Celá recenze</span>${icon('arrow-right')}</a></figcaption>`)}
         </figure>
       </li>`;
       }).join('')}

@@ -865,6 +865,14 @@ a.alt-contact:hover { color: var(--lime-deep); }
   .footer__legal { grid-template-columns: 1fr; }
 }
 
+/* úzké telefony: odkaz jen jako šipka, jméno na jeden řádek – karty pak neporostou */
+@media (max-width: 430px) {
+  .reviews__track .review__more { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--lime); text-decoration: none; }
+  .reviews__track .review__more-text { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .reviews__track .review figcaption > span:not(.review__avatar) { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .reviews__track .review__name { overflow: hidden; text-overflow: ellipsis; }
+}
+
 @media (max-width: 560px) {
   .header__cta { display: none; }
   .menu-toggle { margin-left: auto; }
