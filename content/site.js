@@ -99,8 +99,8 @@ window.SITE = {
 
   /* ---------- Úvodní obrazovka ---------- */
   hero: {
-    eyebrow: 'Hypoteční poradkyně · Brno a okolí',
-    hand: 'Ahoj, jsem Petra',            // ručně psaná poznámka nad nadpisem
+    eyebrow: '',                         // nepovinný řádek nad nadpisem
+    hand: '',                            // nepovinná ručně psaná poznámka nad nadpisem
     stickers: ['Osobně, online i po telefonu', 'První schůzka nezávazně'],
     title: 'Váš nový *domov* začíná správným rozhodnutím.',
     rotate: ['domov', 'byt', 'dům'],   // slovo v *hvězdičkách* se na webu střídá s těmito slovy

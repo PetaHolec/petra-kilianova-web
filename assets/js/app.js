@@ -135,7 +135,7 @@
   <div class="container hero__grid">
     <div class="hero__copy">
       ${hand(h.hand, 'right', 'hero__hand')}
-      <p class="hero__kicker">${fmt(h.eyebrow)}</p>
+      ${h.eyebrow ? `<p class="hero__kicker">${fmt(h.eyebrow)}</p>` : ''}
       <h1 class="hero__title" id="hero-title">${heroTitle(h.title, h.rotate)}</h1>
       <p class="hero__text">${fmt(h.text)}</p>
       <div class="hero__actions">
