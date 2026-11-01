@@ -17,7 +17,7 @@
   const C = S.contact;
 
   // Sekce, které lze vypnout v settings – jejich odkazy v navigaci se pak skryjí
-  const optional = { 'proc-se-mnou': 'showWhy', tym: 'showTeam', kalkulacka: 'showTools', reference: 'showTestimonials', otazky: 'showFaq' };
+  const optional = { 'proc-se-mnou': 'showWhy', tym: 'showTeam', kalkulacka: 'showTools', reference: 'showTestimonials', 'ze-zivota': 'showInsta', otazky: 'showFaq' };
   const hasPosts = !!(PV.blog && PV.blog.hasPosts());
   const navItems = S.nav
     .filter((n) => !optional[n.target] || on(optional[n.target]))
@@ -140,13 +140,17 @@ ${renderPartners()}`;
   function renderPartners() {
     const w = S.why;
     if (!w || !w.banks || !w.banks.length) return '';
+    const list = (hidden) => `<ul class="partners__list" role="list"${hidden ? ' aria-hidden="true"' : ''}>${w.banks.map((b) => (typeof b === 'string'
+      ? `<li class="partners__item partners__item--text">${esc(b)}</li>`
+      : `<li class="partners__item"><img src="${esc(b.logo)}" alt="${hidden ? '' : esc(b.name)}"${hidden ? '' : ` title="${esc(b.name)}"`} decoding="async"></li>`)).join('')}</ul>`;
     return `
 <section class="partners" aria-labelledby="partners-title">
-  <div class="container partners__inner">
+  <div class="container partners__inner" data-partners>
     <p class="partners__title" id="partners-title">${esc(w.banksTitle)}</p>
-    <ul class="partners__list" role="list">${w.banks.map((b) => (typeof b === 'string'
-      ? `<li class="partners__item partners__item--text">${esc(b)}</li>`
-      : `<li class="partners__item"><img src="${esc(b.logo)}" alt="${esc(b.name)}" title="${esc(b.name)}" loading="lazy" decoding="async"></li>`)).join('')}</ul>
+    <div class="partners__marquee">
+      <div class="partners__track">${list(false)}${list(true)}${list(true)}${list(true)}</div>
+    </div>
+    <button class="partners__pause" type="button" data-partners-pause aria-pressed="false" aria-label="Pozastavit pás partnerů">${icon('pause', 'partners__pause-off')}${icon('play-line', 'partners__pause-on')}</button>
     ${w.banksNote ? `<p class="partners__note"><span class="ph">${PV.text(w.banksNote)}</span></p>` : ''}
   </div>
 </section>`;
@@ -240,11 +244,6 @@ ${renderPartners()}`;
       </div>
       ${note(a.note)}
     </div>
-  </div>
-  <div class="container">
-    <ol class="values" role="list">
-      ${a.values.map((v, i) => `<li class="value"><span class="value__num" aria-hidden="true">${i + 1}</span><h3 class="value__title">${fmt(v.title)}</h3><p class="value__text">${fmt(v.text)}</p></li>`).join('')}
-    </ol>
   </div>
 </section>`;
   }
@@ -417,7 +416,7 @@ ${renderPartners()}`;
   /* ---------- Ze života poradkyně – odkaz na Instagram ---------- */
   function renderInsta() {
     const i = S.insta;
-    if (!i) return '';
+    if (!i || !on('showInsta')) return '';
     return `
 <section class="section section--slim insta" id="ze-zivota" aria-labelledby="insta-title">
   <div class="container insta__grid">
@@ -449,7 +448,8 @@ ${renderPartners()}`;
   /* ---------- Reference (volitelné) ---------- */
   function reviewLink(link) {
     const url = PV.safeUrl(link.url);
-    return `<a class="link-arrow" ${url ? `href="${esc(url)}" target="_blank" rel="noopener"` : 'href="#" data-ph-link="Odkaz na hodnocení (např. Google profil firmy) doplníme po jeho založení."'} data-track="review_link"><span class="link-arrow__text">${esc(link.label)}</span><span class="link-arrow__icon" aria-hidden="true">${icon('arrow-up-right')}</span></a>`;
+    if (!url) return '';   // odkaz se ukáže až po doplnění skutečné adresy
+    return `<a class="link-arrow" href="${esc(url)}" target="_blank" rel="noopener" data-track="review_link"><span class="link-arrow__text">${esc(link.label)}</span><span class="link-arrow__icon" aria-hidden="true">${icon('arrow-up-right')}</span></a>`;
   }
 
   // Iniciála do kolečka (bez titulů typu Ing.)
@@ -472,7 +472,7 @@ ${renderPartners()}`;
     </div>
   </div>
   <div class="container">${note(t.note)}</div>
-  <div class="reviews" data-reviews role="region" aria-roledescription="carousel" aria-label="Recenze klientů – pás se posouvá sám, najetím myší se zastaví" tabindex="0">
+  <div class="reviews" data-reviews role="region" aria-roledescription="carousel" aria-label="Recenze klientů – posouvejte šipkami nebo prstem" tabindex="0">
     <ul class="reviews__track" role="list">
       ${items.map((it, i) => {
         return `
@@ -647,6 +647,7 @@ ${renderPartners()}`;
   /* ---------- Patička ---------- */
   function renderFooter() {
     const f = S.footer;
+    const liveSocial = S.social.filter((x) => PV.safeUrl(x.url));
     const legalLinks = f.legalLinks.map((l) => (l.action === 'cookies'
       ? `<li><button type="button" data-open-consent>${esc(l.label)}</button></li>`
       : `<li><a href="${esc(l.href)}">${esc(l.label)}</a></li>`)).join('');
@@ -660,7 +661,7 @@ ${renderPartners()}`;
     <div class="footer__top">
       <div class="footer__brand">
         ${logo()}
-        <div class="footer__social">${S.social.map((s) => `<a ${socialLink(s)} aria-label="${esc(s.label)}" data-track="social_${esc(s.id)}">${icon(s.id)}</a>`).join('')}</div>
+        ${liveSocial.length ? `<div class="footer__social">${liveSocial.map((s) => `<a href="${esc(PV.safeUrl(s.url))}" target="_blank" rel="noopener" aria-label="${esc(s.label)}" data-track="social_${esc(s.id)}">${icon(s.id)}</a>`).join('')}</div>` : ''}
       </div>
       <div>
         <p class="footer__title">Na webu</p>
@@ -809,132 +810,71 @@ ${renderPartners()}`;
     });
   }
 
-  // Reference: pás, který se pomalu posouvá doleva; jde i táhnout, šipkami a tlačítky
+  // Reference: pás ovládaný ručně (šipky, klávesnice, prst); sám se neposouvá
   function initReviews() {
     const m = $('[data-reviews]');
     if (!m) return;
     const track = $('.reviews__track', m);
     const items = Array.from(track.children);
-    const reduce = PV.reducedMotion.matches;
+    const prev = $('[data-reviews-prev]');
+    const next = $('[data-reviews-next]');
 
-    // Kopie karet, aby pás nikdy nedojel na konec
-    const addSet = () => items.forEach((it) => {
-      const c = it.cloneNode(true);
-      c.setAttribute('aria-hidden', 'true');
-      $$('a, button', c).forEach((b) => { b.tabIndex = -1; });
-      track.appendChild(c);
-    });
-    addSet();
-    let W = 0;
-    const measure = () => { W = track.children[items.length].offsetLeft - items[0].offsetLeft; };
-    const fill = () => {
-      measure();
-      const need = Math.ceil(m.clientWidth / (W || 1)) + 2;
-      while (track.children.length < items.length * need) addSet();
-    };
-    fill();
-
-    // „Číst celou recenzi“ jen u karet, kde se text do zkráceného prostoru nevejde
-    const markLong = () => $$('.review', track).forEach((card) => {
+    // „Celá recenze“ jen u karet, kde se text do zkráceného prostoru nevejde
+    const markLong = () => items.forEach((card) => {
       const p = $('.review__text', card);
       const more = $('.review__more', card);
       if (p && more) more.hidden = p.scrollHeight <= p.clientHeight + 2;
     });
-    markLong();
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(markLong);
-
-    let pos = 0;
-    let hover = false;
-    let focus = false;
-    let userUntil = 0;
-    let visible = true;
-    let drag = null;
-    let dragged = false;
-    let last = performance.now();
-    const speed = 32; // px za vteřinu
-
-    const wrap = () => {
-      if (m.scrollLeft >= W * 2) m.scrollLeft -= W;
-      else if (m.scrollLeft < 1 && W) m.scrollLeft += W;
-      pos = m.scrollLeft;
+    const syncButtons = () => {
+      const max = m.scrollWidth - m.clientWidth - 2;
+      if (prev) prev.disabled = m.scrollLeft <= 2;
+      if (next) next.disabled = m.scrollLeft >= max;
     };
-    m.addEventListener('scroll', () => {
-      if (Math.abs(m.scrollLeft - Math.round(pos)) > 1) userUntil = performance.now() + 3000;
-      wrap();
-    }, { passive: true });
-
-    m.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') hover = true; });
-    m.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') hover = false; });
-    m.addEventListener('focusin', () => { focus = true; });
-    m.addEventListener('focusout', () => { focus = false; });
-    ['touchstart', 'wheel'].forEach((ev) => m.addEventListener(ev, () => { userUntil = performance.now() + 3000; }, { passive: true }));
-
-    m.addEventListener('pointerdown', (e) => {
-      if (e.pointerType !== 'mouse' || e.button !== 0 || e.target.closest('a, button')) return;
-      drag = { x: e.clientX, left: m.scrollLeft, moved: false };
-      m.classList.add('is-drag');
-    });
-    window.addEventListener('pointermove', (e) => {
-      if (!drag) return;
-      const dx = e.clientX - drag.x;
-      if (Math.abs(dx) > 3) drag.moved = true;
-      m.scrollLeft = drag.left - dx;
-    });
-    window.addEventListener('pointerup', () => {
-      if (!drag) return;
-      dragged = drag.moved;
-      drag = null;
-      m.classList.remove('is-drag');
-      userUntil = performance.now() + 2000;
-    });
-    // po tažení myší se odkaz v kartě neotevře
-    m.addEventListener('click', (e) => { if (dragged && e.target.closest('a')) e.preventDefault(); dragged = false; }, true);
-
-    const step = () => (items[1] ? items[1].offsetLeft - items[0].offsetLeft : 360);
     const go = (dir) => {
-      userUntil = performance.now() + 4000;
-      m.scrollBy({ left: dir * step(), behavior: reduce ? 'auto' : 'smooth' });
+      const step = items[1] ? items[1].offsetLeft - items[0].offsetLeft : 340;
+      m.scrollBy({ left: dir * step, behavior: PV.reducedMotion.matches ? 'auto' : 'smooth' });
     };
+
+    markLong();
+    syncButtons();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { markLong(); syncButtons(); });
+    m.addEventListener('scroll', PV.debounce(syncButtons, 60), { passive: true });
+    window.addEventListener('resize', PV.debounce(() => { markLong(); syncButtons(); }, 200));
     m.addEventListener('keydown', (e) => {
       if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
       e.preventDefault();
       go(e.key === 'ArrowRight' ? 1 : -1);
     });
-    const prev = $('[data-reviews-prev]');
-    const next = $('[data-reviews-next]');
     if (prev) prev.addEventListener('click', () => go(-1));
     if (next) next.addEventListener('click', () => go(1));
-
-    if ('IntersectionObserver' in window) new IntersectionObserver((en) => { visible = en[0].isIntersecting; }).observe(m);
-    window.addEventListener('resize', PV.debounce(() => { fill(); markLong(); wrap(); }, 200));
-    m.scrollLeft = W;
-    pos = W;
-
-    if (reduce) return;
-    const tick = (now) => {
-      const dt = Math.min(0.1, (now - last) / 1000);
-      last = now;
-      if (visible && !hover && !focus && !drag && now > userUntil && !document.hidden) {
-        pos += speed * dt;
-        m.scrollLeft = Math.round(pos);
-        if (m.scrollLeft >= W * 2) { m.scrollLeft -= W; pos -= W; }
-      } else {
-        pos = m.scrollLeft;
-      }
-      window.requestAnimationFrame(tick);
-    };
-    window.requestAnimationFrame(tick);
   }
 
-  // Jemné objevení prvků a nakreslení cesty při rolování
-  function initReveal() {
-    const els = $$('.road, .versus, .values');
-    if (!('IntersectionObserver' in window) || PV.reducedMotion.matches) { els.forEach((el) => el.classList.add('is-in')); return; }
-    document.documentElement.classList.add('can-reveal');
-    const io = new IntersectionObserver((entries) => entries.forEach((en) => {
-      if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); }
-    }), { rootMargin: '0px 0px -12% 0px' });
-    els.forEach((el) => io.observe(el));
+  // Partneři: stejná optická velikost log (podle plochy, ne šířky) a pozastavení pásu
+  function initPartners() {
+    const root = $('[data-partners]');
+    if (!root) return;
+    const fit = (img) => {
+      const ratio = img.naturalWidth / img.naturalHeight;
+      if (!ratio || !Number.isFinite(ratio)) return;
+      const area = window.innerWidth < 760 ? 1900 : 2600;
+      let h = Math.min(44, Math.max(18, Math.sqrt(area / ratio)));
+      let w = h * ratio;
+      if (w > 138) { w = 138; h = w / ratio; }
+      img.style.width = `${Math.round(w)}px`;
+      img.style.height = `${Math.round(h)}px`;
+    };
+    const imgs = $$('img', root);
+    const fitAll = () => imgs.forEach((img) => { if (img.complete) fit(img); });
+    imgs.forEach((img) => img.addEventListener('load', () => fit(img)));
+    fitAll();
+    window.addEventListener('resize', PV.debounce(fitAll, 200));
+
+    const pause = $('[data-partners-pause]', root);
+    pause.addEventListener('click', () => {
+      const paused = root.classList.toggle('is-paused');
+      pause.setAttribute('aria-pressed', String(paused));
+      pause.setAttribute('aria-label', paused ? 'Spustit pás partnerů' : 'Pozastavit pás partnerů');
+    });
   }
 
   // Orientační kalkulačka splátky (anuitní splácení)
@@ -1145,8 +1085,8 @@ ${renderPartners()}`;
   mount('[data-render="header"]', renderHeader());
   if (isHome) {
     $('#main').innerHTML = [
-      renderHero(), renderServices(), renderWhy(), renderAbout(), renderTeam(),
-      renderProcess(), renderTools(), renderBooking(), renderInsta(), renderBlogTeaser(), renderTestimonials(), renderFaq(), renderContact(),
+      renderHero(), renderServices(), renderWhy(), renderTestimonials(), renderAbout(), renderTeam(),
+      renderProcess(), renderTools(), renderBooking(), renderInsta(), renderBlogTeaser(), renderFaq(), renderContact(),
     ].join('');
   }
   if (page === 'glossary') $('#main').innerHTML = renderGlossaryPage();
@@ -1158,8 +1098,8 @@ ${renderPartners()}`;
   initHeader();
   initScrollSpy();
   initServices();
-  initReveal();
   initReviews();
+  initPartners();
   initCalculator();
   initFixWatch();
   initFaq();

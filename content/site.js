@@ -20,6 +20,7 @@ window.SITE = {
     showTeam: true,          // tým
     showTools: true,         // kalkulačka splátky + hlídání konce fixace
     showTestimonials: true,  // reference
+    showInsta: false,        // sekce o Instagramu – zapnout až s reálnými příspěvky nebo videi
     showFaq: true,           // časté otázky a slovníček
     prototype: false,        // true = zobrazí odznak „Prototyp“ a poznámky k návrhu
   },
@@ -202,7 +203,7 @@ window.SITE = {
   why: {
     eyebrow: 'Proč se mnou',
     title: 'Sami v bance, nebo s poradkyní?',
-    intro: 'Do banky můžete jít i sami. Rozdíl je v tom, kolik nabídek uvidíte, kolik času strávíte papírováním a jestli vám po podpisu někdo pohlídá další kroky.',
+    intro: 'Do banky můžete jít i sami. Rozdíl je v tom, co všechno zůstane na vás.',
     selfLabel: 'Sami v bance',
     meLabel: 'Se mnou',
     rows: [
@@ -242,15 +243,9 @@ window.SITE = {
     lead: 'Jmenuji se Petra Kilianová a jsem hypoteční poradkyně s kanceláří v Brně. Pomáhám lidem financovat bydlení tak, aby rozuměli tomu, co podepisují – a mohli se na nový domov těšit.',
     paragraphs: [
       'Za každou žádostí o hypotéku vidím konkrétní příběh. Pár, který poprvé podepisuje kupní smlouvu. Rodinu, které je malý byt těsný. Nebo někoho, kdo konečně staví dům, o kterém roky mluvil.',
-      'Mou prací je přeložit čísla, podmínky a bankovní jazyk do srozumitelných rozhodnutí. Abyste věděli, proč volíte právě tuhle variantu – a co pro vás bude znamenat za pět nebo deset let.',
     ],
     story: '[Osobní příběh: jak se Petra k hypotékám dostala, co ji na práci baví a proč jí na klientech záleží. Doplníme po společném rozhovoru – jejími vlastními slovy.]',
     quote: 'Dobrá hypotéka je ta, které *rozumíte*.',
-    values: [
-      { title: 'Rozumíte každému kroku', text: 'Než cokoli podepíšete, víte, co to znamená. Vysvětluji bez zkratek a bankovního žargonu.' },
-      { title: 'Díváme se dál než na sazbu', text: 'Úroková sazba je důležitá, ale není jediná. Řešíme i délku fixace, pojištění, mimořádné splátky a to, jak se hypotéka vejde do vašeho života.' },
-      { title: 'Podpisem to nekončí', text: 'Hypotéka vás bude provázet roky. Když se blíží konec fixace nebo se změní vaše situace, můžete se na mě obrátit.' },
-    ],
     signature: 'Petra Kilianová',
     photoNote: 'To jsem já',
     cta: 'Domluvit schůzku',
@@ -273,14 +268,14 @@ window.SITE = {
   process: {
     eyebrow: 'Jak probíhá spolupráce',
     title: 'Víte, co vás čeká. *Krok za krokem.*',
-    intro: 'Celý proces má jasný postup. U každého kroku vám řeknu, co se bude dít, co budu potřebovat od vás a co zařídím já.',
+    intro: 'U každého kroku víte, co se bude dít a co budu potřebovat od vás.',
     cta: 'Domluvit schůzku',
     finish: 'Klíče od vašeho domova',
     steps: [
-      { title: 'Seznámíme se a probereme vaše plány', text: 'Osobně, online nebo po telefonu. Řeknete mi, co chcete financovat, v jakém časovém horizontu a co je pro vás důležité. Já vám vysvětlím, jak celý proces probíhá.' },
-      { title: 'Společně projdeme dostupné možnosti', text: 'Porovnáme varianty, které pro vás připadají v úvahu. Nejen podle úrokové sazby, ale i podle délky fixace, výše splátky a podmínek, které budou důležité za pár let.' },
-      { title: 'Pomohu vám s dalším postupem a administrativou', text: 'Připravíme podklady, podáme žádost a já pohlídám termíny i komunikaci s bankou. Každý dokument vám před podpisem vysvětlím.' },
-      { title: 'Zůstáváme v kontaktu', text: 'Hypotéka vás bude provázet roky. Když se blíží konec fixace nebo se změní vaše plány, ozvěte se – společně najdeme další krok.' },
+      { title: 'Seznámíme se a probereme vaše plány', text: 'Osobně, online nebo po telefonu. Řeknete mi, co chcete financovat a kdy. Podklady zatím nepotřebujete, stačí vaše představa.' },
+      { title: 'Společně projdeme dostupné možnosti', text: 'Porovnáme varianty podle sazby, délky fixace a výše splátky. Vy si vyberete tu, která vám sedí.' },
+      { title: 'Pomohu vám s dalším postupem a administrativou', text: 'Dostanete ode mě seznam podkladů. Až je připravíte, podáme žádost a před podpisem vám každý dokument vysvětlím.' },
+      { title: 'Zůstáváme v kontaktu', text: 'Když se blíží konec fixace nebo se změní vaše plány, ozvěte se a domluvíme další krok.' },
     ],
   },
 
