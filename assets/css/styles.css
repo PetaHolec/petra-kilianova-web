@@ -615,7 +615,9 @@ a.alt-contact:hover { color: var(--lime-deep); }
 .map__overlay p { margin: 0 0 .85rem; font-size: .9375rem; color: var(--ink-soft); }
 .map__actions { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1.25rem; }
 .map--live { display: flex; flex-direction: column; background: var(--cream); }
-.map__frame { display: block; flex: 1; width: 100%; min-height: 380px; border: 0; }
+.map__stage { position: relative; flex: 1; min-height: 380px; overflow: hidden; }
+.map__fallback { position: absolute; left: 1rem; right: 1rem; bottom: 1rem; max-width: 22rem; margin: 0; padding: .6rem .85rem; border-radius: var(--r-sm); background: #fff; font-size: .875rem; color: var(--ink-soft); }
+.map__frame { position: absolute; inset: 0; display: block; width: 100%; height: 100%; border: 0; }
 .map--live .map__overlay { top: 1rem; bottom: auto; max-width: 320px; }
 .map__overlay strong { color: var(--ink); }
 
@@ -808,7 +810,7 @@ a.alt-contact:hover { color: var(--lime-deep); }
   .consent { left: .75rem; bottom: .75rem; width: calc(100% - 1.5rem); }
   .cal-wrap { grid-template-columns: 1fr; }
   .map--live .map__overlay { position: static; max-width: none; margin: 0; border-radius: 0; box-shadow: none; }
-  .map__frame { min-height: 300px; }
+  .map__stage { min-height: 300px; }
   .slots__empty { min-height: 0; }
   .calc { grid-template-columns: 1fr; }
   .footer__legal { grid-template-columns: 1fr; }

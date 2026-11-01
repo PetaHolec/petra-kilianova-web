@@ -611,7 +611,11 @@ ${renderPartners()}`;
     }
     return `
       <div class="map map--live">
-        <iframe class="map__frame" src="https://www.google.com/maps?q=${q}&amp;hl=cs&amp;z=16&amp;output=embed" title="Mapa: ${esc(o.mapQuery)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+        <div class="map__stage">
+          ${mapArt}
+          <p class="map__fallback">${esc(c.mapFallback || '')}</p>
+          <iframe class="map__frame" src="https://www.google.com/maps?q=${q}&amp;hl=cs&amp;z=16&amp;output=embed" title="Mapa: ${esc(o.mapQuery)}" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+        </div>
         <div class="map__overlay"><p><strong>${fmt(o.name || c.officeTitle)}</strong><br>${fmt(o.street)}, ${fmt(o.city)}</p>${links}</div>
       </div>`;
   }
@@ -665,7 +669,7 @@ ${renderPartners()}`;
       </div>
       <div>
         <p class="footer__title">Na webu</p>
-        <ul class="footer__links footer__links--nav">${navItems.map((n) => `<li><a href="${n.url || href(n.target)}">${esc(n.label)}</a></li>`).join('')}</ul>
+        <ul class="footer__links footer__links--nav">${navItems.filter((n) => n.footer).map((n) => `<li><a href="${n.url || href(n.target)}">${esc(n.footerLabel || n.label)}</a></li>`).join('')}</ul>
       </div>
       <div>
         <p class="footer__title">Kontakt</p>

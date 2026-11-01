@@ -78,23 +78,23 @@ window.SITE = {
 
   /* ---------- Navigace ---------- */
   // Položky s main: true jsou v hlavičce a v mobilním menu (jen to nejdůležitější).
-  // Všechny položky jsou v patičce. Odkazy na sekce vypnuté v settings se skryjí samy.
+  // Položky s footer: true jsou v patičce. Odkazy na sekce vypnuté v settings se skryjí samy.
   nav: [
     { label: 'Úvod', target: 'uvod' },
-    { label: 'Služby', target: 'sluzby', main: true },
+    { label: 'Služby', target: 'sluzby', main: true, footer: true },
     { label: 'Proč se mnou', target: 'proc-se-mnou' },
-    { label: 'O mně', target: 'o-mne', main: true },
+    { label: 'O mně', target: 'o-mne', main: true, footer: true },
     { label: 'Tým', target: 'tym' },
     { label: 'Spolupráce', target: 'spoluprace' },
-    { label: 'Kalkulačka', target: 'kalkulacka', main: true },
+    { label: 'Kalkulačka', target: 'kalkulacka', main: true, footer: true },
     { label: 'Rezervace', target: 'rezervace' },
     { label: 'Ze života poradkyně', target: 'ze-zivota' },
     { label: 'Blog', target: 'blog', url: 'blog.html', main: true, needsPosts: true },
-    { label: 'Reference', target: 'reference' },
+    { label: 'Reference', footerLabel: 'Recenze', target: 'reference', footer: true },
     { label: 'Všechny recenze', target: 'recenze', url: 'recenze.html' },
-    { label: 'FAQ', target: 'otazky', main: true },
+    { label: 'FAQ', footerLabel: 'Časté otázky', target: 'otazky', main: true, footer: true },
     { label: 'Slovníček', target: 'slovnicek', url: 'slovnicek.html', main: true },
-    { label: 'Kontakt', target: 'kontakt', main: true },
+    { label: 'Kontakt', target: 'kontakt', main: true, footer: true },
   ],
   navCta: 'Domluvit schůzku',
 
@@ -103,7 +103,7 @@ window.SITE = {
     eyebrow: '',                         // nepovinný řádek nad nadpisem
     reassure: 'Osobně, online i po telefonu · První schůzka nezávazně',   // řádek pod tlačítky
     title: 'Váš nový *domov* začíná správným rozhodnutím.',
-    text: 'Jsem hypoteční poradkyně s kanceláří v Brně a pomáhám klientům po celé republice. Pomohu vám zorientovat se v hypotékách a najít financování, které sedí vašim plánům. Vysvětlím vám každou možnost a provedu vás celým procesem – od první otázky až po podpis.',
+    text: 'Jsem hypoteční poradkyně s kanceláří v Brně a pomáhám klientům po celé republice. Porovnám možnosti financování a provedu vás hypotékou od první konzultace až po podpis.',
     primaryCta: 'Domluvit schůzku',
     secondaryCta: 'Jak vám mohu pomoci',
     portrait: {
@@ -272,10 +272,10 @@ window.SITE = {
     cta: 'Domluvit schůzku',
     finish: 'Klíče od vašeho domova',
     steps: [
-      { title: 'Seznámíme se a probereme vaše plány', text: 'Osobně, online nebo po telefonu. Řeknete mi, co chcete financovat a kdy. Podklady zatím nepotřebujete, stačí vaše představa.' },
-      { title: 'Společně projdeme dostupné možnosti', text: 'Porovnáme varianty podle sazby, délky fixace a výše splátky. Vy si vyberete tu, která vám sedí.' },
-      { title: 'Pomohu vám s dalším postupem a administrativou', text: 'Dostanete ode mě seznam podkladů. Až je připravíte, podáme žádost a před podpisem vám každý dokument vysvětlím.' },
-      { title: 'Zůstáváme v kontaktu', text: 'Když se blíží konec fixace nebo se změní vaše plány, ozvěte se a domluvíme další krok.' },
+      { title: 'Probereme vaše plány', text: 'Osobně, online nebo po telefonu. Řeknete mi, co chcete financovat a kdy. Podklady zatím nepotřebujete, stačí vaše představa.' },
+      { title: 'Porovnáme možnosti', text: 'Porovnáme varianty podle sazby, délky fixace a výše splátky. Vy si vyberete tu, která vám sedí.' },
+      { title: 'Vyřídíme žádost a podklady', text: 'Dostanete ode mě seznam podkladů. Až je připravíte, podáme žádost a před podpisem vám každý dokument vysvětlím.' },
+      { title: 'Zůstaneme v kontaktu', text: 'Když se blíží konec fixace nebo se změní vaše plány, ozvěte se a domluvíme další krok.' },
     ],
   },
 
@@ -375,19 +375,19 @@ window.SITE = {
     intro: 'Co o spolupráci napsali klienti v hodnoceních na webu Gepard Finance. Doslovně, bez úprav.',
     // Nová recenze = nový řádek { text: '…', name: '…' }. Na webu jedou v posuvném pásu i na podstránce recenze.html.
     items: [
-      { text: 'Jednička, co dodat?', name: 'Vladimír Kaleta' },
-      { text: 'Profesionální služby na vysoké úrovni.', name: 'Ing. Ľuboslav Ddrobáň' },
-      { text: 'Paní Kilianová je profesionál s lidským přístupem a nekonečnou ochotou.', name: 'Fajkus Marek' },
-      { text: 'Na cestě za naším vysněným domem jsme potkali na osobní doporučení paní Petru Kiliánovou. Asi se nedá vyjádřit poděkování jedním slovem. Naše cesta za financemi nebyla vůbec jednoduchá a s paní Petrou jsme strávili 5měsíců intenzivní práce, nervů, infarktových stavů, kdy hořely termíny rezervací,smluv atd. Paní Petra nikdy neztratila svůj optimistický pohled na věc, vždy podpořila vlídným slovem a patřičnou motivací, vždy byla na telefonu či mailu. Profesně je to člověk na svém místě, který lidsky dává neuvěřitelnou víru klientům, že společné dílo dopadne. Nám dopadlo a v pondělí se stáváme vlastníky nemovistosti. :-) Určitě budeme rádi, když nám paní Petra vydrží vitální a po našem boku celých dalších 20let trvání hypotéky. :-) Děkujeme! Silva Páčová a Luboš Dobšík', name: 'Libor F.' },
-      { text: 'Vše v pořádku! Děkuji za spolupráci!', name: 'Ing. Ľuboslav Ddrobáň' },
-      { text: 'Maximálně profesionální přístup a znalost daného finančního problému...rychlá a účelná domluva.', name: 'Nataliya Dukhnych' },
-      { text: 'Naprosto profesionální přístup, rychlost jednání, neopomenutí detailů. Naprostá spokojenost!', name: 'Chlup Rostislav' },
       { text: 'Paní Kilianová, chtěli bychom Vám hrozně moc poděkovat za vaši naprosto neskutečně precizní a kvalitní práci. Máme s Vámi už druhou perfektní zkušenost a to prostě nemůže být náhoda. Navíc, tento prodej-koupě byl docela oříšek, ale vy jste nás tím martýriem provedla jako nic. Díky Vám jsme byli v pořád obraze. Možná i ve větším, než někteří pracovníci KB. Spolupracovat s Vámi je radost. Opravdu moc Vám za to děkujeme. Osobně doufám, že teď nějakou dobu žádnou nemovitost kupovat nebudeme. Nicméně až nějaká taková příležitost nastane, budete první, na koho se obrátíme. A buďte si jistá, že Vás budeme doporučovat každému, kdo se jen letmo zmíní, že uvažuje o hypotéce. Omlouvám se, že píšeme až cca po měsíci od předání domu, ale doteď jsme lítali s přepisy energií, po úřadech, domlouvali rekonstrukci...ale to už jsou takové ty příjemné starosti. V domě už bydlíme, sice máme jen stůl, židle a matrace, ale je to lepší, než v kdejakém pětihvězdičkovém hotelu. Ještě jednou děkujeme a rádi Vám napíšeme vynikající recenzi! Mějte se krásně a přejeme spoustu dalších spokojených klientů, jako jste udělala z nás. Jílkovi', name: 'Nataliya Dukhnych' },
-      { text: 'Paní Kilianová je člověk na svém místě a není to pro ni jen práce. Jsem moc rád že jsem s ní mohl spolupracovat.', name: 'Alena H.' },
-      { text: 'jednička!', name: 'Vladimír Kaleta' },
-      { text: 'Naprosto profesionální přístup, rychlost jednání, neopomenutí detailů. Naprostá spokojenost!', name: 'Čermák Daniel' },
-      { text: 'Paní Kilianova nejlepší specialista. Vždycky pomůže, nic není problém.', name: 'Ing. Ľuboslav Ddrobáň' },
+      { text: 'Na cestě za naším vysněným domem jsme potkali na osobní doporučení paní Petru Kiliánovou. Asi se nedá vyjádřit poděkování jedním slovem. Naše cesta za financemi nebyla vůbec jednoduchá a s paní Petrou jsme strávili 5měsíců intenzivní práce, nervů, infarktových stavů, kdy hořely termíny rezervací,smluv atd. Paní Petra nikdy neztratila svůj optimistický pohled na věc, vždy podpořila vlídným slovem a patřičnou motivací, vždy byla na telefonu či mailu. Profesně je to člověk na svém místě, který lidsky dává neuvěřitelnou víru klientům, že společné dílo dopadne. Nám dopadlo a v pondělí se stáváme vlastníky nemovistosti. :-) Určitě budeme rádi, když nám paní Petra vydrží vitální a po našem boku celých dalších 20let trvání hypotéky. :-) Děkujeme! Silva Páčová a Luboš Dobšík', name: 'Libor F.' },
+      { text: 'Paní Kilianová je profesionál s lidským přístupem a nekonečnou ochotou.', name: 'Fajkus Marek' },
       { text: 'Paní Kiliánová je mistr ve svém oboru, je profesionální, má široký rozptyl vědomostí, dokáže skvěle poradit, je ochotná, usměvavá a moc nás těší spolupráce s ní.', name: 'Ing. Ľuboslav Ddrobáň' },
+      { text: 'Paní Kilianová je člověk na svém místě a není to pro ni jen práce. Jsem moc rád že jsem s ní mohl spolupracovat.', name: 'Alena H.' },
+      { text: 'Naprosto profesionální přístup, rychlost jednání, neopomenutí detailů. Naprostá spokojenost!', name: 'Chlup Rostislav' },
+      { text: 'Maximálně profesionální přístup a znalost daného finančního problému...rychlá a účelná domluva.', name: 'Nataliya Dukhnych' },
+      { text: 'Paní Kilianova nejlepší specialista. Vždycky pomůže, nic není problém.', name: 'Ing. Ľuboslav Ddrobáň' },
+      { text: 'Naprosto profesionální přístup, rychlost jednání, neopomenutí detailů. Naprostá spokojenost!', name: 'Čermák Daniel' },
+      { text: 'Profesionální služby na vysoké úrovni.', name: 'Ing. Ľuboslav Ddrobáň' },
+      { text: 'Vše v pořádku! Děkuji za spolupráci!', name: 'Ing. Ľuboslav Ddrobáň' },
+      { text: 'Jednička, co dodat?', name: 'Vladimír Kaleta' },
+      { text: 'jednička!', name: 'Vladimír Kaleta' },
     ],
     allLabel: 'Všechny recenze',
     pageTitle: 'Co o spolupráci říkají klienti.',   // nadpis podstránky recenze.html
@@ -434,6 +434,7 @@ window.SITE = {
     officeTitle: 'Kancelář',
     callCta: 'Zavolat',
     mapCta: 'Otevřít v Google Maps',
+    mapFallback: 'Mapa se načítá. Pokud se nezobrazí, otevřete ji přímo v Google Maps.',
     routeCta: 'Naplánovat trasu',
   },
 
