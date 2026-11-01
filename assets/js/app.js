@@ -1201,40 +1201,6 @@ ${renderPartners()}`;
     });
   }
 
-  // SEO: titulek, popis a strukturovaná data (JSON-LD) z obsahového souboru
-  function initSEO() {
-    if (!isHome) return;
-    document.title = PV.stripPh(S.seo.title);
-    const desc = $('meta[name="description"]');
-    if (desc) desc.setAttribute('content', S.seo.description);
-    const clean = (v) => (v && !PV.hasPh(v) ? v : undefined);
-    const office = (S.offices || [])[0] || {};
-    const sameAs = S.social.map((s) => PV.safeUrl(s.url)).filter(Boolean);
-    const graph = [
-      {
-        '@type': 'FinancialService',
-        name: `${S.brand.name} – ${S.brand.role}`,
-        description: S.seo.description,
-        url: clean(S.seo.url),
-        telephone: clean(C.phoneHref),
-        email: clean(C.emailHref),
-        areaServed: clean(S.brand.city),
-        address: clean(office.street) ? { '@type': 'PostalAddress', streetAddress: office.street, addressLocality: clean(office.city) } : undefined,
-      },
-      { '@type': 'Person', name: S.brand.name, jobTitle: S.brand.role, sameAs: sameAs.length ? sameAs : undefined },
-    ];
-    if (on('showFaq') && S.faq) {
-      const qa = S.faq.items.filter((it) => !PV.hasPh(it.a)).map((it) => ({
-        '@type': 'Question', name: it.q, acceptedAnswer: { '@type': 'Answer', text: it.a },
-      }));
-      if (qa.length) graph.push({ '@type': 'FAQPage', mainEntity: qa });
-    }
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.textContent = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph });
-    document.head.appendChild(script);
-  }
-
   /* ---------- Start ---------- */
   function mount(selector, html) {
     const el = $(selector);
@@ -1268,7 +1234,6 @@ ${renderPartners()}`;
   initMobileCTA();
   initProto();
   initGlobalClicks();
-  initSEO();
   PV.attribution();
 
   // Po načtení se posuneme na kotvu z adresy (obsah se vykresluje skriptem)

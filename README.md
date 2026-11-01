@@ -249,3 +249,7 @@ Na webech hypotečních poradců a zprostředkovatelů se opakují tyto prvky �
 - [ ] Zásady ochrany osobních údajů a cookies – právník
 - [ ] Doména, hosting, firemní e-mail
 - [ ] Fotografie podle seznamu výše
+
+## SEO
+
+Po změně textů, kontaktů nebo domény spusťte `node tools/seo-static.js`. Skript z `content/site.js` obnoví metadata, strukturovaná data a statický text v `index.html` a soubor `sitemap.xml`. Indexaci zapnete odstraněním `noindex` ze stránek a povolením v `robots.txt`.

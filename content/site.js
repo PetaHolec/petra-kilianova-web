@@ -40,9 +40,9 @@ window.SITE = {
 
   /* ---------- SEO (titulek a popis ve vyhledávačích) ---------- */
   seo: {
-    title: 'Petra Kilianová – hypoteční poradkyně | Brno',
-    description: 'Pomohu vám zorientovat se v hypotékách a najít financování, které sedí vašim plánům. Osobně v kanceláři, online i po telefonu. Domluvte si nezávaznou konzultaci.',
-    url: 'https://www.[domena].cz/',
+    title: 'Hypoteční poradkyně Brno – Petra Kilianová | Gepard Finance',
+    description: 'Hypoteční poradkyně v Brně. Porovnám nabídky bank a provedu vás hypotékou i refinancováním při konci fixace. Osobně na Husově, online i po telefonu.',
+    url: 'https://petaholec.github.io/petra-kilianova-web/',   // po koupi domény přepsat a spustit node tools/seo-static.js
   },
 
   /* ---------- Kontakty ---------- */
@@ -102,9 +102,9 @@ window.SITE = {
     eyebrow: '',                         // nepovinný řádek nad nadpisem
     hand: '',                            // nepovinná ručně psaná poznámka nad nadpisem
     stickers: ['Osobně, online i po telefonu', 'První schůzka nezávazně'],
-    title: 'Váš nový *domov* začíná správným rozhodnutím.',
+    title: 'Váš nový *domov* v Brně začíná správným rozhodnutím.',
     rotate: ['domov', 'byt', 'dům'],   // slovo v *hvězdičkách* se na webu střídá s těmito slovy
-    text: 'Pomohu vám zorientovat se v hypotékách a najít financování, které sedí vašim plánům. Vysvětlím vám každou možnost a provedu vás celým procesem – od první otázky až po podpis.',
+    text: 'Jsem hypoteční poradkyně v Brně. Pomohu vám zorientovat se v hypotékách a najít financování, které sedí vašim plánům. Vysvětlím vám každou možnost a provedu vás celým procesem – od první otázky až po podpis.',
     primaryCta: 'Domluvit nezávaznou konzultaci',
     secondaryCta: 'Jak vám mohu pomoci',
     portrait: {
@@ -125,7 +125,7 @@ window.SITE = {
   services: {
     eyebrow: 'S čím mohu pomoci',
     title: 'Ať teprve začínáte, nebo vám *končí fixace*.',
-    intro: 'Vyberte si, co právě řešíte. Na první schůzce si ujasníme vaši situaci a já vám ukážu, jaké máte možnosti – bez zbytečných odborných pojmů.',
+    intro: 'Hypotéka, refinancování, stavba i rekonstrukce v Brně a okolí. Vyberte si, co právě řešíte. Na první schůzce si ujasníme vaši situaci a já vám ukážu, jaké máte možnosti – bez zbytečných odborných pojmů.',
     detailsLabel: 'Co spolu vyřešíme',
     hand: 'Klikněte na to, co právě řešíte',
     cta: 'Probrat na schůzce',
@@ -413,6 +413,7 @@ window.SITE = {
     items: [
       { q: 'Kolik mě vaše služby stojí?', a: '[Doplnit podle skutečnosti – např. zda je konzultace zdarma a jak je poradkyně odměňována.]' },
       { q: 'Proč řešit hypotéku přes poradkyni, a ne rovnou v bance?', a: 'Uvidíte víc nabídek najednou a nemusíte obcházet jednotlivé banky. Pomohu vám s podklady, s komunikací s bankou i s tím, abyste rozuměli každé smlouvě. Rozhodnutí je vždy na vás.' },
+      { q: 'Jaký je rozdíl mezi hypotečním poradcem, specialistou a makléřem?', a: 'V běžné řeči jde většinou o totéž: o člověka, který vám pomůže porovnat nabídky bank a vyřídit hypotéku. Důležitější než název je, kolik nabídek s vámi projde a jestli rozumíte tomu, co podepisujete.' },
       { q: 'Co si mám připravit na první schůzku?', a: 'Stačí představa o tom, co chcete financovat, a přehled o vašich příjmech a výdajích. Konkrétní doklady řešíme až v dalším kroku – dostanete ode mě přesný seznam.' },
       { q: 'Jak dlouho trvá vyřízení hypotéky?', a: 'Záleží na bance, typu nemovitosti a na tom, jak rychle se podaří připravit podklady. Obvykle počítejte s několika týdny. Odhad pro vaši situaci vám řeknu na první schůzce.' },
       { q: 'Kdy začít řešit konec fixace?', a: 'Ideálně několik měsíců předem. Budete mít čas porovnat nabídku své banky s dalšími možnostmi a v klidu se rozhodnout.' },
@@ -439,7 +440,7 @@ window.SITE = {
   contactSection: {
     eyebrow: 'Kancelář a kontakt',
     title: 'Pojďme probrat *vaše možnosti*.',
-    intro: 'Potkáme se v kanceláři, online, nebo po telefonu. Schůzky domlouvám vždy předem, abych na vás měla dost času.',
+    intro: 'Potkáme se v kanceláři na Husově v Brně, online, nebo po telefonu. Schůzky domlouvám vždy předem, abych na vás měla dost času.',
     officeTitle: 'Kancelář',
     callCta: 'Zavolat',
     mapCta: 'Otevřít v Google Maps',
