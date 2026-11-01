@@ -1,7 +1,4 @@
-# PROTOTYP – web zatím neindexovat.
-# Před spuštěním ostrého webu nahraďte pravidly níže a doplňte sitemap:
-#   User-agent: *
-#   Allow: /
-#   Sitemap: https://www.[domena].cz/sitemap.xml
 User-agent: *
-Disallow: /
+Allow: /
+
+Sitemap: https://petaholec.github.io/petra-kilianova-web/sitemap.xml
