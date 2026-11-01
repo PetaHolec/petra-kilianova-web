@@ -22,7 +22,7 @@ const txt = (v) => esc(plain(v));
 
 /* ---------- Podstránky: titulek a popis ---------- */
 const PAGES = {
-  'recenze.html': { title: 'Recenze klientů – hypoteční poradkyně Brno | Petra Kilianová', description: 'Zkušenosti klientů s hypoteční poradkyní Petrou Kilianovou z Brna. Přečtěte si, jak probíhalo vyřízení hypotéky a refinancování očima lidí, kteří jím prošli.', sitemap: true },
+  'recenze.html': { title: 'Recenze klientů – hypoteční poradkyně | Petra Kilianová', description: 'Zkušenosti klientů s hypoteční poradkyní Petrou Kilianovou. Přečtěte si, jak probíhalo vyřízení hypotéky a refinancování očima lidí, kteří jím prošli.', sitemap: true },
   'slovnicek.html': { title: 'Slovníček hypotečních pojmů: fixace, LTV, RPSN | Petra Kilianová', description: 'Co znamená fixace, LTV, RPSN, čerpání nebo zástava? Nejčastější pojmy kolem hypoték vysvětlené srozumitelně a na jednom místě.', sitemap: true },
   'ochrana-osobnich-udaju.html': { title: 'Ochrana osobních údajů | Petra Kilianová', description: 'Informace o zpracování osobních údajů a používání cookies na webu hypoteční poradkyně Petry Kilianové.', sitemap: true },
   'blog.html': { title: 'Blog o hypotékách | Petra Kilianová', description: 'Tipy, vysvětlení a odpovědi na časté otázky kolem hypoték a financování bydlení.' },
@@ -46,7 +46,7 @@ function jsonLd() {
       telephone: S.contact.phoneHref || undefined,
       email: S.contact.emailHref || undefined,
       brand: { '@type': 'Brand', name: 'Gepard Finance' },
-      areaServed: { '@type': 'City', name: S.brand.city },
+      areaServed: { '@type': 'Country', name: 'Česko' },
       address: { '@type': 'PostalAddress', streetAddress: o.street, postalCode, addressLocality: locality[0], addressCountry: 'CZ' },
       hasOfferCatalog: {
         '@type': 'OfferCatalog',

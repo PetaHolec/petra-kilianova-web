@@ -41,7 +41,7 @@ window.SITE = {
   /* ---------- SEO (titulek a popis ve vyhledávačích) ---------- */
   seo: {
     title: 'Hypoteční poradkyně Brno – Petra Kilianová | Gepard Finance',
-    description: 'Hypoteční poradkyně v Brně. Porovnám nabídky bank a provedu vás hypotékou i refinancováním při konci fixace. Osobně na Husově, online i po telefonu.',
+    description: 'Hypoteční poradkyně s kanceláří v Brně, pomáhám po celé ČR. Porovnám nabídky bank a provedu vás hypotékou i refinancováním. Osobně, online i po telefonu.',
     url: 'https://petaholec.github.io/petra-kilianova-web/',   // po koupi domény přepsat a spustit node tools/seo-static.js
   },
 
@@ -101,8 +101,8 @@ window.SITE = {
   hero: {
     eyebrow: '',                         // nepovinný řádek nad nadpisem
     reassure: 'Osobně, online i po telefonu · První schůzka nezávazně',   // řádek pod tlačítky
-    title: 'Váš nový *domov* v Brně začíná správným rozhodnutím.',
-    text: 'Jsem hypoteční poradkyně v Brně. Pomohu vám zorientovat se v hypotékách a najít financování, které sedí vašim plánům. Vysvětlím vám každou možnost a provedu vás celým procesem – od první otázky až po podpis.',
+    title: 'Váš nový *domov* začíná správným rozhodnutím.',
+    text: 'Jsem hypoteční poradkyně s kanceláří v Brně a pomáhám klientům po celé republice. Pomohu vám zorientovat se v hypotékách a najít financování, které sedí vašim plánům. Vysvětlím vám každou možnost a provedu vás celým procesem – od první otázky až po podpis.',
     primaryCta: 'Domluvit schůzku',
     secondaryCta: 'Jak vám mohu pomoci',
     portrait: {
@@ -123,7 +123,7 @@ window.SITE = {
   services: {
     eyebrow: 'S čím mohu pomoci',
     title: 'Ať teprve začínáte, nebo vám končí fixace.',
-    intro: 'Hypotéka, refinancování, stavba i rekonstrukce v Brně a okolí. Vyberte si, co právě řešíte. Na první schůzce si ujasníme vaši situaci a já vám ukážu, jaké máte možnosti – bez zbytečných odborných pojmů.',
+    intro: 'Hypotéka, refinancování, stavba i rekonstrukce, ať bydlíte kdekoli. Vyberte si, co právě řešíte. Na první schůzce si ujasníme vaši situaci a já vám ukážu, jaké máte možnosti – bez zbytečných odborných pojmů.',
     detailsLabel: 'Co spolu vyřešíme',
     cta: 'Domluvit schůzku',
     note: 'Rozsah a názvy služeb jsou návrh – je potřeba je potvrdit s klientkou.',
@@ -239,7 +239,7 @@ window.SITE = {
   about: {
     eyebrow: 'O mně',
     title: 'Za každou hypotékou je jeden velký životní krok.',
-    lead: 'Jmenuji se Petra Kilianová a jsem hypoteční poradkyně v Brně. Pomáhám lidem financovat bydlení tak, aby rozuměli tomu, co podepisují – a mohli se na nový domov těšit.',
+    lead: 'Jmenuji se Petra Kilianová a jsem hypoteční poradkyně s kanceláří v Brně. Pomáhám lidem financovat bydlení tak, aby rozuměli tomu, co podepisují – a mohli se na nový domov těšit.',
     paragraphs: [
       'Za každou žádostí o hypotéku vidím konkrétní příběh. Pár, který poprvé podepisuje kupní smlouvu. Rodinu, které je malý byt těsný. Nebo někoho, kdo konečně staví dům, o kterém roky mluvil.',
       'Mou prací je přeložit čísla, podmínky a bankovní jazyk do srozumitelných rozhodnutí. Abyste věděli, proč volíte právě tuhle variantu – a co pro vás bude znamenat za pět nebo deset let.',
