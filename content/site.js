@@ -613,10 +613,7 @@ window.SITE = {
     // Regulatorní a identifikační údaje – NEVYMÝŠLET, doplnit až po ověření.
     legal: [
       { label: 'Identifikační údaje', value: 'Kili company s. r. o. · IČO 02634252 · DIČ CZ02634252 · sídlo Husova 594/6, 602 00 Brno' },
-      { label: 'Značka', value: 'Působím jako franšízová poradkyně značky Gepard Finance. [Údaje o franšízové smlouvě a sídle značky – doplnit]' },
-      { label: 'Postavení a registrace', value: '[Postavení zprostředkovatele a údaje o registraci – doplnit po ověření]' },
-      { label: 'Stížnosti a spory', value: '[Informace o vyřizování stížností a mimosoudním řešení sporů – doplnit po ověření]' },
-      { label: 'Reprezentativní příklad', value: '[Doplnit, pokud web uvádí úrokové sazby nebo náklady úvěru – podle pokynů Gepard Finance]' },
+      { label: 'Postavení', value: 'Společnost GEPARD FINANCE a.s. je samostatným zprostředkovatelem spotřebitelského úvěru. Já jsem vázaným zástupcem GEPARD FINANCE a.s. a poskytuji doporučení podle § 3 odst. 1 písm. b) bodu 3 zákona 257 / 2016 Sb. o spotřebitelském úvěru. Společnost GEPARD FINANCE a.s. a její vázaní zástupci se nezabývají poskytováním rady podle § 85 zákona 257 / 2016 Sb. o spotřebitelském úvěru.' },
     ],
     prototypeNote: 'Prototyp webu – fotografie, texty a právní údaje budou doplněny po ověření.',
   },
