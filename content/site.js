@@ -468,7 +468,7 @@ window.SITE = {
 
   /* ---------- Patička a právní informace ---------- */
   footer: {
-    credit: { label: 'Tvorba webu: Skočdal', url: '' },   // url = adresa webu tvůrce; prázdné = jen text bez odkazu
+    credit: { label: 'Tvorba webu: Skočdal', url: 'https://skocdal.cz' },
     legalLinks: [
       { label: 'Ochrana osobních údajů', href: 'ochrana-osobnich-udaju.html' },
       { label: 'Nastavení cookies', action: 'cookies' },
