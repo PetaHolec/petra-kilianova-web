@@ -358,7 +358,8 @@ legend { padding: 0; }
 .road__step--finish .road__dot .i { width: 26px; height: 26px; }
 .road__title { margin-bottom: .55rem; font-size: 1.15rem; line-height: 1.25; color: var(--forest); }
 .road__text { font-size: .96875rem; color: var(--ink); }
-.road__finish { margin-bottom: 1.25rem; font-size: 1.15rem; font-weight: 700; line-height: 1.25; color: var(--forest); }
+.road__text + .btn { margin-top: 1.25rem; }
+.road__finish { margin-bottom: 0; font-size: 1.15rem; font-weight: 700; line-height: 1.25; color: var(--forest); }
 .calc { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); overflow: hidden; border: 1px solid var(--line); border-radius: var(--r-lg); background: #fff; }
 .calc__inputs { padding: clamp(1.25rem, 3vw, 2rem); }
 .calc__field { margin-bottom: 1.5rem; }
@@ -789,7 +790,7 @@ a.alt-contact:hover { color: var(--lime-deep); }
   .road__step { display: grid; grid-template-columns: 56px minmax(0, 1fr); column-gap: 1.1rem; }
   .road__dot { grid-row: 1 / span 4; margin: 0; }
   .road__step > :not(.road__dot) { grid-column: 2; }
-  .road__step--finish .btn { justify-self: start; }
+  .road__step .btn { justify-self: start; }
 
   .footer__top { grid-template-columns: 1fr 1fr; }
   .footer__brand { grid-column: 1 / -1; }

@@ -267,7 +267,7 @@ window.SITE = {
     steps: [
       { title: 'Probereme vaše plány', text: 'Osobně, online nebo po telefonu. Řeknete mi, co chcete financovat a kdy. Podklady zatím nepotřebujete, stačí vaše představa.' },
       { title: 'Porovnáme možnosti', text: 'Porovnáme varianty podle sazby, délky fixace a výše splátky. Vy si vyberete tu, která vám sedí.' },
-      { title: 'Vyřídíme žádost a podklady', text: 'Dostanete ode mě seznam podkladů. Až je připravíte, podáme žádost a před podpisem vám každý dokument vysvětlím.' },
+      { title: 'Vyřídíme žádost a podklady', text: 'Ověříme u banky, zda je to možné, zkompletujeme podklady a podepíšeme dokumenty.' },
       { title: 'Zůstaneme v kontaktu', text: 'Když se změní vaše plány, napište mi a domluvíme další krok.' },
     ],
   },

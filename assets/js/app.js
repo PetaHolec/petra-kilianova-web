@@ -281,17 +281,20 @@ ${renderPartners()}`;
   <div class="container">
     ${sectionHead(p.eyebrow, p.title, p.intro, 'process-title')}
     <ol class="road" role="list" data-road>
-      ${p.steps.map((s, i) => `
+      ${p.steps.map((s, i) => {
+        const last = i === p.steps.length - 1;
+        return `${last ? `
+      <li class="road__step road__step--finish">
+        <span class="road__dot" aria-hidden="true">${icon('key')}</span>
+        <p class="road__finish">${esc(p.finish || '')}</p>
+      </li>` : ''}
       <li class="road__step">
         <span class="road__dot" aria-hidden="true">${i + 1}</span>
         <h3 class="road__title"><span class="visually-hidden">Krok ${i + 1}: </span>${fmt(s.title)}</h3>
         <p class="road__text">${fmt(s.text)}</p>
-      </li>`).join('')}
-      <li class="road__step road__step--finish">
-        <span class="road__dot" aria-hidden="true">${icon('key')}</span>
-        <p class="road__finish">${esc(p.finish || '')}</p>
-        ${btn(p.cta, { to: href('rezervace'), attrs: 'data-book data-track="cta_process"' })}
-      </li>
+        ${last ? btn(p.cta, { to: href('rezervace'), attrs: 'data-book data-track="cta_process"' }) : ''}
+      </li>`;
+      }).join('')}
     </ol>
   </div>
 </section>`;
