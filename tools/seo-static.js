@@ -21,6 +21,9 @@ const isPh = (v) => /\[[^\]]*\]/.test(String(v || ''));           // obsahuje z�
 const txt = (v) => esc(plain(v));
 
 /* ---------- Podstránky: titulek a popis ---------- */
+// Adresy na webu jsou bez .html, viz .htaccess
+const cleanPath = (file) => file.replace(/\.html$/, '');
+
 const PAGES = {
   'recenze.html': { title: 'Petra Kilianová – recenze', description: 'Zkušenosti klientů s hypoteční poradkyní Petrou Kilianovou. Přečtěte si, jak probíhalo vyřízení hypotéky a refinancování očima lidí, kteří jím prošli.', sitemap: true },
   'slovnicek.html': { title: 'Petra Kilianová – slovníček', description: 'Co znamená fixace, LTV, RPSN, čerpání nebo zástava? Nejčastější pojmy kolem hypoték vysvětlené srozumitelně a na jednom místě.', sitemap: true },
@@ -105,7 +108,7 @@ function staticMain() {
     ...S.faq.items.filter((it) => !isPh(it.a)).map((it) => `<h3>${txt(it.q)}</h3>\n<p>${txt(it.a)}</p>`),
     `<h2>${txt(S.contactSection.title)}</h2>`,
     `<p>${txt(o.name)}, ${txt(o.street)}, ${txt(o.city)}. Telefon: <a href="tel:${esc(S.contact.phoneHref)}">${esc(S.contact.phone)}</a>, e-mail: <a href="mailto:${esc(S.contact.emailHref)}">${esc(S.contact.email)}</a>.</p>`,
-    '<p><a href="recenze.html">Recenze klientů</a> · <a href="slovnicek.html">Slovníček hypotečních pojmů</a></p>',
+    '<p><a href="recenze">Recenze klientů</a> · <a href="slovnicek">Slovníček hypotečních pojmů</a></p>',
   ];
   return `<div class="seo-static">\n${parts.join('\n')}\n</div>`;
 }
@@ -127,11 +130,11 @@ Object.entries(PAGES).forEach(([file, p]) => {
   const fp = path.join(root, file);
   let html = fs.readFileSync(fp, 'utf8');
   html = html.replace(/<title>[\s\S]*?<\/title>/, `<title>${esc(p.title)}</title>`);
-  html = html.replace(/<meta name="description" content="[^"]*">(\n\s*<link rel="canonical"[^>]*>)?/, `<meta name="description" content="${esc(p.description)}">\n  <link rel="canonical" href="${esc(BASE + file)}">`);
+  html = html.replace(/<meta name="description" content="[^"]*">(\n\s*<link rel="canonical"[^>]*>)?/, `<meta name="description" content="${esc(p.description)}">\n  <link rel="canonical" href="${esc(BASE + cleanPath(file))}">`);
   fs.writeFileSync(fp, html);
 });
 
-const urls = [BASE, ...Object.entries(PAGES).filter(([, p]) => p.sitemap).map(([f]) => BASE + f)];
+const urls = [BASE, ...Object.entries(PAGES).filter(([, p]) => p.sitemap).map(([f]) => BASE + cleanPath(f))];
 fs.writeFileSync(path.join(root, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map((u) => `  <url><loc>${esc(u)}</loc></url>`).join('\n')}

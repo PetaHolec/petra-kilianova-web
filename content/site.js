@@ -89,12 +89,12 @@ window.SITE = {
     { label: 'Kalkulačka', target: 'kalkulacka', main: true, footer: true },
     { label: 'Rezervace', target: 'rezervace' },
     { label: 'Ze života poradkyně', target: 'ze-zivota' },
-    { label: 'Blog', target: 'blog', url: 'blog.html', main: true, needsPosts: true },
+    { label: 'Blog', target: 'blog', url: 'blog', main: true, needsPosts: true },
     { label: 'Reference', footerLabel: 'Recenze', target: 'reference', footer: true },
-    { label: 'Všechny recenze', target: 'recenze', url: 'recenze.html' },
+    { label: 'Všechny recenze', target: 'recenze', url: 'recenze' },
     { label: 'FAQ', footerLabel: 'Časté otázky', target: 'otazky', main: true, footer: true },
-    { label: 'Slovníček', target: 'slovnicek', url: 'slovnicek.html', main: true },
-    { label: 'Certifikace', target: 'certifikace', url: 'certifikace.html', main: true },
+    { label: 'Slovníček', target: 'slovnicek', url: 'slovnicek', main: true },
+    { label: 'Certifikace', target: 'certifikace', url: 'certifikace', main: true },
     { label: 'Kontakt', target: 'kontakt', main: true, footer: true },
   ],
   navCta: 'Domluvit schůzku',
@@ -608,8 +608,8 @@ window.SITE = {
   footer: {
     credit: { label: 'Tvorba webu: Skočdal', url: 'https://skocdal.cz' },
     legalLinks: [
-      { label: 'Reklamační řád', href: 'reklamacni-rad.html' },
-      { label: 'Ochrana osobních údajů', href: 'ochrana-osobnich-udaju.html' },
+      { label: 'Reklamační řád', href: 'reklamacni-rad' },
+      { label: 'Ochrana osobních údajů', href: 'ochrana-osobnich-udaju' },
       { label: 'Nastavení cookies', action: 'cookies' },
     ],
     // Regulatorní a identifikační údaje – NEVYMÝŠLET, doplnit až po ověření.

@@ -141,7 +141,7 @@
               ${PV.field({ id: 'bk-note', name: 'note', label: 'Chcete mi něco vzkázat předem?', rows: 3, full: true, placeholder: 'Např. kupujeme první byt a máme rezervaci do konce měsíce…' })}
             </div>
             <div class="hp-field" aria-hidden="true"><label for="bk-company">Toto pole nevyplňujte</label><input id="bk-company" name="company" tabindex="-1" autocomplete="off"></div>
-            <p class="form-privacy">Údaje použijeme jen k domluvení schůzky. Více v <a href="ochrana-osobnich-udaju.html">zásadách ochrany osobních údajů</a>.</p>
+            <p class="form-privacy">Údaje použijeme jen k domluvení schůzky. Více v <a href="ochrana-osobnich-udaju">zásadách ochrany osobních údajů</a>.</p>
             <div class="bk__actions"><p class="bk__hint">Krok 3 ze 3</p><button class="btn btn--primary" type="submit"><span>Potvrdit rezervaci</span><span class="btn__icon" aria-hidden="true">${icon('arrow-right')}</span></button></div>
           </form>
         </section>

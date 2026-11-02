@@ -119,7 +119,7 @@
     el.hidden = true;
     el.innerHTML = `
       <h2 class="consent__title">${icon('cookie')}Cookies a soukromí</h2>
-      <p class="consent__text">Web používá jen technologie nutné pro svůj chod. Analytické a marketingové cookies zapneme pouze s vaším souhlasem. Více v <a href="ochrana-osobnich-udaju.html#cookies">zásadách ochrany osobních údajů</a>.</p>
+      <p class="consent__text">Web používá jen technologie nutné pro svůj chod. Analytické a marketingové cookies zapneme pouze s vaším souhlasem. Více v <a href="ochrana-osobnich-udaju#cookies">zásadách ochrany osobních údajů</a>.</p>
       <div class="consent__prefs" data-prefs hidden>
         <div class="consent__cat">
           <div class="consent__cat-text"><strong>Nezbytné</strong><span>Zajišťují základní funkce webu. Jsou vždy zapnuté.</span></div>

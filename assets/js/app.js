@@ -24,7 +24,7 @@
     .filter((n) => !n.needsPosts || hasPosts);
   const mainNav = navItems.filter((n) => n.main);
 
-  const href = (id) => (isHome ? '#' : 'index.html#') + id;
+  const href = (id) => (isHome ? '#' : './#') + id;
   const notesOn = proto && PV.store.get('pv_notes') === true;
   if (notesOn) document.documentElement.classList.add('show-notes');
 
@@ -61,7 +61,7 @@
   const emailValue = () => (C.emailHref ? `<a href="mailto:${esc(C.emailHref)}" data-track="contact_email">${fmt(C.email)}</a>` : fmt(C.email));
 
   const logo = (white = false) =>
-    `<a class="logo" href="${isHome ? '#uvod' : 'index.html'}" aria-label="${esc(S.brand.name)}, ${esc(S.brand.role.toLowerCase())} – na úvod"><img class="logo__gepard" src="assets/img/gepard/logo${white ? '-white' : ''}.svg" alt="" width="181" height="91"><span class="logo__text"><span class="logo__name">${esc(S.brand.name)}</span><span class="logo__role">${esc(S.brand.role)}</span></span></a>`;
+    `<a class="logo" href="${isHome ? '#uvod' : './'}" aria-label="${esc(S.brand.name)}, ${esc(S.brand.role.toLowerCase())} – na úvod"><img class="logo__gepard" src="assets/img/gepard/logo${white ? '-white' : ''}.svg" alt="" width="181" height="91"><span class="logo__text"><span class="logo__name">${esc(S.brand.name)}</span><span class="logo__role">${esc(S.brand.role)}</span></span></a>`;
 
   const phBlock = (t) => (PV.isPh(t)
     ? `<div class="ph-block">${icon('edit')}<p>${PV.text(PV.stripPh(t))}</p></div>`
@@ -465,7 +465,7 @@ ${renderPartners()}`;
       <li class="review">
         <figure>
           <blockquote><p class="review__text">${PV.text(it.text)}</p></blockquote>
-          ${reviewAuthor(it).replace('</figcaption>', `<a class="review__more" href="recenze.html#recenze-${i + 1}" hidden aria-label="Číst celou recenzi od: ${esc(PV.stripPh(it.name))}"><span class="review__more-text">Celá recenze</span>${icon('arrow-right')}</a></figcaption>`)}
+          ${reviewAuthor(it).replace('</figcaption>', `<a class="review__more" href="recenze#recenze-${i + 1}" hidden aria-label="Číst celou recenzi od: ${esc(PV.stripPh(it.name))}"><span class="review__more-text">Celá recenze</span>${icon('arrow-right')}</a></figcaption>`)}
         </figure>
       </li>`;
       }).join('')}
@@ -475,7 +475,7 @@ ${renderPartners()}`;
     <div class="testimonials__foot">
       <p>${fmt(t.ask)}</p>
       <div class="testimonials__links">
-        ${linkArrow(t.allLabel || 'Všechny recenze', 'recenze.html', 'data-track="reviews_all"')}
+        ${linkArrow(t.allLabel || 'Všechny recenze', 'recenze', 'data-track="reviews_all"')}
         ${reviewLink(t.reviewLink)}
       </div>
     </div>
@@ -490,7 +490,7 @@ ${renderPartners()}`;
     return `
 <section class="blog-page reviews-page">
   <div class="container">
-    <a class="link-arrow link-arrow--back" href="index.html#reference"><span class="link-arrow__icon" aria-hidden="true">${icon('arrow-left')}</span><span class="link-arrow__text">Zpět na úvodní stránku</span></a>
+    <a class="link-arrow link-arrow--back" href="./#reference"><span class="link-arrow__icon" aria-hidden="true">${icon('arrow-left')}</span><span class="link-arrow__text">Zpět na úvodní stránku</span></a>
     <header class="blog-head">
       <p class="kicker">${esc(t.eyebrow)}</p>
       <h1 class="h2">${fmt(t.pageTitle || t.title)}</h1>
@@ -523,7 +523,7 @@ ${renderPartners()}`;
       ${eyebrow(f.eyebrow)}
       <h2 class="h2" id="faq-title">${fmt(f.title)}</h2>
       <p>${fmt(f.intro)}</p>
-      <a class="glossary-card" href="slovnicek.html" data-track="glossary_open">
+      <a class="glossary-card" href="slovnicek" data-track="glossary_open">
         <span><strong>${esc(f.glossaryTitle)}</strong><span>${fmt(f.glossaryText)}</span></span>
       </a>
       ${note(f.note)}
@@ -545,7 +545,7 @@ ${renderPartners()}`;
     return `
 <section class="blog-page">
   <div class="container">
-    <a class="link-arrow link-arrow--back" href="index.html#otazky"><span class="link-arrow__icon" aria-hidden="true">${icon('arrow-left')}</span><span class="link-arrow__text">Zpět na časté otázky</span></a>
+    <a class="link-arrow link-arrow--back" href="./#otazky"><span class="link-arrow__icon" aria-hidden="true">${icon('arrow-left')}</span><span class="link-arrow__text">Zpět na časté otázky</span></a>
     <header class="blog-head">
       <p class="kicker">Srozumitelně</p>
       <h1 class="h2">${esc(f.glossaryTitle)}</h1>
@@ -569,7 +569,7 @@ ${renderPartners()}`;
     return `
 <section class="blog-page">
   <div class="container">
-    <a class="link-arrow link-arrow--back" href="index.html"><span class="link-arrow__icon" aria-hidden="true">${icon('arrow-left')}</span><span class="link-arrow__text">Zpět na úvodní stránku</span></a>
+    <a class="link-arrow link-arrow--back" href="./"><span class="link-arrow__icon" aria-hidden="true">${icon('arrow-left')}</span><span class="link-arrow__text">Zpět na úvodní stránku</span></a>
     <header class="blog-head">
       <p class="kicker">${esc(c.eyebrow)}</p>
       <h1 class="h2">${esc(c.title)}</h1>

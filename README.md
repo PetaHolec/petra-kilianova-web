@@ -97,6 +97,10 @@ Barvy a písma se mění na jednom místě – proměnné na začátku `assets/c
 
 ---
 
+## Adresy bez .html
+
+Odkazy na webu i sitemap používají adresy bez přípony (`/slovnicek`). Na hostingu to zařizuje `.htaccess` (Apache), na GitHub Pages to funguje samo. Místní náhled: `php -S 127.0.0.1:5174 -t . tools/dev-router.php`. Nová podstránka: odkazovat bez `.html`.
+
 ## Blog a správa webu
 
 Blog se spravuje přímo na webu, na adrese **`admin.html`** (např. `https://petaholec.github.io/petra-kilianova-web/admin.html`). Klientka tam bez programování píše, upravuje, skrývá (koncept) a maže články.
