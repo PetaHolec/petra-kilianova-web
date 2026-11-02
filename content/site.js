@@ -511,7 +511,7 @@ window.SITE = {
     ],
     // Regulatorní a identifikační údaje – NEVYMÝŠLET, doplnit až po ověření.
     legal: [
-      { label: 'Identifikační údaje', value: 'Petra Kilianová · [IČO a sídlo – doplnit]' },
+      { label: 'Identifikační údaje', value: 'Kili company s. r. o. · IČO 02634252 · DIČ CZ02634252 · sídlo Husova 594/6, 602 00 Brno' },
       { label: 'Značka', value: 'Působím jako franšízová poradkyně značky Gepard Finance. [Údaje o franšízové smlouvě a sídle značky – doplnit]' },
       { label: 'Postavení a registrace', value: '[Postavení zprostředkovatele a údaje o registraci – doplnit po ověření]' },
       { label: 'Stížnosti a spory', value: '[Informace o vyřizování stížností a mimosoudním řešení sporů – doplnit po ověření]' },
