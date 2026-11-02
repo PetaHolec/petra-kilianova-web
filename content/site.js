@@ -106,12 +106,6 @@ window.SITE = {
     text: 'Jsem hypoteční poradkyně s kanceláří v Brně a pomáhám klientům po celé republice. Porovnám možnosti financování a provedu vás hypotékou od první konzultace až po podpis.',
     primaryCta: 'Domluvit schůzku',
     secondaryCta: 'Jak vám mohu pomoci',
-    portrait: {
-      src: 'assets/img/petra-kilianova.jpg',
-      alt: 'Portrét hypoteční poradkyně Petry Kilianové',
-      label: 'Portrét poradkyně',
-      hint: 'Profesionální fotografie · 4 : 5 · min. 1600 × 2000 px',
-    },
     card: {
       title: 'První krok je jednoduchý',
       text: 'Vyberte si termín schůzky – osobně, online, nebo po telefonu.',

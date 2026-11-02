@@ -127,7 +127,6 @@
     <div class="hero__visual">
       <div class="hero__panel">
         ${houseArt}
-        ${media(h.portrait, { ratio: '4/5', className: 'hero__portrait', eager: true })}
       </div>
     </div>
   </div>
