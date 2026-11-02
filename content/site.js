@@ -107,7 +107,7 @@ window.SITE = {
     primaryCta: 'Domluvit schůzku',
     secondaryCta: 'Jak vám mohu pomoci',
     portrait: {
-      src: '',
+      src: 'assets/img/petra-kilianova.jpg',
       alt: 'Portrét hypoteční poradkyně Petry Kilianové',
       label: 'Portrét poradkyně',
       hint: 'Profesionální fotografie · 4 : 5 · min. 1600 × 2000 px',
@@ -249,7 +249,7 @@ window.SITE = {
     signature: 'Petra Kilianová',
     photoNote: 'To jsem já',
     cta: 'Domluvit schůzku',
-    portrait: { src: '', alt: 'Petra Kilianová, hypoteční poradkyně', label: 'Portrét – osobní představení', hint: 'Přirozené světlo · 3 : 4 · min. 1500 × 2000 px' },
+    portrait: { src: 'assets/img/petra-kilianova.jpg', alt: 'Petra Kilianová, hypoteční poradkyně', label: 'Portrét – osobní představení', hint: 'Přirozené světlo · 3 : 4 · min. 1500 × 2000 px' },
     note: 'Návrh textu – finální podobu upravíme po rozhovoru s klientkou. Neobsahuje žádné vymyšlené údaje o praxi, oprávněních ani úspěších. Logo a prezentaci partnera ověřit podle pravidel Gepard Finance.',
   },
 
@@ -259,9 +259,9 @@ window.SITE = {
     title: 'Při práci mi pomáhá asistentka.',
     intro: '[Volitelné: krátké představení asistentky a toho, s čím vám pomůže.]',
     members: [
-      { name: '[Jméno a příjmení]', role: 'Asistentka', text: '[Jednou větou: s čím klientům pomáhá]', photo: { src: '', alt: '', label: 'Portrét asistentky' } },
+      { name: 'Alžběta Mejzlíková', role: 'Asistentka', text: '[Jednou větou: s čím klientům pomáhá]', photo: { src: 'assets/img/alzbeta-mejzlikova.jpg', alt: 'Alžběta Mejzlíková, asistentka', label: 'Portrét asistentky' } },
     ],
-    note: 'Volitelná sekce. Vypnete ji v souboru content/site.js (settings.showTeam: false). Neuvádíme žádné skutečné zaměstnance.',
+    note: 'Volitelná sekce. Vypnete ji v souboru content/site.js (settings.showTeam: false). Jméno a fotka asistentky jsou z webu Gepard Finance (gpf.cz/brno-husova).',
   },
 
   /* ---------- Jak probíhá spolupráce ---------- */
