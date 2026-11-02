@@ -607,6 +607,7 @@ window.SITE = {
   footer: {
     credit: { label: 'Tvorba webu: Skočdal', url: 'https://skocdal.cz' },
     legalLinks: [
+      { label: 'Reklamační řád', href: 'reklamacni-rad.html' },
       { label: 'Ochrana osobních údajů', href: 'ochrana-osobnich-udaju.html' },
       { label: 'Nastavení cookies', action: 'cookies' },
     ],

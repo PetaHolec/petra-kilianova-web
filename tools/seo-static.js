@@ -26,6 +26,7 @@ const PAGES = {
   'slovnicek.html': { title: 'Slovníček hypotečních pojmů: fixace, LTV, RPSN | Petra Kilianová', description: 'Co znamená fixace, LTV, RPSN, čerpání nebo zástava? Nejčastější pojmy kolem hypoték vysvětlené srozumitelně a na jednom místě.', sitemap: true },
   'certifikace.html': { title: 'Certifikace a ocenění – hypoteční poradkyně | Petra Kilianová', description: 'Osvědčení o odborné zkoušce, certifikáty a ocenění hypoteční poradkyně Petry Kilianové na jednom místě.', sitemap: true },
   'ochrana-osobnich-udaju.html': { title: 'Ochrana osobních údajů | Petra Kilianová', description: 'Informace o zpracování osobních údajů a používání cookies na webu hypoteční poradkyně Petry Kilianové.', sitemap: true },
+  'reklamacni-rad.html': { title: 'Reklamační řád | Petra Kilianová', description: 'Reklamační řád společnosti GEPARD FINANCE a.s.: jak podat reklamaci nebo stížnost a jak se vyřizují.', sitemap: true },
   'blog.html': { title: 'Blog o hypotékách | Petra Kilianová', description: 'Tipy, vysvětlení a odpovědi na časté otázky kolem hypoték a financování bydlení.' },
 };
 
