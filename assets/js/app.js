@@ -309,7 +309,7 @@ ${renderPartners()}`;
           <div class="calc__field">
             <div class="calc__row">
               <label class="calc__label" for="calc-${key}">${esc(label)}</label>
-              <span class="calc__money"><input class="calc__money-input" type="text" inputmode="numeric" autocomplete="off" data-calc-text="${key}" aria-label="${esc(label)} v korunách">Kč</span>
+              <span class="calc__money"><input class="calc__money-input" type="text" inputmode="numeric" autocomplete="off" name="calc-${key}" data-calc-text="${key}" aria-label="${esc(label)} v korunách">Kč</span>
             </div>
             <input class="range" type="range" id="calc-${key}" step="50000" data-calc-range="${key}" aria-label="${esc(label)}">
             <div class="calc__scale" aria-hidden="true"><span data-min="${key}"></span><span data-max="${key}"></span></div>
