@@ -415,15 +415,49 @@ window.SITE = {
     glossaryText: 'Fixace, LTV, RPSN… Co která slova znamenají, vysvětlená lidsky a na jednom místě.',
     glossaryCta: 'Slovníček pojmů',
     glossaryIntro: 'Hypotéky mají svůj vlastní jazyk. Tady najdete nejčastější pojmy vysvětlené srozumitelně.',
-    glossary: [
-      { term: 'Fixace', def: 'Období, po které se nemění úroková sazba. Po jejím skončení dostanete novou nabídku – nebo můžete hypotéku převést jinam.' },
-      { term: 'LTV', def: 'Poměr výše úvěru k hodnotě nemovitosti. Čím je nižší, tím menší riziko pro banku.' },
-      { term: 'DTI', def: 'Poměr všech vašich dluhů k čistému ročnímu příjmu. Ukazuje, kolikanásobek ročního příjmu dlužíte, a banka podle něj posuzuje, kolik si můžete půjčit.' },
-      { term: 'DSTI', def: 'Poměr všech vašich měsíčních splátek k čistému měsíčnímu příjmu. Ukazuje, jakou část příjmu vám splátky každý měsíc vezmou.' },
-      { term: 'RPSN', def: 'Roční procentní sazba nákladů. Zahrnuje úrok i další náklady úvěru a pomáhá porovnat nabídky mezi sebou.' },
-      { term: 'Odhad nemovitosti', def: 'Ocenění nemovitosti, ze kterého banka vychází při rozhodování, kolik vám může půjčit.' },
-      { term: 'Čerpání', def: 'Vyplacení peněz z hypotéky – najednou, nebo postupně, například podle průběhu stavby.' },
-      { term: 'Zástava', def: 'Nemovitost, kterou hypotéku zajišťujete. Banka ji má zapsanou v katastru, dokud úvěr nesplatíte.' },
+    glossaryGroups: [
+      {
+        title: 'Schvalování hypotéky',
+        items: [
+          { term: 'LTV', def: 'Poměr výše úvěru k hodnotě nemovitosti. Čím je nižší, tím menší riziko pro banku.' },
+          { term: 'DTI', def: 'Poměr všech vašich dluhů k čistému ročnímu příjmu. Ukazuje, kolikanásobek ročního příjmu dlužíte, a banka podle něj posuzuje, kolik si můžete půjčit.' },
+          { term: 'DSTI', def: 'Poměr všech vašich měsíčních splátek k čistému měsíčnímu příjmu. Ukazuje, jakou část příjmu vám splátky každý měsíc vezmou.' },
+          { term: 'Odhad nemovitosti', def: 'Ocenění nemovitosti, ze kterého banka vychází při rozhodování, kolik vám může půjčit.' },
+          { term: 'Předschválená hypotéka', def: 'Banka předběžně posoudí vaše příjmy a závazky a řekne vám, kolik si můžete půjčit, ještě než si vyberete konkrétní nemovitost. Konečné schválení přijde až po jejím posouzení.' },
+        ],
+      },
+      {
+        title: 'Splácení a čerpání',
+        items: [
+          { term: 'Fixace', def: 'Období, po které se nemění úroková sazba. Po jejím skončení dostanete novou nabídku – nebo můžete hypotéku převést jinam.' },
+          { term: 'RPSN', def: 'Roční procentní sazba nákladů. Zahrnuje úrok i další náklady úvěru a pomáhá porovnat nabídky mezi sebou.' },
+          { term: 'Čerpání', def: 'Vyplacení peněz z hypotéky – najednou, nebo postupně, například podle průběhu stavby.' },
+          { term: 'Podmínky čerpání', def: 'Co musíte splnit, než vám banka peníze vyplatí. Například podepsaná zástavní smlouva, návrh na vklad do katastru nebo pojištění nemovitosti.' },
+          { term: 'Postupné čerpání', def: 'Peníze dostáváte po částech, obvykle podle postupu stavby nebo rekonstrukce a doložených faktur. Do vyčerpání celé částky platíte většinou jen úroky z toho, co už jste vyčerpali.' },
+          { term: 'Dočerpání úvěru', def: 'Vyplacení zbývající části úvěru, zpravidla do termínu sjednaného ve smlouvě. Typicky jde o poslední platbu za dokončenou stavbu nebo rekonstrukci.' },
+          { term: 'Nedočerpání úvěru', def: 'Situace, kdy do konce lhůty pro čerpání nevyužijete celou schválenou částku. Některé banky si za to účtují poplatek. Podmínky najdete ve smlouvě.' },
+          { term: 'Odklad splátek', def: 'Dočasné přerušení splácení po dohodě s bankou, například při ztrátě příjmu. Úroky obvykle běží dál, takže úvěr může ve výsledku vyjít dráž.' },
+        ],
+      },
+      {
+        title: 'Koupě a zajištění nemovitosti',
+        items: [
+          { term: 'Zástava', def: 'Nemovitost, kterou hypotéku zajišťujete. Banka ji má zapsanou v katastru, dokud úvěr nesplatíte.' },
+          { term: 'Rezervační poplatek', def: 'Částka, kterou zaplatíte prodávajícímu nebo realitní kanceláři, aby nemovitost po sjednanou dobu nenabízeli nikomu jinému. Obvykle se započítá do kupní ceny. Podmínky vrácení najdete v rezervační smlouvě.' },
+          { term: 'Zástavní právo', def: 'Právo banky uspokojit se z prodeje nemovitosti, pokud by se úvěr přestal splácet. Zapisuje se do katastru nemovitostí.' },
+          { term: 'Zástavce', def: 'Vlastník nemovitosti, který ji dává bance do zástavy. Nemusí to být ten, kdo si půjčuje. Svou nemovitostí za vás můžou ručit například rodiče.' },
+          { term: 'Věcné břemeno', def: 'Právo někoho jiného k vaší nemovitosti, například právo bydlení nebo vedení sítí přes pozemek. Zapisuje se do katastru, přechází na nového vlastníka a může ovlivnit hodnotu nemovitosti i to, jestli ji banka přijme do zástavy.' },
+          { term: 'Výmaz zástavního práva', def: 'Odstranění zástavního práva z katastru po splacení úvěru. Nestane se samo: banka vám vydá potvrzení a s ním se podá návrh na výmaz.' },
+        ],
+      },
+      {
+        title: 'Druhy financování',
+        items: [
+          { term: 'Americká hypotéka', def: 'Úvěr zajištěný nemovitostí, který můžete použít na cokoli a nemusíte dokládat účel. Úrok bývá vyšší než u běžné hypotéky.' },
+          { term: 'Předhypoteční úvěr', def: 'Úvěr na koupi bytu, který zatím nejde dát bance do zástavy, typicky družstevního před převodem do osobního vlastnictví nebo novostavby ještě nezapsané v katastru. Po zápisu zástavního práva ho nahradí běžná hypotéka. Úrok bývá vyšší.' },
+          { term: 'Družstevní bydlení', def: 'Byt patří bytovému družstvu a vy kupujete členský podíl, se kterým získáte právo byt užívat. Protože byt není váš, nejde ho dát bance do zástavy. Financování se proto řeší jinak, například zástavou jiné nemovitosti nebo předhypotečním úvěrem.' },
+        ],
+      },
     ],
     note: 'Otázky a odpovědi jsou návrh – ověřit s klientkou, zejména cenu služeb.',
   },

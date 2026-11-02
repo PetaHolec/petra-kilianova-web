@@ -747,6 +747,9 @@ a.alt-contact:hover { color: var(--lime-deep); }
 .prose img, .prose figure { margin: 2rem 0; border-radius: var(--r); }
 .prose hr { margin: 2.5rem 0; border: 0; border-top: 2px dashed var(--lime-2); }
 
+.glossary-group { margin-top: 2.5rem; }
+.glossary-group:first-of-type { margin-top: 0; }
+.glossary-group__title { margin: 0 0 1rem; font-size: 1.6rem; color: var(--ink); }
 .glossary { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; max-width: 64rem; margin: 0; }
 .glossary__item { padding: 1.4rem 1.5rem; border-radius: var(--r-lg); background: var(--cream); }
 .glossary dt { margin-bottom: .4rem; font-size: 1.3rem; font-weight: 700; color: var(--forest); }

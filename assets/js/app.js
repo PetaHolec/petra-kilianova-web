@@ -555,7 +555,7 @@ ${renderPartners()}`;
 
   /* ---------- Slovníček pojmů (podstránka) ---------- */
   function renderGlossaryPage() {
-    const f = S.faq || { glossary: [] };
+    const f = S.faq || { glossaryGroups: [] };
     return `
 <section class="blog-page">
   <div class="container">
@@ -565,7 +565,10 @@ ${renderPartners()}`;
       <h1 class="h2">${esc(f.glossaryTitle)}</h1>
       <p class="blog-head__intro">${fmt(f.glossaryIntro || '')}</p>
     </header>
-    <dl class="glossary">${f.glossary.map((g) => `<div class="glossary__item"><dt>${esc(g.term)}</dt><dd>${PV.text(g.def)}</dd></div>`).join('')}</dl>
+    ${f.glossaryGroups.map((group) => `<section class="glossary-group">
+      <h2 class="glossary-group__title">${esc(group.title)}</h2>
+      <dl class="glossary">${group.items.map((g) => `<div class="glossary__item"><dt>${esc(g.term)}</dt><dd>${PV.text(g.def)}</dd></div>`).join('')}</dl>
+    </section>`).join('')}
     <div class="post__cta">
       <div><h2>Něco tu chybí?</h2><p>Zeptejte se mě, vysvětlím vám to osobně a bez zkratek.</p></div>
       ${btn(S.navCta, { to: href('rezervace'), attrs: 'data-book data-track="cta_glossary"' })}
