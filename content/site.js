@@ -267,7 +267,7 @@ window.SITE = {
     steps: [
       { title: 'Probereme vaše plány', text: 'Osobně, online nebo po telefonu. Řeknete mi, co chcete financovat a kdy. Podklady zatím nepotřebujete, stačí vaše představa.' },
       { title: 'Porovnáme možnosti', text: 'Porovnáme varianty podle sazby, délky fixace a výše splátky. Vy si vyberete tu, která vám sedí.' },
-      { title: 'Vyřídíme žádost a podklady', text: 'Ověříme u banky, zda je to možné, zkompletujeme podklady a podepíšeme dokumenty.' },
+      { title: 'Vyřídíme žádost a podklady', text: 'Nejdřív u banky ověříme, zda je hypotéka ve vaší situaci možná. Pak zkompletujeme podklady, jako jsou doklady o příjmech, kupní smlouva nebo odhad nemovitosti, a podáme žádost. Po schválení podepíšeme úvěrovou a zástavní smlouvu a každý dokument vám předem vysvětlím.' },
       { title: 'Zůstaneme v kontaktu', text: 'Když se změní vaše plány, napište mi a domluvíme další krok.' },
     ],
   },
