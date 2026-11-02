@@ -418,6 +418,8 @@ window.SITE = {
     glossary: [
       { term: 'Fixace', def: 'Období, po které se nemění úroková sazba. Po jejím skončení dostanete novou nabídku – nebo můžete hypotéku převést jinam.' },
       { term: 'LTV', def: 'Poměr výše úvěru k hodnotě nemovitosti. Čím je nižší, tím menší riziko pro banku.' },
+      { term: 'DTI', def: 'Poměr všech vašich dluhů k čistému ročnímu příjmu. Ukazuje, kolikanásobek ročního příjmu dlužíte, a banka podle něj posuzuje, kolik si můžete půjčit.' },
+      { term: 'DSTI', def: 'Poměr všech vašich měsíčních splátek k čistému měsíčnímu příjmu. Ukazuje, jakou část příjmu vám splátky každý měsíc vezmou.' },
       { term: 'RPSN', def: 'Roční procentní sazba nákladů. Zahrnuje úrok i další náklady úvěru a pomáhá porovnat nabídky mezi sebou.' },
       { term: 'Odhad nemovitosti', def: 'Ocenění nemovitosti, ze kterého banka vychází při rozhodování, kolik vám může půjčit.' },
       { term: 'Čerpání', def: 'Vyplacení peněz z hypotéky – najednou, nebo postupně, například podle průběhu stavby.' },
