@@ -142,7 +142,7 @@ ${renderPartners()}`;
     if (!w || !w.banks || !w.banks.length) return '';
     const list = (hidden) => `<ul class="partners__list" role="list"${hidden ? ' aria-hidden="true"' : ''}>${w.banks.map((b) => (typeof b === 'string'
       ? `<li class="partners__item partners__item--text">${esc(b)}</li>`
-      : `<li class="partners__item"><img src="${esc(b.logo)}" alt="${hidden ? '' : esc(b.name)}"${hidden ? '' : ` title="${esc(b.name)}"`} decoding="async"></li>`)).join('')}</ul>`;
+      : `<li class="partners__item"><img src="${esc(b.logo)}" alt="${hidden ? '' : esc(b.name)}"${hidden ? '' : ` title="${esc(b.name)}"`} decoding="async" draggable="false"></li>`)).join('')}</ul>`;
     return `
 <section class="partners" aria-labelledby="partners-title">
   <div class="container partners__inner" data-partners>
@@ -236,7 +236,7 @@ ${renderPartners()}`;
       <h2 class="h2" id="about-title">${fmt(a.title)}</h2>
       <p class="about__lead">${fmt(a.lead)}</p>
       ${a.paragraphs.map((p) => `<p>${fmt(p)}</p>`).join('')}
-      ${phBlock(a.story)}
+      ${a.story ? phBlock(a.story) : '<div class="about__story" aria-hidden="true"></div>'}
       <blockquote class="about__quote"><p>${fmt(a.quote)}</p></blockquote>
       <div class="about__sign">
         <p class="signature">${esc(a.signature)}</p>
@@ -682,7 +682,7 @@ ${renderPartners()}`;
     </div>
     <dl class="footer__legal">${f.legal.map((l) => `<div><dt>${esc(l.label)}</dt><dd>${fmt(l.value)}</dd></div>`).join('')}</dl>
     <div class="footer__bottom">
-      <p>© ${new Date().getFullYear()} ${esc(S.brand.name)}${proto ? ` · ${esc(f.prototypeNote)}` : ''}<span class="footer__credit">Tvorba webu: Skočdal</span></p>
+      <p>© ${new Date().getFullYear()} ${esc(S.brand.name)}${proto ? ` · ${esc(f.prototypeNote)}` : ''}<span class="footer__credit">${f.credit && PV.safeUrl(f.credit.url) ? `<a href="${esc(PV.safeUrl(f.credit.url))}" target="_blank" rel="noopener" data-track="credit">${esc(f.credit.label)}</a>` : esc((f.credit || {}).label || '')}</span></p>
       <button class="to-top" type="button" data-to-top>Zpět nahoru ${icon('arrow-up')}</button>
     </div>
   </div>
@@ -879,6 +879,80 @@ ${renderPartners()}`;
       pause.setAttribute('aria-pressed', String(paused));
       pause.setAttribute('aria-label', paused ? 'Spustit pás partnerů' : 'Pozastavit pás partnerů');
     });
+
+    // Pás jede sám a jde k tomu táhnout myší nebo prstem; při omezeném pohybu zůstává statický
+    if (PV.reducedMotion.matches) return;
+    const box = $('.partners__marquee', root);
+    const track = $('.partners__track', root);
+    const lists = $$('.partners__list', track);
+    const speed = 30; // px za vteřinu
+    let cycle = 1;    // šířka dvou sad log = délka smyčky
+    let pos = 0;
+    let velocity = 0; // dojezd po puštění
+    let drag = null;
+    let hover = false;
+    let focus = false;
+    let visible = true;
+    let holdUntil = 0;
+    let last = performance.now();
+
+    const measure = () => { cycle = (lists[2].offsetLeft - lists[0].offsetLeft) || 1; };
+    // poloha se vždy přepočítá do jedné smyčky, takže ani při tažení nevznikne prázdné místo
+    const paint = () => { track.style.transform = `translate3d(${-(((pos % cycle) + cycle) % cycle)}px, 0, 0)`; };
+    measure();
+    imgs.forEach((img) => img.addEventListener('load', measure));
+    window.addEventListener('resize', PV.debounce(measure, 220));
+
+    box.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') hover = true; });
+    box.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') hover = false; });
+    box.addEventListener('pointerdown', (e) => {
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      drag = { id: e.pointerId, x: e.clientX, pos, lastX: e.clientX, lastT: performance.now() };
+      velocity = 0;
+      box.setPointerCapture(e.pointerId);
+      box.classList.add('is-drag');
+    });
+    box.addEventListener('pointermove', (e) => {
+      if (!drag || e.pointerId !== drag.id) return;
+      const now = performance.now();
+      velocity = ((drag.lastX - e.clientX) / Math.max(1, now - drag.lastT)) * 1000;
+      drag.lastX = e.clientX;
+      drag.lastT = now;
+      pos = drag.pos + (drag.x - e.clientX);
+    });
+    const release = (e) => {
+      if (!drag || e.pointerId !== drag.id) return;
+      if (performance.now() - drag.lastT > 90) velocity = 0;
+      velocity = Math.max(-900, Math.min(900, velocity));
+      drag = null;
+      holdUntil = performance.now() + 1500;
+      box.classList.remove('is-drag');
+    };
+    box.addEventListener('pointerup', release);
+    box.addEventListener('pointercancel', release);
+
+    root.addEventListener('focusin', (e) => { focus = e.target.matches(':focus-visible'); });
+    root.addEventListener('focusout', () => { focus = false; });
+    if ('IntersectionObserver' in window) new IntersectionObserver((en) => { visible = en[0].isIntersecting; }).observe(box);
+
+    const tick = (now) => {
+      const dt = Math.min(0.1, (now - last) / 1000);
+      last = now;
+      if (!drag) {
+        if (Math.abs(velocity) > 5) {
+          pos += velocity * dt;
+          velocity *= Math.exp(-4 * dt);
+        } else {
+          velocity = 0;
+          const stopped = hover || focus || root.classList.contains('is-paused') || now < holdUntil || !visible || document.hidden;
+          if (!stopped) pos += speed * dt;
+        }
+      }
+      if (!drag) pos = ((pos % cycle) + cycle) % cycle;
+      paint();
+      window.requestAnimationFrame(tick);
+    };
+    window.requestAnimationFrame(tick);
   }
 
   // Orientační kalkulačka splátky (anuitní splácení)

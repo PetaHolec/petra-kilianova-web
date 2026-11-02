@@ -244,7 +244,7 @@ window.SITE = {
     paragraphs: [
       'Za každou žádostí o hypotéku vidím konkrétní příběh. Pár, který poprvé podepisuje kupní smlouvu. Rodinu, které je malý byt těsný. Nebo někoho, kdo konečně staví dům, o kterém roky mluvil.',
     ],
-    story: '[Osobní příběh: jak se Petra k hypotékám dostala, co ji na práci baví a proč jí na klientech záleží. Doplníme po společném rozhovoru – jejími vlastními slovy.]',
+    story: '',   // Petřin osobní příběh, jejími vlastními slovy. Dokud je prázdné, na webu je jen volné místo.
     quote: 'Dobrá hypotéka je ta, které *rozumíte*.',
     signature: 'Petra Kilianová',
     photoNote: 'To jsem já',
@@ -468,6 +468,7 @@ window.SITE = {
 
   /* ---------- Patička a právní informace ---------- */
   footer: {
+    credit: { label: 'Tvorba webu: Skočdal', url: '' },   // url = adresa webu tvůrce; prázdné = jen text bez odkazu
     legalLinks: [
       { label: 'Ochrana osobních údajů', href: 'ochrana-osobnich-udaju.html' },
       { label: 'Nastavení cookies', action: 'cookies' },
