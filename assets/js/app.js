@@ -122,7 +122,6 @@
         ${btn(h.primaryCta, { to: href('rezervace'), cls: 'btn--primary btn--lg', attrs: 'data-book data-track="cta_hero_primary"' })}
         ${linkArrow(h.secondaryCta, href('sluzby'), 'data-track="cta_hero_secondary"', 'arrow-down')}
       </div>
-      ${h.reassure ? `<p class="hero__reassure">${fmt(h.reassure)}</p>` : ''}
     </div>
     <div class="hero__visual">
       <div class="hero__panel">

@@ -102,7 +102,6 @@ window.SITE = {
   /* ---------- Úvodní obrazovka ---------- */
   hero: {
     eyebrow: '',                         // nepovinný řádek nad nadpisem
-    reassure: 'Osobně, online i po telefonu · První schůzka nezávazně',   // řádek pod tlačítky
     title: 'Váš nový *domov* začíná správným rozhodnutím.',
     text: 'Jsem hypoteční poradkyně s kanceláří v Brně a pomáhám klientům po celé republice. Porovnám možnosti financování a provedu vás hypotékou od první konzultace až po podpis.',
     primaryCta: 'Domluvit schůzku',
