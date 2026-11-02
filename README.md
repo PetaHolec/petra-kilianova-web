@@ -65,7 +65,7 @@ assets/
   js/admin.js, css/admin.css  správa blogu
   js/consent.js               souhlas s cookies + Google Consent Mode v2
   fonts/                      písmo hostované lokálně (Outfit – OFL)
-  img/favicon.svg
+  img/favicon.ico
 ```
 
 Bez build kroku, bez knihoven, bez načítání čehokoli z cizích serverů.
