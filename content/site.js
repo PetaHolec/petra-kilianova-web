@@ -251,9 +251,9 @@ window.SITE = {
   team: {
     eyebrow: 'Tým',
     title: 'Při práci mi pomáhá asistentka.',
-    intro: '[Volitelné: krátké představení asistentky a toho, s čím vám pomůže.]',
+    intro: '',
     members: [
-      { name: 'Alžběta Mejzlíková', role: 'Asistentka', text: '[Jednou větou: s čím klientům pomáhá]', photo: { src: 'assets/img/alzbeta-mejzlikova.jpg', alt: 'Alžběta Mejzlíková, asistentka', label: 'Portrét asistentky' } },
+      { name: 'Alžběta Mejzlíková', role: 'Asistentka', text: '', photo: { src: 'assets/img/alzbeta-mejzlikova.jpg', alt: 'Alžběta Mejzlíková, asistentka', label: 'Portrét asistentky' } },
     ],
     note: 'Volitelná sekce. Vypnete ji v souboru content/site.js (settings.showTeam: false). Jméno a fotka asistentky jsou z webu Gepard Finance (gpf.cz/brno-husova).',
   },

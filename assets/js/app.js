@@ -257,7 +257,7 @@ ${renderPartners()}`;
     <div>
       ${eyebrow(t.eyebrow)}
       <h2 class="h3" id="team-title">${fmt(t.title)}</h2>
-      <p class="team__intro">${fmt(t.intro)}</p>
+      ${t.intro ? `<p class="team__intro">${fmt(t.intro)}</p>` : ''}
       ${note(t.note)}
     </div>
     ${t.members.map((m) => `
@@ -266,7 +266,7 @@ ${renderPartners()}`;
       <div>
         <h3 class="member__name">${fmt(m.name)}</h3>
         <p class="member__role">${fmt(m.role)}</p>
-        <p class="member__text">${fmt(m.text)}</p>
+        ${m.text ? `<p class="member__text">${fmt(m.text)}</p>` : ''}
       </div>
     </article>`).join('')}
   </div>
