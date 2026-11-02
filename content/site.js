@@ -276,12 +276,31 @@ window.SITE = {
   calculator: {
     eyebrow: 'Kalkulačka',
     title: 'Jaká může být vaše splátka?',
-    intro: 'Spočítejte si orientační splátku v kalkulačce Gepard Finance. Přesná čísla podle vaší situace připravím na schůzce.',
-    // Kalkulačka Gepard Finance, partner a broker určují Petru jako poradkyni (stejně jako na petrakilianova.cz)
-    src: 'https://www.gpf.cz/hypotecni-kalkulacka/onepage?tmpl=component&responsive&partner=1917&broker=12626',
-    title_frame: 'Hypoteční kalkulačka Gepard Finance',
-    gateText: 'Kalkulačka běží na webu Gepard Finance, který při jejím zobrazení používá vlastní cookies a měřicí nástroje.',
-    gateCta: 'Zobrazit kalkulačku',
+    intro: 'Zadejte cenu nemovitosti a výši úvěru a podívejte se, jak vychází splátka u jednotlivých bank. Přesná čísla podle vaší situace připravím na schůzce.',
+    endpoint: 'https://www.gpf.cz/calculator',   // stejný výpočet jako kalkulačka na webu Gepard Finance
+    maxLtv: 0.9,
+    modes: [
+      { id: 'BYD', label: 'Hypotéka na bydlení', guarantee: { min: 200000, max: 20000000, value: 2500000 }, credit: { min: 200000, max: 20000000, value: 2000000 }, maxYears: 30, years: 30 },
+      { id: 'AHU', label: 'Americká hypotéka', guarantee: { min: 300000, max: 30000000, value: 2500000 }, credit: { min: 300000, max: 10000000, value: 1000000 }, maxYears: 20, years: 20 },
+      { id: 'RFU', label: 'Refinancování', guarantee: { min: 200000, max: 20000000, value: 2500000 }, credit: { min: 200000, max: 20000000, value: 2000000 }, maxYears: 30, years: 30 },
+    ],
+    fixations: [1, 3, 5, 10],
+    fixation: 3,
+    guaranteeLabel: 'Cena nemovitosti',
+    creditLabel: 'Kolik si chcete půjčit',
+    yearsLabel: 'Doba splácení',
+    fixationLabel: 'Doba fixace',
+    insuranceLabel: 'Pojištění schopnosti splácet',
+    resultLabel: 'Orientační měsíční splátka',
+    compareCta: 'Porovnat hypotéky',
+    compareHide: 'Skrýt porovnání',
+    compareTitle: 'Porovnání podle úroku',
+    ltvError: 'Maximální výše úvěru je 90 % z ceny nemovitosti.',
+    emptyError: 'Pro tyto parametry teď žádná banka nevychází. Zkuste upravit zadání, nebo se mi ozvěte.',
+    loadError: 'Sazby se teď nepodařilo načíst. Zkuste to prosím za chvíli, nebo si rovnou domluvte schůzku.',
+    disclaimer: 'Výpočet je orientační a nejde o nabídku úvěru. Sazby a splátky pocházejí z kalkulačky Gepard Finance, konečné podmínky stanoví banka podle vaší situace.',
+    cta: 'Domluvit schůzku',
+    note: 'Web uvádí sazby a RPSN, proto je potřeba s Gepard Finance ověřit povinné údaje (např. reprezentativní příklad) a použití jejich výpočtu.',
   },
 
   /* ---------- Rezervace schůzky ---------- */
