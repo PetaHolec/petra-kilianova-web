@@ -24,6 +24,7 @@ const txt = (v) => esc(plain(v));
 const PAGES = {
   'recenze.html': { title: 'Recenze klientů – hypoteční poradkyně | Petra Kilianová', description: 'Zkušenosti klientů s hypoteční poradkyní Petrou Kilianovou. Přečtěte si, jak probíhalo vyřízení hypotéky a refinancování očima lidí, kteří jím prošli.', sitemap: true },
   'slovnicek.html': { title: 'Slovníček hypotečních pojmů: fixace, LTV, RPSN | Petra Kilianová', description: 'Co znamená fixace, LTV, RPSN, čerpání nebo zástava? Nejčastější pojmy kolem hypoték vysvětlené srozumitelně a na jednom místě.', sitemap: true },
+  'certifikace.html': { title: 'Certifikace a ocenění – hypoteční poradkyně | Petra Kilianová', description: 'Osvědčení o odborné zkoušce, certifikáty a ocenění hypoteční poradkyně Petry Kilianové na jednom místě.', sitemap: true },
   'ochrana-osobnich-udaju.html': { title: 'Ochrana osobních údajů | Petra Kilianová', description: 'Informace o zpracování osobních údajů a používání cookies na webu hypoteční poradkyně Petry Kilianové.', sitemap: true },
   'blog.html': { title: 'Blog o hypotékách | Petra Kilianová', description: 'Tipy, vysvětlení a odpovědi na časté otázky kolem hypoték a financování bydlení.' },
 };

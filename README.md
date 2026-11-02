@@ -39,6 +39,7 @@ Pak otevřete http://localhost:5173.
 | Ze života poradkyně | Odkaz na Instagram (videa a tipy jsou jen tam) a LinkedIn |
 | Reference | Místo pro skutečné recenze; lze skrýt |
 | Časté otázky | Rozbalovací odpovědi + slovníček pojmů (fixace, LTV, RPSN…) |
+| Certifikace | Podstránka `certifikace.html` s certifikáty a oceněními (`certifications` v `content/site.js`) |
 | Kancelář a kontakt | Adresa kanceláře, telefon, e-mail, tlačítko na rezervaci a mapa (načte se až po souhlasu) |
 | Patička | Kontakty, sítě, právní a regulatorní údaje (k doplnění) |
 

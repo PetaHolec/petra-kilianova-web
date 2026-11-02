@@ -565,6 +565,7 @@ a.alt-contact:hover { color: var(--lime-deep); }
 /* podstránka: karty skládané do sloupců */
 .reviews-page__count { display: inline-block; margin: 1.25rem 0 0; padding: .35rem .9rem; border-radius: 999px; background: var(--lime); font-weight: 700; color: var(--forest); }
 .review-wall { columns: 3 300px; column-gap: 1.5rem; }
+.review-wall blockquote p { white-space: pre-line; }
 .review-wall .review { display: inline-block; width: 100%; margin: 0 0 2.25rem; break-inside: avoid; scroll-margin-top: calc(var(--header-h) + 24px); }
 .review-wall .review:target blockquote { box-shadow: 0 0 0 3px var(--lime-deep); animation: pop .6s var(--ease); }
 @keyframes pop { 0% { transform: scale(.97); } 60% { transform: scale(1.02); } 100% { transform: none; } }
@@ -746,6 +747,17 @@ a.alt-contact:hover { color: var(--lime-deep); }
 .glossary__item { padding: 1.4rem 1.5rem; border-radius: var(--r-lg); background: var(--cream); }
 .glossary dt { margin-bottom: .4rem; font-size: 1.3rem; font-weight: 700; color: var(--forest); }
 .glossary dd { margin: 0; color: var(--ink-soft); }
+
+.certs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin: 0; padding: 0; list-style: none; }
+.cert { display: flex; flex-direction: column; height: 100%; border: 2px solid transparent; border-radius: var(--r-lg); background: var(--cream); color: inherit; text-decoration: none; transition: border-color .2s; }
+.cert:hover { border-color: var(--lime); }
+.cert__img { position: relative; display: block; aspect-ratio: 4 / 3; }
+.cert__img img { position: absolute; inset: 1rem 1rem 0; width: calc(100% - 2rem); height: calc(100% - 1rem); object-fit: contain; }
+.cert__body { display: grid; gap: .3rem; padding: 1rem 1.25rem 1.25rem; }
+.cert__title { font-size: 1.0625rem; font-weight: 700; line-height: 1.3; color: var(--forest); }
+.cert__meta { font-size: .9375rem; color: var(--ink-soft); }
+@media (max-width: 900px) { .certs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .certs { grid-template-columns: 1fr; } }
 
 .legal-doc { max-width: 46rem; }
 .legal-doc h1 { margin-bottom: 2rem; }

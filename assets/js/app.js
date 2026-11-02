@@ -95,7 +95,7 @@
 
   /* ---------- Hlavička ---------- */
   function renderHeader() {
-    const links = mainNav.map((n) => `<li><a class="nav__link${(n.target === 'blog' && (page === 'blog' || page === 'post')) || (n.target === 'slovnicek' && page === 'glossary') ? ' is-active" aria-current="page' : ''}" href="${n.url || href(n.target)}" data-nav="${esc(n.target)}">${esc(n.label)}</a></li>`).join('');
+    const links = mainNav.map((n) => `<li><a class="nav__link${(n.target === 'blog' && (page === 'blog' || page === 'post')) || (n.target === 'slovnicek' && page === 'glossary') || (n.target === 'certifikace' && page === 'certifications') ? ' is-active" aria-current="page' : ''}" href="${n.url || href(n.target)}" data-nav="${esc(n.target)}">${esc(n.label)}</a></li>`).join('');
     return `
 <a class="skip-link" href="#main">Přeskočit na obsah</a>
 <header class="site-header" data-header>
@@ -425,7 +425,7 @@ ${renderPartners()}`;
   function renderTestimonials() {
     if (!on('showTestimonials')) return '';
     const t = S.testimonials;
-    const items = (t.items || []).filter((it) => it.text);
+    const items = (t.items || []).filter((it) => it.text).slice(0, t.homeCount || undefined);
     if (!items.length) return '';
     return `
 <section class="section testimonials" id="reference" aria-labelledby="t-title">
@@ -537,6 +537,33 @@ ${renderPartners()}`;
     <div class="post__cta">
       <div><h2>Něco tu chybí?</h2><p>Zeptejte se mě, vysvětlím vám to osobně a bez zkratek.</p></div>
       ${btn(S.navCta, { to: href('rezervace'), attrs: 'data-book data-track="cta_glossary"' })}
+    </div>
+  </div>
+</section>`;
+  }
+
+  /* ---------- Certifikace (podstránka) ---------- */
+  function renderCertificationsPage() {
+    const c = S.certifications || { items: [] };
+    return `
+<section class="blog-page">
+  <div class="container">
+    <a class="link-arrow link-arrow--back" href="index.html"><span class="link-arrow__icon" aria-hidden="true">${icon('arrow-left')}</span><span class="link-arrow__text">Zpět na úvodní stránku</span></a>
+    <header class="blog-head">
+      <p class="kicker">${esc(c.eyebrow)}</p>
+      <h1 class="h2">${esc(c.title)}</h1>
+      <p class="blog-head__intro">${fmt(c.intro)}</p>
+    </header>
+    <ul class="certs" role="list">
+      ${c.items.map((it) => `
+      <li><a class="cert" href="${esc(it.img)}" target="_blank" rel="noopener" data-track="cert_open">
+        <span class="cert__img"><img src="${esc(it.img)}" alt="${esc(it.title)}" loading="lazy" decoding="async"></span>
+        <span class="cert__body"><strong class="cert__title">${PV.text(it.title)}</strong><span class="cert__meta">${esc(it.issuer)} · ${esc(it.date)}</span></span>
+      </a></li>`).join('')}
+    </ul>
+    <div class="post__cta">
+      <div><h2>Chcete to probrat osobně?</h2><p>Domluvte si schůzku, ať už kupujete první bydlení, nebo řešíte refinancování.</p></div>
+      ${btn(S.navCta, { to: href('rezervace'), attrs: 'data-book data-track="cta_certifications"' })}
     </div>
   </div>
 </section>`;
@@ -1120,6 +1147,7 @@ ${renderPartners()}`;
   }
   if (page === 'glossary') $('#main').innerHTML = renderGlossaryPage();
   if (page === 'reviews') $('#main').innerHTML = renderReviewsPage();
+  if (page === 'certifications') $('#main').innerHTML = renderCertificationsPage();
   mount('[data-render="footer"]', renderFooter() + renderOverlays());
 
   if (isHome) PV.booking.init(document.getElementById('booking-widget'), S.booking, S);
