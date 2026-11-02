@@ -378,11 +378,14 @@ legend { padding: 0; }
 .range:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 5px rgba(142, 198, 63, .5); }
 
 .calc__result { display: flex; flex-direction: column; padding: clamp(1.25rem, 3vw, 2rem); background: var(--forest); color: #fff; }
-.calc__result-label { margin-bottom: .25rem; font-weight: 600; color: var(--lime-2); }
-.calc__payment { margin-bottom: 1.25rem; font-size: clamp(2.4rem, 1.8rem + 2vw, 3.3rem); font-weight: 800; line-height: 1; letter-spacing: -.03em; color: var(--lime); }
-.calc__stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 0 0 1rem; }
-.calc__stats dt { font-size: .8125rem; color: rgba(255, 255, 255, .65); }
-.calc__stats dd { margin: 0; font-weight: 700; }
+.calc__result-label { margin-bottom: .35rem; font-size: 1.125rem; font-weight: 600; color: var(--lime-2); }
+.calc__payment { margin-bottom: 1.5rem; font-size: clamp(3rem, 2.2rem + 3vw, 4.5rem); font-weight: 800; line-height: 1; letter-spacing: -.03em; color: var(--lime); }
+.calc__stats { flex: 1 0 auto; display: grid; grid-template-columns: 1fr 1fr; grid-auto-rows: 1fr; gap: .75rem; margin: 0 0 1.5rem; }
+.calc__stats > div { display: flex; flex-direction: column; justify-content: center; gap: .4rem; padding: 1rem 1.15rem; border-radius: var(--r); background: rgba(255, 255, 255, .09); }
+.calc__stats > div[hidden] { display: none; }
+.calc__stats > [hidden] + div { grid-column: 1 / -1; }
+.calc__stats dt { font-size: .9375rem; line-height: 1.3; color: rgba(255, 255, 255, .85); }
+.calc__stats dd { margin: 0; font-size: clamp(1.3rem, 1.1rem + .9vw, 1.75rem); font-weight: 800; line-height: 1.1; letter-spacing: -.01em; }
 .calc__label--block { display: block; margin-bottom: .4rem; }
 .calc__modes { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1.5rem; }
 .calc__modes--small { margin-bottom: 0; }
@@ -418,7 +421,7 @@ legend { padding: 0; }
   .calc__table td:first-child { display: block; text-align: left; }
   .calc__table td:not(:first-child)::before { content: attr(data-label); color: var(--ink-muted); }
 }
-.calc__disclaimer { margin: 1rem 0 0; font-size: .75rem; line-height: 1.5; color: rgba(255, 255, 255, .6); }
+.calc__disclaimer { margin: 1rem 0 0; font-size: .8125rem; line-height: 1.5; color: rgba(255, 255, 255, .75); }
 
 
 /* ---------- 11. Rezervace ---------- */
