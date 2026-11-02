@@ -1053,11 +1053,17 @@ ${renderPartners()}`;
       toggle.querySelector('span').textContent = c.compareCta;
     };
 
+    // Logo podle názvu banky ze seznamu partnerů; neznámá banka má jen prázdné místo a název
+    const bankLogo = (name) => {
+      const bank = (S.why.banks || []).find((b) => b.name.toLowerCase() === name.toLowerCase());
+      return `<span class="calc__bank-logo">${bank ? `<img src="${esc(bank.logo)}" alt="" loading="lazy" decoding="async">` : ''}</span>`;
+    };
+
     const renderRows = (best) => {
       $('[data-col-insurance]', root).hidden = !state.insurance;
       $('[data-calc-rows]', root).innerHTML = offers.map((o) => `
             <tr${o === best ? ' class="is-best"' : ''}>
-              <td data-label="Banka"><strong>${esc(o.bankName)}</strong><span class="calc__product">${esc(o.productName)}</span></td>
+              <td data-label="Banka"><span class="calc__bank">${bankLogo(o.bankName)}<span><strong>${esc(o.bankName)}</strong><span class="calc__product">${esc(o.productName)}</span></span></span></td>
               <td data-label="Úrok">${percent(o.interestRate)}</td>
               <td data-label="RPSN">${percent(o.apr)}</td>
               <td data-label="Splátka">${czk(o.monthlyPayment)}</td>

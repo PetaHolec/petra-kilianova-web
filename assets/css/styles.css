@@ -406,6 +406,9 @@ legend { padding: 0; }
 .calc__table th { padding: .5rem .75rem; font-size: .8125rem; font-weight: 600; text-align: left; color: var(--ink-muted); }
 .calc__table td { padding: .75rem; border-top: 1px solid var(--line); }
 .calc__table .is-best td { background: var(--lime-soft); }
+.calc__bank { display: flex; align-items: center; gap: .9rem; }
+.calc__bank-logo { display: grid; place-items: center; flex: none; width: 92px; height: 40px; padding: .3rem .4rem; border-radius: var(--r-sm); background: #fff; }
+.calc__bank-logo img { width: 100%; height: 100%; object-fit: contain; }
 .calc__product { display: block; font-size: .8125rem; color: var(--ink-muted); }
 @media (max-width: 700px) {
   .calc__table thead { display: none; }
