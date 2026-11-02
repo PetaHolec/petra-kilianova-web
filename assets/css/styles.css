@@ -755,6 +755,12 @@ a.alt-contact:hover { color: var(--lime-deep); }
 .cert__body { display: grid; gap: .3rem; padding: 1rem 1.25rem 1.25rem; }
 .cert__title { font-size: 1.0625rem; font-weight: 700; line-height: 1.3; color: var(--forest); }
 .cert__meta { font-size: .9375rem; color: var(--ink-soft); }
+.cert-view { width: min(100vw - 2rem, 72rem); max-width: none; max-height: calc(100dvh - 2rem); padding: 1rem; border: 0; border-radius: var(--r-lg); background: #fff; overflow: hidden; }
+.cert-view[open] { display: flex; flex-direction: column; gap: .75rem; }
+.cert-view::backdrop { background: rgba(14, 59, 27, .6); }
+.cert-view__bar { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; }
+.cert-view__caption { flex: 1 1 12rem; margin: 0; font-weight: 700; line-height: 1.3; color: var(--forest); }
+.cert-view__img { flex: 1 1 auto; width: 100%; min-height: 0; height: calc(100dvh - 8.5rem); object-fit: contain; }
 @media (max-width: 900px) { .certs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 560px) { .certs { grid-template-columns: 1fr; } }
 

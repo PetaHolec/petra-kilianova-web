@@ -529,7 +529,7 @@ window.SITE = {
   certifications: {
     eyebrow: 'Vzdělání a ocenění',
     title: 'Certifikace a ocenění',
-    intro: 'Osvědčení, certifikáty a ocenění, které jsem získala. Kliknutím si každý dokument otevřete v plné velikosti.',
+    intro: 'Osvědčení, certifikáty a ocenění, které jsem získala. Kliknutím si každý dokument zvětšíte.',
     // Nový dokument = nový řádek. Obrázek patří do assets/img/certifikaty.
     items: [
       { title: 'TOP poradce pro rok 2023', issuer: 'ČSOB a Hypoteční banka', date: '2023', img: 'assets/img/certifikaty/top-poradce-2023.jpg' },

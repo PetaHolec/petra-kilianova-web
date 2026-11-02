@@ -555,7 +555,7 @@ ${renderPartners()}`;
     </header>
     <ul class="certs" role="list">
       ${c.items.map((it) => `
-      <li><a class="cert" href="${esc(it.img)}" target="_blank" rel="noopener" data-track="cert_open">
+      <li><a class="cert" href="${esc(it.img)}" data-cert data-track="cert_open">
         <span class="cert__img"><img src="${esc(it.img)}" alt="${esc(it.title)}" loading="lazy" decoding="async"></span>
         <span class="cert__body"><strong class="cert__title">${PV.text(it.title)}</strong><span class="cert__meta">${esc(it.issuer)} · ${esc(it.date)}</span></span>
       </a></li>`).join('')}
@@ -565,7 +565,16 @@ ${renderPartners()}`;
       ${btn(S.navCta, { to: href('rezervace'), attrs: 'data-book data-track="cta_certifications"' })}
     </div>
   </div>
-</section>`;
+</section>
+<dialog class="cert-view" data-cert-view aria-label="Zvětšený dokument">
+  <div class="cert-view__bar">
+    <p class="cert-view__caption" data-cert-caption></p>
+    <button class="reviews__btn" type="button" data-cert-prev aria-label="Předchozí dokument">${icon('arrow-left')}</button>
+    <button class="reviews__btn" type="button" data-cert-next aria-label="Další dokument">${icon('arrow-right')}</button>
+    <button class="reviews__btn" type="button" data-cert-close autofocus aria-label="Zavřít">${icon('close')}</button>
+  </div>
+  <img class="cert-view__img" data-cert-img alt="">
+</dialog>`;
   }
 
   /* ---------- Kancelář a kontakt ---------- */
@@ -1004,6 +1013,38 @@ ${renderPartners()}`;
     update();
   }
 
+  // Certifikace – zvětšený dokument přímo na stránce
+  function initCertViewer() {
+    const view = $('[data-cert-view]');
+    if (!view) return;
+    const links = $$('[data-cert]');
+    const img = $('[data-cert-img]', view);
+    const caption = $('[data-cert-caption]', view);
+    let current = 0;
+    const show = (i) => {
+      current = (i + links.length) % links.length;
+      const source = links[current].querySelector('img');
+      img.src = links[current].getAttribute('href');
+      img.alt = source.alt;
+      caption.textContent = source.alt;
+    };
+    links.forEach((a, i) => a.addEventListener('click', (e) => {
+      if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+      e.preventDefault();
+      show(i);
+      view.showModal();
+    }));
+    $('[data-cert-prev]', view).addEventListener('click', () => show(current - 1));
+    $('[data-cert-next]', view).addEventListener('click', () => show(current + 1));
+    $('[data-cert-close]', view).addEventListener('click', () => view.close());
+    view.addEventListener('click', (e) => { if (e.target === view) view.close(); });
+    view.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') show(current - 1);
+      if (e.key === 'ArrowRight') show(current + 1);
+    });
+    view.addEventListener('close', () => links[current].focus());
+  }
+
   function initFaq() {
     $$('.faq__item').forEach((d) => d.addEventListener('toggle', () => {
       if (d.open) PV.track('faq_open', { question: d.querySelector('summary').textContent.trim().slice(0, 80) });
@@ -1158,6 +1199,7 @@ ${renderPartners()}`;
   initPartners();
   initCalculator();
   initFaq();
+  initCertViewer();
   initBookLinks();
   initContact();
   initMap();
