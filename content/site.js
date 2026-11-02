@@ -18,7 +18,7 @@ window.SITE = {
   settings: {
     showWhy: true,           // srovnání „sami v bance × se mnou“ + banky
     showTeam: true,          // tým
-    showTools: true,         // kalkulačka splátky + hlídání konce fixace
+    showTools: true,         // kalkulačka splátky
     showTestimonials: true,  // reference
     showInsta: false,        // sekce o Instagramu – zapnout až s reálnými příspěvky nebo videi
     showFaq: true,           // časté otázky a slovníček
@@ -205,7 +205,6 @@ window.SITE = {
       { label: 'Podklady', self: 'Zjišťujete a zařizujete sami', me: 'Řeknu vám přesně, co je potřeba, a pomohu s přípravou' },
       { label: 'Jednání s bankou', self: 'Na vás', me: 'Komunikaci s bankou pohlídám za vás' },
       { label: 'Schůzky', self: 'Na pobočce v otevírací době', me: 'Osobně, online i po telefonu' },
-      { label: 'Po podpisu', self: 'Konec fixace si hlídáte sami', me: 'Před koncem fixace se vám ozvu' },
     ],
     banksTitle: 'Partneři, se kterými spolupracuji',
     banks: [
@@ -269,13 +268,13 @@ window.SITE = {
       { title: 'Probereme vaše plány', text: 'Osobně, online nebo po telefonu. Řeknete mi, co chcete financovat a kdy. Podklady zatím nepotřebujete, stačí vaše představa.' },
       { title: 'Porovnáme možnosti', text: 'Porovnáme varianty podle sazby, délky fixace a výše splátky. Vy si vyberete tu, která vám sedí.' },
       { title: 'Vyřídíme žádost a podklady', text: 'Dostanete ode mě seznam podkladů. Až je připravíte, podáme žádost a před podpisem vám každý dokument vysvětlím.' },
-      { title: 'Zůstaneme v kontaktu', text: 'Před koncem fixace se vám ozvu. A když se změní vaše plány, napište mi a domluvíme další krok.' },
+      { title: 'Zůstaneme v kontaktu', text: 'Když se změní vaše plány, napište mi a domluvíme další krok.' },
     ],
   },
 
   /* ---------- Kalkulačka splátky (viz settings.showTools) ---------- */
   calculator: {
-    eyebrow: 'Kalkulačka a hlídání fixace',
+    eyebrow: 'Kalkulačka',
     title: 'Jaká může být vaše splátka?',
     intro: 'Orientační výpočet vám dá první představu. Přesná čísla podle vaší situace a aktuálních nabídek bank připravím na schůzce.',
     cardTitle: 'Orientační splátka',
@@ -286,15 +285,6 @@ window.SITE = {
     disclaimer: 'Výpočet je pouze orientační a nejde o nabídku úvěru ani o aktuální sazby bank. Nezahrnuje poplatky, pojištění ani další náklady.',
     cta: 'Domluvit schůzku',
     note: 'Výchozí sazba je jen ukázková. Pokud bude web uvádět sazby nebo náklady úvěru, je potřeba ověřit povinné údaje (např. reprezentativní příklad) s Gepard Finance.',
-  },
-
-  /* ---------- Hlídání konce fixace – sběr kontaktů ---------- */
-  fixWatch: {
-    title: 'Pohlídám vám konec fixace.',
-    text: 'Napište mi, kdy vám končí fixace, a já se vám včas ozvu. Budete mít dost času porovnat nabídku své banky s dalšími možnostmi.',
-    consent: 'Souhlasím, aby mě poradkyně kontaktovala ohledně konce mé fixace. Souhlas mohu kdykoli odvolat.',
-    cta: 'Hlídat moji fixaci',
-    success: 'Děkuji, ozvu se vám s dostatečným předstihem před koncem fixace.',
   },
 
   /* ---------- Rezervace schůzky ---------- */
@@ -396,7 +386,7 @@ window.SITE = {
     title: 'Na co se lidé ptají nejčastěji.',
     intro: 'Nenašli jste odpověď? Zavolejte mi, napište e-mail, nebo si rovnou domluvte schůzku. Hloupé otázky neexistují.',
     items: [
-      { q: 'Kolik mě vaše služby stojí?', a: '[Doplnit podle skutečnosti – např. zda je konzultace zdarma a jak je poradkyně odměňována.]' },
+      { q: 'Kolik mě vaše služby stojí?', a: 'Vás nic. Mé služby jsou pro vás zdarma, odměnu mi platí banka.' },
       { q: 'Proč řešit hypotéku přes poradkyni, a ne rovnou v bance?', a: 'Uvidíte víc nabídek najednou a nemusíte obcházet jednotlivé banky. Pomohu vám s podklady, s komunikací s bankou i s tím, abyste rozuměli každé smlouvě. Rozhodnutí je vždy na vás.' },
       { q: 'Jaký je rozdíl mezi hypotečním poradcem, specialistou a makléřem?', a: 'V běžné řeči jde většinou o totéž: o člověka, který vám pomůže porovnat nabídky bank a vyřídit hypotéku. Důležitější než název je, kolik nabídek s vámi projde a jestli rozumíte tomu, co podepisujete.' },
       { q: 'Co si mám připravit na první schůzku?', a: 'Stačí představa o tom, co chcete financovat, a přehled o vašich příjmech a výdajích. Konkrétní doklady řešíme až v dalším kroku – dostanete ode mě přesný seznam.' },

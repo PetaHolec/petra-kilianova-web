@@ -297,9 +297,7 @@ ${renderPartners()}`;
 </section>`;
   }
 
-  /* ---------- Kalkulačka a hlídání fixace (volitelné) ---------- */
-  const MONTHS = ['Leden', 'Únor', 'Březen', 'Duben', 'Květen', 'Červen', 'Červenec', 'Srpen', 'Září', 'Říjen', 'Listopad', 'Prosinec'];
-
+  /* ---------- Kalkulačka (volitelná) ---------- */
   function renderTools() {
     if (!on('showTools') || !S.calculator) return '';
     const c = S.calculator;
@@ -320,7 +318,6 @@ ${renderPartners()}`;
   <div class="container">
     ${sectionHead(c.eyebrow, c.title, c.intro, 'tools-title')}
     ${note(c.note)}
-    <div class="tools__grid">
       <div class="calc" data-calculator>
         <div class="calc__inputs">
           <h3 class="card-title">${esc(c.cardTitle)}</h3>
@@ -341,43 +338,8 @@ ${renderPartners()}`;
           <p class="visually-hidden" aria-live="polite" data-calc-live></p>
         </div>
       </div>
-      ${S.fixWatch ? renderFixWatch() : ''}
-    </div>
   </div>
 </section>`;
-  }
-
-  function renderFixWatch() {
-    const f = S.fixWatch;
-    const year = new Date().getFullYear();
-    const years = Array.from({ length: 11 }, (_, i) => ({ id: String(year + i), label: String(year + i) }));
-    const months = MONTHS.map((m, i) => ({ id: String(i + 1), label: m }));
-    return `
-      <div class="fixwatch">
-        <div data-fw-body>
-          <h3 class="card-title">${fmt(f.title)}</h3>
-          <p class="fixwatch__text">${fmt(f.text)}</p>
-          <form class="fixwatch__form" novalidate data-fw-form>
-            ${PV.field({ id: 'fw-email', name: 'email', label: 'E-mail', type: 'email', required: true, autocomplete: 'email', validate: 'email' })}
-            <div class="fixwatch__row">
-              ${PV.field({ id: 'fw-month', name: 'month', label: 'Fixace končí – měsíc', required: true, options: months })}
-              ${PV.field({ id: 'fw-year', name: 'year', label: 'Rok', required: true, options: years })}
-            </div>
-            <div class="field">
-              <label class="check"><input type="checkbox" id="fw-consent" name="consent" required aria-required="true" data-field aria-describedby="fw-consent-error"><span>${esc(f.consent)} Více v <a href="ochrana-osobnich-udaju.html">zásadách ochrany osobních údajů</a>.</span></label>
-              <p class="field__error" id="fw-consent-error"></p>
-            </div>
-            <div class="hp-field" aria-hidden="true"><label for="fw-company">Toto pole nevyplňujte</label><input id="fw-company" name="company" tabindex="-1" autocomplete="off"></div>
-            <button class="btn btn--primary btn--block" type="submit"><span>${esc(f.cta)}</span></button>
-          </form>
-        </div>
-        <div class="fixwatch__success" data-fw-success tabindex="-1" hidden>
-          ${PV.checkSvg()}
-          <h3 class="card-title">Fixaci máme pod dohledem</h3>
-          <p>${esc(f.success)}</p>
-          <button class="btn btn--outline btn--sm" type="button" data-fw-reset><span>Zadat další fixaci</span></button>
-        </div>
-      </div>`;
   }
 
   /* ---------- Rezervace ---------- */
@@ -1012,38 +974,6 @@ ${renderPartners()}`;
     update();
   }
 
-  // Hlídání konce fixace – demo formulář pro sběr kontaktů
-  function initFixWatch() {
-    const form = $('[data-fw-form]');
-    if (!form) return;
-    const body = $('[data-fw-body]');
-    const success = $('[data-fw-success]');
-    PV.forms.bindLive(form);
-    let sending = false;
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      if (sending || form.elements.namedItem('company').value) return;
-      if (!PV.forms.validate(form)) { PV.track('fixwatch_form_error'); return; }
-      sending = true;
-      const submit = form.querySelector('[type="submit"]');
-      submit.classList.add('is-loading');
-      window.setTimeout(() => {
-        sending = false;
-        submit.classList.remove('is-loading');
-        PV.track('fixwatch_submit_demo', Object.assign({ fix_end: `${form.elements.namedItem('year').value}-${PV.pad(form.elements.namedItem('month').value)}` }, PV.attribution()));
-        body.hidden = true;
-        success.hidden = false;
-        success.focus();
-      }, 800);
-    });
-    $('[data-fw-reset]').addEventListener('click', () => {
-      PV.forms.reset(form);
-      success.hidden = true;
-      body.hidden = false;
-      form.querySelector('input').focus();
-    });
-  }
-
   function initFaq() {
     $$('.faq__item').forEach((d) => d.addEventListener('toggle', () => {
       if (d.open) PV.track('faq_open', { question: d.querySelector('summary').textContent.trim().slice(0, 80) });
@@ -1196,7 +1126,6 @@ ${renderPartners()}`;
   initReviews();
   initPartners();
   initCalculator();
-  initFixWatch();
   initFaq();
   initBookLinks();
   initContact();

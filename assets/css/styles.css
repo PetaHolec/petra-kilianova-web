@@ -349,7 +349,7 @@ legend { padding: 0; }
 .member__role { margin: .15rem 0 .4rem; font-weight: 600; color: var(--lime-deep); }
 .member__text { margin: 0; color: var(--ink-soft); }
 
-/* ---------- 10. Cesta, kalkulačka a fixace ---------- */
+/* ---------- 10. Cesta a kalkulačka ---------- */
 .road { position: relative; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1.5rem; margin: 0; padding: 0; list-style: none; }
 .road::before { content: ""; position: absolute; left: 28px; right: 28px; top: 27px; border-top: 3px dashed var(--forest); opacity: .45; transform-origin: left; }
 .road__step { position: relative; }
@@ -359,8 +359,6 @@ legend { padding: 0; }
 .road__title { margin-bottom: .55rem; font-size: 1.15rem; line-height: 1.25; color: var(--forest); }
 .road__text { font-size: .96875rem; color: var(--ink); }
 .road__finish { margin-bottom: 1.25rem; font-size: 1.15rem; font-weight: 700; line-height: 1.25; color: var(--forest); }
-
-.tools__grid { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); gap: 1.5rem; align-items: start; }
 .calc { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); overflow: hidden; border: 1px solid var(--line); border-radius: var(--r-lg); background: #fff; }
 .calc__inputs { padding: clamp(1.25rem, 3vw, 2rem); }
 .calc__field { margin-bottom: 1.5rem; }
@@ -398,12 +396,6 @@ legend { padding: 0; }
 .calc__sens { font-size: .875rem; color: rgba(255, 255, 255, .8); }
 .calc__disclaimer { margin: 1rem 0 0; font-size: .75rem; line-height: 1.5; color: rgba(255, 255, 255, .6); }
 
-.fixwatch { position: relative; padding: clamp(1.25rem, 3vw, 2rem); border-radius: var(--r-lg); background: var(--lime-soft); }
-.fixwatch__text { color: var(--ink-soft); }
-.fixwatch__form { display: grid; gap: 1rem; }
-.fixwatch__row { display: grid; grid-template-columns: 3fr 2fr; gap: .75rem; }
-.fixwatch__success { text-align: center; }
-.fixwatch__success:focus { outline: none; }
 
 /* ---------- 11. Rezervace ---------- */
 .booking-section__grid { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: clamp(2rem, 5vw, 4rem); align-items: start; }
@@ -766,7 +758,6 @@ a.alt-contact:hover { color: var(--lime-deep); }
   .nav { display: none; }
   .header__cta { margin-left: auto; }
   .menu-toggle { display: inline-flex; }
-  .tools__grid { grid-template-columns: 1fr; }
   .road { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 2.5rem; }
   .road::before { display: none; }
 }

@@ -1,6 +1,6 @@
 # Petra Kilianová – hypoteční poradkyně · web
 
-Responzivní prototyp osobního webu hypoteční poradkyně Petry Kilianové (franšízová značka Gepard Finance, barvy webu jsou odvozené z gpf.cz). Slouží jako návrh budoucí realizace: design, texty, struktura i klíčové funkce (rezervace schůzky, kalkulačka, hlídání konce fixace, cookies) jsou funkční, ale **běží v ukázkovém režimu**.
+Responzivní prototyp osobního webu hypoteční poradkyně Petry Kilianové (franšízová značka Gepard Finance, barvy webu jsou odvozené z gpf.cz). Slouží jako návrh budoucí realizace: design, texty, struktura i klíčové funkce (rezervace schůzky, kalkulačka, cookies) jsou funkční, ale **běží v ukázkovém režimu**.
 
 - Fotografie a neznámé údaje jsou nahrazené zástupnými plochami a `[zvýrazněnými]` údaji.
 - Nic není vymyšlené: žádné reference, hodnocení, počty klientů, oprávnění, registrace ani zaměstnanci.
@@ -34,7 +34,7 @@ Pak otevřete http://localhost:5173.
 | Proč se mnou | Srovnání „sami v bance × se mnou“ a místo pro loga spolupracujících bank |
 | O mně (+ tým) | Osobní představení, hodnoty, motto; tým lze skrýt |
 | Jak probíhá spolupráce | 4 kroky s animací při posunu |
-| Kalkulačka a hlídání fixace | Orientační splátka (posuvníky) + formulář „Pohlídám vám konec fixace“ (sběr kontaktů) |
+| Kalkulačka | Orientační splátka (posuvníky) |
 | Rezervace schůzky | Jediný formulář na webu: typ schůzky (kancelář / online / telefon) → kalendář a čas → kontakt a vzkaz → potvrzení (demo) |
 | Ze života poradkyně | Odkaz na Instagram (videa a tipy jsou jen tam) a LinkedIn |
 | Reference | Místo pro skutečné recenze; lze skrýt |
@@ -58,7 +58,7 @@ content/
 assets/
   css/styles.css              designový systém (barvy, písma, rozvržení, animace)
   js/core.js                  sdílené nástroje (ikony, fotografie, validace, měření)
-  js/app.js                   vykreslení sekcí a interakce (kalkulačka, hlídání fixace…)
+  js/app.js                   vykreslení sekcí a interakce (kalkulačka…)
   js/booking.js               rezervační widget (vyměnitelný „poskytovatel termínů“)
   js/blog.js                  výpis a detail článků, čištění HTML
   js/admin.js, css/admin.css  správa blogu
@@ -87,7 +87,7 @@ Sekce lze vypnout v `settings` (hodnota `false`):
 | --- | --- |
 | `showWhy` | Proč se mnou (srovnání s bankou + banky) |
 | `showTeam` | Tým |
-| `showTools` | Kalkulačka splátky + hlídání konce fixace |
+| `showTools` | Kalkulačka splátky |
 | `showTestimonials` | Reference (dokud nejsou skutečné recenze) |
 | `showFaq` | Časté otázky a slovníček |
 | `prototype` | odznak „Prototyp“ a poznámky k návrhu (pro ostrý web vypnout) |
@@ -134,10 +134,9 @@ Videa (Reels) jsou **jen na Instagramu** – web je nepřehrává ani nevkládá
 
 ---
 
-## Kalkulačka a hlídání fixace
+## Kalkulačka
 
 - **Kalkulačka** počítá orientační měsíční splátku anuitního úvěru (výše úvěru, doba splácení, sazba) a ukáže, o kolik by splátka vzrostla při sazbě vyšší o 1 procentní bod. Výchozí sazba je **ukázková**, ne aktuální nabídka bank – nastavuje se v `calculator.rate.value`. Pokud bude web uvádět sazby nebo náklady úvěru, je potřeba s Gepard Finance ověřit povinné údaje (např. reprezentativní příklad – v patičce je pro něj připravené místo).
-- **Hlídání konce fixace** sbírá e-mail, měsíc a rok konce fixace a souhlas s kontaktováním. V ostré verzi napojit na e-mailový nástroj nebo CRM a připomenutí posílat s předstihem. V prototypu se nic neukládá.
 
 ---
 
@@ -162,7 +161,7 @@ Typy schůzek, jejich délku a pracovní dobu je potřeba potvrdit s klientkou (
 
 ## Formuláře
 
-Na webu je jen rezervační formulář (kancelář / online / telefon, s možností napsat vzkaz předem) a krátký formulář pro hlídání fixace. Oba mají validaci a ochranu proti spamu (skryté pole), **ale nic neodesílají**. Samostatný formulář „Napište mi“ na webu záměrně není – dotazy bez schůzky pokryje telefon a e-mail v sekci Kontakt. Pro ostrou verzi napojit na vlastní endpoint nebo službu (např. Netlify Forms, Formspree, vlastní backend, e-mailový nástroj) – s ohledem na GDPR (smlouva se zpracovatelem, umístění dat).
+Na webu je jen rezervační formulář (kancelář / online / telefon, s možností napsat vzkaz předem). Má validaci a ochranu proti spamu (skryté pole), **ale nic neodesílá**. Samostatný formulář „Napište mi“ na webu záměrně není – dotazy bez schůzky pokryje telefon a e-mail v sekci Kontakt. Pro ostrou verzi napojit na vlastní endpoint nebo službu (např. Netlify Forms, Formspree, vlastní backend, e-mailový nástroj) – s ohledem na GDPR (smlouva se zpracovatelem, umístění dat).
 
 ---
 
@@ -196,11 +195,10 @@ Web zapisuje události do `dataLayer` (pro Google Tag Manager, GA4, Meta):
 | `booking_cta_click` | klik na libovolné „Domluvit schůzku“ (s informací, které tlačítko) |
 | `booking_type_selected`, `booking_date_selected`, `booking_time_selected`, `booking_slot_confirmed` | jednotlivé kroky rezervace (trychtýř) |
 | `booking_submit_demo` | dokončená rezervace (v ostré verzi hlavní konverze) |
-| `fixwatch_submit_demo` | přihlášení k hlídání konce fixace (sběr kontaktů) |
 | `calculator_used`, `faq_open`, `service_details_open` | zájem o obsah |
 | `*_form_error`, `click` | chyby ve formulářích, ostatní sledované odkazy (telefon, e-mail, sítě…) |
 
-UTM parametry z reklamních kampaní (`utm_source`, `utm_campaign`…) se uloží na dobu návštěvy a připojí k rezervaci i hlídání fixace – je tak vidět, ze které kampaně zájemce přišel.
+UTM parametry z reklamních kampaní (`utm_source`, `utm_campaign`…) se uloží na dobu návštěvy a připojí k rezervaci – je tak vidět, ze které kampaně zájemce přišel.
 
 ---
 
@@ -219,7 +217,6 @@ Na webech hypotečních poradců a zprostředkovatelů se opakují tyto prvky �
 | Prvek | Stav v prototypu |
 | --- | --- |
 | Kalkulačka splátky / refinancování | ✅ přidáno (orientační, bez aktuálních sazeb) |
-| Hlídání konce fixace s upozorněním | ✅ přidáno (sběr kontaktů se souhlasem) |
 | Srovnání „poradce × banka“ | ✅ přidáno |
 | Loga spolupracujících bank | ✅ místo připravené – doplnit jen ověřené banky |
 | Časté otázky + slovníček pojmů | ✅ přidáno |
@@ -240,7 +237,7 @@ Na webech hypotečních poradců a zprostředkovatelů se opakují tyto prvky �
 - [ ] Rozsah a názvy služeb (4 karty), body „Co spolu vyřešíme“ a seznam méně obvyklých situací
 - [ ] Kolik bank Petra porovnává a které (loga), cena služeb pro klienta (časté otázky)
 - [ ] Typy schůzek, jejich délka, kdy jsou termíny k dispozici; výběr rezervačního systému
-- [ ] Výchozí ukázková sazba v kalkulačce; jak a kdy posílat připomenutí konce fixace
+- [ ] Výchozí ukázková sazba v kalkulačce
 - [ ] Osobní příběh (rozhovor s klientkou) a motto „Dobrá hypotéka je ta, které rozumíte.“
 - [ ] Tým: prezentovat, nebo sekci skrýt? Jména, role, souhlas s fotkou
 - [ ] Gepard Finance: přesný název, logo a pravidla pro weby poradců (povinné údaje, použití loga, schvalování textů, reprezentativní příklad)
