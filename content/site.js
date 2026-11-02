@@ -41,7 +41,7 @@ window.SITE = {
 
   /* ---------- SEO (titulek a popis ve vyhledávačích) ---------- */
   seo: {
-    title: 'Hypoteční poradkyně Brno – Petra Kilianová | Gepard Finance',
+    title: 'Petra Kilianová – hypoteční poradkyně',
     description: 'Hypoteční poradkyně s kanceláří v Brně, pomáhám po celé ČR. Porovnám nabídky bank a provedu vás hypotékou i refinancováním. Osobně, online i po telefonu.',
     url: 'https://petaholec.github.io/petra-kilianova-web/',   // po koupi domény přepsat a spustit node tools/seo-static.js
   },

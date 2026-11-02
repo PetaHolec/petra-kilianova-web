@@ -142,7 +142,7 @@
     const list = published();
     const p = list.find((x) => x.slug === slug);
     if (!p) {
-      document.title = `Článek nenalezen – ${S.brand.name}`;
+      document.title = `${S.brand.name} – článek nenalezen`;
       return `
       <section class="blog-page">
         <div class="container">
@@ -152,7 +152,7 @@
     }
 
     const lead = excerptOf(p);
-    document.title = `${p.title} – ${S.brand.name}`;
+    document.title = `${S.brand.name} – ${p.title}`;
     const desc = document.querySelector('meta[name="description"]');
     if (desc) desc.setAttribute('content', lead);
     const ld = document.createElement('script');
