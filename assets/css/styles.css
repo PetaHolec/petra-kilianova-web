@@ -235,8 +235,6 @@ legend { padding: 0; }
 .site-header.is-scrolled { box-shadow: 0 1px 0 var(--line), 0 10px 30px -20px rgba(14, 59, 27, .35); }
 .header__inner { display: flex; align-items: center; gap: 1.5rem; min-height: var(--header-h); }
 .logo { display: inline-flex; align-items: center; gap: .7rem; text-decoration: none; }
-.logo__mark { display: grid; place-items: center; width: 44px; height: 44px; flex: none; border-radius: 50%; background: var(--lime); color: var(--forest); font-weight: 700; font-size: 1rem; letter-spacing: .02em; }
-.logo__mark svg { width: 20px; height: 26px; }
 .logo__text { display: flex; flex-direction: column; line-height: 1.15; }
 .logo__name { font-size: 1.1rem; font-weight: 700; letter-spacing: -.01em; }
 .logo__role { font-size: .8125rem; color: var(--ink-muted); }

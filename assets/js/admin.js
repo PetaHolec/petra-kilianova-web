@@ -182,7 +182,7 @@
     return `
     <header class="adm-top">
       <div class="adm-top__in">
-        <a class="logo" href="index.html" aria-label="Na web">${PV.archMark('logo__mark')}<span class="logo__text"><span class="logo__name">${esc(S.brand.name)}</span><span class="logo__role">Správa webu</span></span></a>
+        <a class="logo" href="index.html" aria-label="Na web"><span class="logo__text"><span class="logo__name">${esc(S.brand.name)}</span><span class="logo__role">Správa webu</span></span></a>
         <span class="adm-top__space"></span>
         <a class="adm-link" href="index.html" target="_blank" rel="noopener">Zobrazit web</a>
         ${loggedIn ? '<button class="adm-link" type="button" data-logout>Odhlásit se</button>' : ''}
