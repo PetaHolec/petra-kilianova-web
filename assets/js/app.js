@@ -60,8 +60,8 @@
   const phoneValue = () => (C.phoneHref ? `<a href="tel:${esc(C.phoneHref)}" data-track="contact_phone">${fmt(C.phone)}</a>` : fmt(C.phone));
   const emailValue = () => (C.emailHref ? `<a href="mailto:${esc(C.emailHref)}" data-track="contact_email">${fmt(C.email)}</a>` : fmt(C.email));
 
-  const logo = () =>
-    `<a class="logo" href="${isHome ? '#uvod' : 'index.html'}" aria-label="${esc(S.brand.name)}, ${esc(S.brand.role.toLowerCase())} – na úvod"><span class="logo__text"><span class="logo__name">${esc(S.brand.name)}</span><span class="logo__role">${esc(S.brand.role)}</span></span></a>`;
+  const logo = (white = false) =>
+    `<a class="logo" href="${isHome ? '#uvod' : 'index.html'}" aria-label="${esc(S.brand.name)}, ${esc(S.brand.role.toLowerCase())} – na úvod"><img class="logo__gepard" src="assets/img/gepard/logo${white ? '-white' : ''}.svg" alt="" width="181" height="91"><span class="logo__text"><span class="logo__name">${esc(S.brand.name)}</span><span class="logo__role">${esc(S.brand.role)}</span></span></a>`;
 
   const phBlock = (t) => (PV.isPh(t)
     ? `<div class="ph-block">${icon('edit')}<p>${PV.text(PV.stripPh(t))}</p></div>`
@@ -688,7 +688,7 @@ ${renderPartners()}`;
     </div>
     <div class="footer__top">
       <div class="footer__brand">
-        ${logo()}
+        ${logo(true)}
         ${liveSocial.length ? `<div class="footer__social">${liveSocial.map((s) => `<a href="${esc(PV.safeUrl(s.url))}" target="_blank" rel="noopener" aria-label="${esc(s.label)}" data-track="social_${esc(s.id)}">${icon(s.id)}</a>`).join('')}</div>` : ''}
       </div>
       <div>
