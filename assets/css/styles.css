@@ -261,6 +261,7 @@ legend { padding: 0; }
 .hero__visual { position: relative; }
 .hero__panel { position: relative; display: flex; align-items: flex-end; justify-content: center; aspect-ratio: 5 / 5.6; overflow: hidden; border-radius: var(--r-lg); background: var(--lime); }
 .house-art { position: absolute; inset: 4% 4% 0; width: 92%; height: 96%; }
+.hero__person { position: absolute; bottom: 0; left: 50%; width: auto; max-width: none; height: 93%; transform: translateX(-50%); }
 
 .partners { padding: 1.25rem 0; border-block: 1px solid var(--line); background: #fff; }
 .partners__inner { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: .75rem 1.5rem; align-items: center; }

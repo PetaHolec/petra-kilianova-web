@@ -126,6 +126,7 @@
     <div class="hero__visual">
       <div class="hero__panel">
         ${houseArt}
+        ${h.photo ? `<img class="hero__person" src="${esc(h.photo.src)}" alt="${esc(h.photo.alt)}" width="641" height="1100" fetchpriority="high">` : ''}
       </div>
     </div>
   </div>
