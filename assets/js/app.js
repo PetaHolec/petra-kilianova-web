@@ -304,43 +304,64 @@ ${renderPartners()}`;
   function renderTools() {
     if (!on('showTools') || !S.calculator) return '';
     const c = S.calculator;
-    const slider = (key) => {
-      const o = c[key];
-      return `
+    const money = (key, label) => `
           <div class="calc__field">
             <div class="calc__row">
-              <label class="calc__label" for="calc-${key}">${esc(o.label)}${key === 'rate' ? ` <span class="calc__hint">(${esc(c.rateNote)})</span>` : ''}</label>
-              <output class="calc__value" for="calc-${key}" data-out="${key}"></output>
+              <label class="calc__label" for="calc-${key}">${esc(label)}</label>
+              <span class="calc__money"><input class="calc__money-input" type="text" inputmode="numeric" autocomplete="off" data-calc-text="${key}" aria-label="${esc(label)} v korunách">Kč</span>
             </div>
-            <input class="range" type="range" id="calc-${key}" min="${o.min}" max="${o.max}" step="${o.step}" value="${o.value}" data-calc="${key}">
+            <input class="range" type="range" id="calc-${key}" step="50000" data-calc-range="${key}" aria-label="${esc(label)}">
             <div class="calc__scale" aria-hidden="true"><span data-min="${key}"></span><span data-max="${key}"></span></div>
+            <p class="calc__error" data-calc-error="${key}" hidden></p>
           </div>`;
-    };
     return `
 <section class="section tools" id="kalkulacka" aria-labelledby="tools-title">
   <div class="container">
     ${sectionHead(c.eyebrow, c.title, c.intro, 'tools-title')}
     ${note(c.note)}
-      <div class="calc" data-calculator>
-        <div class="calc__inputs">
-          <h3 class="card-title">${esc(c.cardTitle)}</h3>
-          ${slider('amount')}${slider('years')}${slider('rate')}
+    <div class="calc" data-calculator>
+      <div class="calc__inputs">
+        <div class="calc__modes" role="group" aria-label="Druh hypotéky">
+          ${c.modes.map((m) => `<button class="calc__mode" type="button" data-calc-mode="${esc(m.id)}" aria-pressed="false">${esc(m.label)}</button>`).join('')}
         </div>
-        <div class="calc__result">
-          <p class="calc__result-label">Měsíční splátka</p>
-          <p class="calc__payment" data-out="payment">–</p>
-          <dl class="calc__stats">
-            <div><dt>Celkem zaplatíte</dt><dd data-out="total"></dd></div>
-            <div><dt>Z toho úroky</dt><dd data-out="interest"></dd></div>
-          </dl>
-          <div class="calc__bar" aria-hidden="true"><span class="calc__bar-principal" data-bar="principal"></span><span class="calc__bar-interest" data-bar="interest"></span></div>
-          <p class="calc__legend" aria-hidden="true"><span><i class="calc__dot calc__dot--principal"></i>Jistina</span><span><i class="calc__dot calc__dot--interest"></i>Úroky</span></p>
-          <p class="calc__sens" data-out="sens"></p>
-          ${btn(c.cta, { to: href('rezervace'), cls: 'btn--lime btn--block', attrs: 'data-book data-track="cta_calculator"' })}
-          <p class="calc__disclaimer">${fmt(c.disclaimer)}</p>
-          <p class="visually-hidden" aria-live="polite" data-calc-live></p>
+        ${money('guarantee', c.guaranteeLabel)}${money('credit', c.creditLabel)}
+        <div class="calc__selects">
+          <div><label class="calc__label calc__label--block" for="calc-years">${esc(c.yearsLabel)}</label><select class="field__input" id="calc-years" data-calc-select="years"></select></div>
+          <div><label class="calc__label calc__label--block" for="calc-fixation">${esc(c.fixationLabel)}</label><select class="field__input" id="calc-fixation" data-calc-select="fixation">${c.fixations.map((f) => `<option value="${f}"${f === c.fixation ? ' selected' : ''}>${f} ${PV.plural(f, 'rok', 'roky', 'let')}</option>`).join('')}</select></div>
+        </div>
+        <div class="calc__insurance" role="group" aria-label="${esc(c.insuranceLabel)}">
+          <span class="calc__label">${esc(c.insuranceLabel)}</span>
+          <span class="calc__modes calc__modes--small">
+            <button class="calc__mode" type="button" data-calc-insurance="1" aria-pressed="true">Ano</button>
+            <button class="calc__mode" type="button" data-calc-insurance="0" aria-pressed="false">Ne</button>
+          </span>
         </div>
       </div>
+      <div class="calc__result" data-calc-result>
+        <p class="calc__result-label">${esc(c.resultLabel)}</p>
+        <p class="calc__payment" data-out="payment">–</p>
+        <dl class="calc__stats">
+          <div><dt>Úroková sazba</dt><dd data-out="rate">–</dd></div>
+          <div><dt>RPSN</dt><dd data-out="apr">–</dd></div>
+          <div data-out-wrap="insurance"><dt>Pojištění měsíčně</dt><dd data-out="insurance">–</dd></div>
+          <div><dt>Náklady za dobu fixace</dt><dd data-out="costs">–</dd></div>
+        </dl>
+        <p class="calc__message" data-calc-message hidden></p>
+        <div class="calc__actions">
+          <button class="btn btn--block calc__toggle" type="button" data-calc-toggle aria-expanded="false" aria-controls="calc-compare"><span>${esc(c.compareCta)}</span></button>
+          ${btn(c.cta, { to: href('rezervace'), cls: 'btn--lime btn--block', attrs: 'data-book data-track="cta_calculator"' })}
+        </div>
+        <p class="calc__disclaimer">${fmt(c.disclaimer)}</p>
+        <p class="visually-hidden" aria-live="polite" data-calc-live></p>
+      </div>
+      <div class="calc__compare" id="calc-compare" data-calc-compare hidden>
+        <h3 class="card-title">${esc(c.compareTitle)}</h3>
+        <table class="calc__table">
+          <thead><tr><th scope="col">Banka</th><th scope="col">Úrok</th><th scope="col">RPSN</th><th scope="col">Splátka</th><th scope="col" data-col-insurance>Pojištění</th><th scope="col">Náklady za fixaci</th></tr></thead>
+          <tbody data-calc-rows></tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </section>`;
   }
@@ -962,55 +983,189 @@ ${renderPartners()}`;
   function initCalculator() {
     const root = $('[data-calculator]');
     if (!root) return;
-    const czk = new Intl.NumberFormat('cs-CZ', { style: 'currency', currency: 'CZK', maximumFractionDigits: 0 });
+    const c = S.calculator;
+    const num = new Intl.NumberFormat('cs-CZ', { maximumFractionDigits: 0 });
     const pct = new Intl.NumberFormat('cs-CZ', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    const input = (k) => $(`[data-calc="${k}"]`, root);
+    const czk = (v) => `${num.format(Math.round(v))} Kč`;
+    const percent = (v) => `${pct.format(v)} %`;
     const out = (k) => $(`[data-out="${k}"]`, root);
+    const message = $('[data-calc-message]', root);
+    const toggle = $('[data-calc-toggle]', root);
+    const compare = $('[data-calc-compare]', root);
     const live = $('[data-calc-live]', root);
-    const yearsWord = (n) => PV.plural(n, 'rok', 'roky', 'let');
-    const label = { amount: (v) => czk.format(v), years: (v) => `${v} ${yearsWord(v)}`, rate: (v) => `${pct.format(v)} %` };
-    const payment = (P, years, ratePct) => {
-      const n = years * 12;
-      const r = ratePct / 100 / 12;
-      return r === 0 ? P / n : (P * r) / (1 - Math.pow(1 + r, -n));
-    };
-
-    ['amount', 'years', 'rate'].forEach((k) => {
-      const el = input(k);
-      $(`[data-min="${k}"]`, root).textContent = label[k](Number(el.min));
-      $(`[data-max="${k}"]`, root).textContent = label[k](Number(el.max));
-    });
-
+    const result = $('[data-calc-result]', root);
+    const years = $('[data-calc-select="years"]', root);
+    const fixation = $('[data-calc-select="fixation"]', root);
+    const KEYS = ['guarantee', 'credit'];
+    const state = { mode: c.modes[0], guarantee: 0, credit: 0, insurance: true };
+    let offers = [];
+    let request = 0;
     let used = false;
+
     const announce = PV.debounce((text) => { live.textContent = text; }, 700);
-    const update = () => {
-      const P = Number(input('amount').value);
-      const Y = Number(input('years').value);
-      const R = Number(input('rate').value);
-      ['amount', 'years', 'rate'].forEach((k) => {
-        const el = input(k);
-        const v = Number(el.value);
-        out(k).textContent = label[k](v);
-        el.setAttribute('aria-valuetext', label[k](v));
-        el.style.setProperty('--fill', `${((v - el.min) / (el.max - el.min)) * 100}%`);
-      });
-      const m = payment(P, Y, R);
-      const total = m * Y * 12;
-      const interest = total - P;
-      const higher = payment(P, Y, R + 1);
-      out('payment').textContent = czk.format(Math.round(m));
-      out('total').textContent = czk.format(Math.round(total));
-      out('interest').textContent = czk.format(Math.round(interest));
-      $('[data-bar="principal"]', root).style.width = `${(P / total) * 100}%`;
-      $('[data-bar="interest"]', root).style.width = `${(interest / total) * 100}%`;
-      out('sens').textContent = `Při sazbě o 1 procentní bod vyšší by splátka vzrostla o ${czk.format(Math.round(higher - m))} měsíčně.`;
-      announce(`Orientační měsíční splátka ${czk.format(Math.round(m))}.`);
+    const markUsed = () => { if (!used) { used = true; PV.track('calculator_used'); } };
+
+    const showValue = (k) => {
+      const range = $(`[data-calc-range="${k}"]`, root);
+      range.value = state[k];
+      range.style.setProperty('--fill', `${Math.min(100, Math.max(0, ((state[k] - range.min) / (range.max - range.min)) * 100))}%`);
+      range.setAttribute('aria-valuetext', czk(state[k]));
     };
-    root.addEventListener('input', () => {
-      update();
-      if (!used) { used = true; PV.track('calculator_used'); }
+    const showText = (k) => { $(`[data-calc-text="${k}"]`, root).value = num.format(state[k]); };
+
+    const setMode = (mode) => {
+      state.mode = mode;
+      $$('[data-calc-mode]', root).forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.calcMode === mode.id)));
+      KEYS.forEach((k) => {
+        const range = $(`[data-calc-range="${k}"]`, root);
+        range.min = mode[k].min;
+        range.max = mode[k].max;
+        state[k] = mode[k].value;
+        $(`[data-min="${k}"]`, root).textContent = czk(mode[k].min);
+        $(`[data-max="${k}"]`, root).textContent = czk(mode[k].max);
+        showValue(k);
+        showText(k);
+      });
+      years.innerHTML = Array.from({ length: mode.maxYears - 4 }, (_, i) => i + 5)
+        .map((y) => `<option value="${y}"${y === mode.years ? ' selected' : ''}>${y} ${PV.plural(y, 'rok', 'roky', 'let')}</option>`).join('');
+    };
+
+    const fieldError = () => {
+      const k = state.mode;
+      if (state.guarantee < k.guarantee.min || state.guarantee > k.guarantee.max) return ['guarantee', `Zadejte částku od ${czk(k.guarantee.min)} do ${czk(k.guarantee.max)}.`];
+      if (state.credit < k.credit.min || state.credit > k.credit.max) return ['credit', `Zadejte částku od ${czk(k.credit.min)} do ${czk(k.credit.max)}.`];
+      if (state.credit > c.maxLtv * state.guarantee) return ['credit', c.ltvError];
+      return null;
+    };
+
+    const clearResult = (text) => {
+      offers = [];
+      ['payment', 'rate', 'apr', 'insurance', 'costs'].forEach((k) => { out(k).textContent = '–'; });
+      message.textContent = text || '';
+      message.hidden = !text;
+      toggle.disabled = true;
+      closeCompare();
+    };
+
+    const closeCompare = () => {
+      compare.hidden = true;
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.querySelector('span').textContent = c.compareCta;
+    };
+
+    const renderRows = (best) => {
+      $('[data-col-insurance]', root).hidden = !state.insurance;
+      $('[data-calc-rows]', root).innerHTML = offers.map((o) => `
+            <tr${o === best ? ' class="is-best"' : ''}>
+              <td data-label="Banka"><strong>${esc(o.bankName)}</strong><span class="calc__product">${esc(o.productName)}</span></td>
+              <td data-label="Úrok">${percent(o.interestRate)}</td>
+              <td data-label="RPSN">${percent(o.apr)}</td>
+              <td data-label="Splátka">${czk(o.monthlyPayment)}</td>
+              ${state.insurance ? `<td data-label="Pojištění">${czk(o.riskInsurance)}</td>` : ''}
+              <td data-label="Náklady za fixaci">${czk(o.totalFixationCosts)}</td>
+            </tr>`).join('');
+    };
+
+    const showResult = (list) => {
+      offers = list.slice().sort((a, b) => a.interestRate - b.interestRate);
+      if (!offers.length) { clearResult(c.emptyError); return; }
+      const best = offers.reduce((a, o) => (o.monthlyPayment < a.monthlyPayment ? o : a), offers[0]);
+      out('payment').textContent = czk(best.monthlyPayment);
+      out('rate').textContent = percent(best.interestRate);
+      out('apr').textContent = percent(best.apr);
+      out('insurance').textContent = czk(best.riskInsurance);
+      out('costs').textContent = czk(best.totalFixationCosts);
+      $('[data-out-wrap="insurance"]', root).hidden = !state.insurance;
+      message.hidden = true;
+      toggle.disabled = false;
+      renderRows(best);
+      announce(`Orientační měsíční splátka ${czk(best.monthlyPayment)} při úroku ${percent(best.interestRate)}.`);
+    };
+
+    const calculate = async () => {
+      const id = ++request;
+      try {
+        const res = await fetch(c.endpoint, {
+          method: 'POST',
+          credentials: 'omit',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            credit: { credit: state.credit, purpose: state.mode.id, estateType: 'flat', guarantee: state.guarantee, repayment: years.value, fixation: fixation.value, riskInsurance: true },
+            mainTab: { refinancingWithIncrease: true, milderConditions: true, domiciliationAmount: 2147483647, propertyInsurance: true, riskInsurance: state.insurance, withdrawOnProposal: true, hbBuy: true, hbClient: true, hbAlone: true, hbIncome: 2147483647, sbEstatePurchase: true, hbGreen: true },
+          }),
+        });
+        if (!res.ok) throw new Error(String(res.status));
+        const list = await res.json();
+        if (id !== request) return;
+        if (!Array.isArray(list)) throw new Error('format');
+        showResult(list);
+      } catch (e) {
+        if (id === request) clearResult(c.loadError);
+      } finally {
+        if (id === request) result.removeAttribute('aria-busy');
+      }
+    };
+    const calculateSoon = PV.debounce(calculate, 400);
+
+    const update = () => {
+      const err = fieldError();
+      KEYS.forEach((k) => {
+        const el = $(`[data-calc-error="${k}"]`, root);
+        el.textContent = err && err[0] === k ? err[1] : '';
+        el.hidden = !(err && err[0] === k);
+      });
+      if (err) {
+        request++;
+        result.removeAttribute('aria-busy');
+        clearResult('');
+        return;
+      }
+      result.setAttribute('aria-busy', 'true');
+      calculateSoon();
+    };
+
+    KEYS.forEach((k) => {
+      const range = $(`[data-calc-range="${k}"]`, root);
+      const text = $(`[data-calc-text="${k}"]`, root);
+      range.addEventListener('input', () => {
+        state[k] = Number(range.value);
+        showValue(k);
+        showText(k);
+        update();
+        markUsed();
+      });
+      text.addEventListener('input', () => {
+        state[k] = parseInt(text.value.replace(/\D/g, ''), 10) || 0;
+        showValue(k);
+        update();
+        markUsed();
+      });
+      text.addEventListener('blur', () => showText(k));
     });
-    update();
+    [years, fixation].forEach((el) => el.addEventListener('change', () => { update(); markUsed(); }));
+    $$('[data-calc-mode]', root).forEach((b) => b.addEventListener('click', () => {
+      setMode(c.modes.find((m) => m.id === b.dataset.calcMode));
+      update();
+      markUsed();
+    }));
+    $$('[data-calc-insurance]', root).forEach((b) => b.addEventListener('click', () => {
+      state.insurance = b.dataset.calcInsurance === '1';
+      $$('[data-calc-insurance]', root).forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      update();
+      markUsed();
+    }));
+    toggle.addEventListener('click', () => {
+      const open = compare.hidden;
+      compare.hidden = !open;
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.querySelector('span').textContent = open ? c.compareHide : c.compareCta;
+      if (open) PV.track('calculator_compare');
+    });
+
+    toggle.disabled = true;
+    setMode(c.modes[0]);
+    result.setAttribute('aria-busy', 'true');
+    calculate();
   }
 
   // Certifikace – zvětšený dokument přímo na stránce

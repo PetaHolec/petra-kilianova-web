@@ -137,7 +137,7 @@ Videa (Reels) jsou **jen na Instagramu** – web je nepřehrává ani nevkládá
 
 ## Kalkulačka
 
-- **Kalkulačka** počítá orientační měsíční splátku anuitního úvěru (výše úvěru, doba splácení, sazba) a ukáže, o kolik by splátka vzrostla při sazbě vyšší o 1 procentní bod. Výchozí sazba je **ukázková**, ne aktuální nabídka bank – nastavuje se v `calculator.rate.value`. Pokud bude web uvádět sazby nebo náklady úvěru, je potřeba s Gepard Finance ověřit povinné údaje (např. reprezentativní příklad – v patičce je pro něj připravené místo).
+- **Kalkulačka** funguje na stejném principu jako kalkulačka Gepard Finance: po změně zadání pošle parametry na `calculator.endpoint` (`https://www.gpf.cz/calculator`) a ukáže nejnižší splátku a porovnání bank. Nic se neukládá a neodesílají se žádné kontaktní údaje. Když server neodpoví, ukáže se hláška. Endpoint není veřejně dokumentovaný, jeho použití je potřeba potvrdit s Gepard Finance, stejně jako povinné údaje (např. reprezentativní příklad – v patičce je pro něj připravené místo).
 
 ---
 
@@ -196,7 +196,7 @@ Web zapisuje události do `dataLayer` (pro Google Tag Manager, GA4, Meta):
 | `booking_cta_click` | klik na libovolné „Domluvit schůzku“ (s informací, které tlačítko) |
 | `booking_type_selected`, `booking_date_selected`, `booking_time_selected`, `booking_slot_confirmed` | jednotlivé kroky rezervace (trychtýř) |
 | `booking_submit_demo` | dokončená rezervace (v ostré verzi hlavní konverze) |
-| `calculator_used`, `faq_open`, `service_details_open` | zájem o obsah |
+| `calculator_used`, `calculator_compare`, `faq_open`, `service_details_open` | zájem o obsah |
 | `*_form_error`, `click` | chyby ve formulářích, ostatní sledované odkazy (telefon, e-mail, sítě…) |
 
 UTM parametry z reklamních kampaní (`utm_source`, `utm_campaign`…) se uloží na dobu návštěvy a připojí k rezervaci – je tak vidět, ze které kampaně zájemce přišel.
