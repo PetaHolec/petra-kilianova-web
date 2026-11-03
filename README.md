@@ -254,4 +254,8 @@ Na webech hypotečních poradců a zprostředkovatelů se opakují tyto prvky �
 
 ## SEO
 
-Po změně textů, kontaktů nebo domény spusťte `node tools/seo-static.js`. Skript z `content/site.js` obnoví metadata, strukturovaná data a statický text v `index.html` a soubor `sitemap.xml`. Indexaci zapnete odstraněním `noindex` ze stránek a povolením v `robots.txt`.
+Po změně textů, kontaktů nebo domény spusťte `node tools/seo-static.js`. Skript vygenerované stránky zároveň přeformátuje (potřebuje internet, nebo už stažený Prettier). Skript z `content/site.js` obnoví metadata, strukturovaná data a statický text v `index.html` a soubor `sitemap.xml`. Indexaci zapnete odstraněním `noindex` ze stránek a povolením v `robots.txt`.
+
+## Formátování kódu
+
+Kód je formátovaný Prettierem podle `.prettierrc` (odsazení tabulátorem, šířka 100 znaků). Soubor přeformátujete příkazem `npx prettier@3.3.3 --write <soubor>`. Řetězce označené `/* HTML */` formátuje Prettier jako HTML.

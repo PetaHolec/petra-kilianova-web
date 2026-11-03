@@ -9,190 +9,284 @@
    • Finální texty a kategorie je potřeba ověřit s právníkem.
    ========================================================================== */
 (function () {
-  'use strict';
+	'use strict';
 
-  const KEY = 'pv_consent_v1';
-  const VERSION = 1;
-  const MAX_AGE = 365 * 24 * 60 * 60 * 1000; // platnost souhlasu (12 měsíců)
-  const PV = window.PV;
+	const KEY = 'pv_consent_v1';
+	const VERSION = 1;
+	const MAX_AGE = 365 * 24 * 60 * 60 * 1000; // platnost souhlasu (12 měsíců)
+	const PV = window.PV;
 
-  window.dataLayer = window.dataLayer || [];
-  function gtag() { window.dataLayer.push(arguments); }
+	window.dataLayer = window.dataLayer || [];
+	function gtag() {
+		window.dataLayer.push(arguments);
+	}
 
-  gtag('consent', 'default', {
-    ad_storage: 'denied',
-    ad_user_data: 'denied',
-    ad_personalization: 'denied',
-    analytics_storage: 'denied',
-    personalization_storage: 'denied',
-    functionality_storage: 'granted',
-    security_storage: 'granted',
-    wait_for_update: 500,
-  });
-  gtag('set', 'ads_data_redaction', true);
+	gtag('consent', 'default', {
+		ad_storage: 'denied',
+		ad_user_data: 'denied',
+		ad_personalization: 'denied',
+		analytics_storage: 'denied',
+		personalization_storage: 'denied',
+		functionality_storage: 'granted',
+		security_storage: 'granted',
+		wait_for_update: 500,
+	});
+	gtag('set', 'ads_data_redaction', true);
 
-  const listeners = [];
-  let state = read();
-  let el = null;
+	const listeners = [];
+	let state = read();
+	let el = null;
 
-  function read() {
-    try {
-      const s = JSON.parse(localStorage.getItem(KEY));
-      if (!s || s.v !== VERSION) return null;
-      if (!s.date || Date.now() - new Date(s.date).getTime() > MAX_AGE) return null;
-      return s;
-    } catch (e) {
-      return null;
-    }
-  }
+	function read() {
+		try {
+			const s = JSON.parse(localStorage.getItem(KEY));
+			if (!s || s.v !== VERSION) return null;
+			if (!s.date || Date.now() - new Date(s.date).getTime() > MAX_AGE) return null;
+			return s;
+		} catch (e) {
+			return null;
+		}
+	}
 
-  // Cookies měřicích nástrojů (Google Analytics, Google Ads, Meta) – smažou se při odvolání souhlasu
-  const COOKIES = { analytics: /^(_ga|_gid|_gat|_ga_)/, marketing: /^(_gcl|_fbp|_fbc|_gac|IDE|test_cookie)/ };
-  function clearCookies(category) {
-    const host = window.location.hostname;
-    const parts = host.split('.');
-    const domains = [''];
-    for (let i = 0; i < parts.length - 1; i++) domains.push('.' + parts.slice(i).join('.'));
-    document.cookie.split(';').map((c) => c.split('=')[0].trim()).filter((n) => COOKIES[category].test(n)).forEach((name) => {
-      domains.forEach((d) => {
-        document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/${d ? `; domain=${d}` : ''}`;
-      });
-    });
-  }
+	// Cookies měřicích nástrojů (Google Analytics, Google Ads, Meta) – smažou se při odvolání souhlasu
+	const COOKIES = {
+		analytics: /^(_ga|_gid|_gat|_ga_)/,
+		marketing: /^(_gcl|_fbp|_fbc|_gac|IDE|test_cookie)/,
+	};
+	function clearCookies(category) {
+		const host = window.location.hostname;
+		const parts = host.split('.');
+		const domains = [''];
+		for (let i = 0; i < parts.length - 1; i++) domains.push('.' + parts.slice(i).join('.'));
+		document.cookie
+			.split(';')
+			.map((c) => c.split('=')[0].trim())
+			.filter((n) => COOKIES[category].test(n))
+			.forEach((name) => {
+				domains.forEach((d) => {
+					document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/${d ? `; domain=${d}` : ''}`;
+				});
+			});
+	}
 
-  function save(choice) {
-    const before = state;
-    state = { v: VERSION, necessary: true, analytics: !!choice.analytics, marketing: !!choice.marketing, date: new Date().toISOString() };
-    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* soukromé okno */ }
-    // Odvolaný souhlas: smazat cookies a načíst stránku znovu, aby už žádný měřicí skript neběžel
-    const revoked = ['analytics', 'marketing'].filter((c) => before && before[c] && !state[c]);
-    if (revoked.length) {
-      revoked.forEach(clearCookies);
-      window.location.reload();
-      return;
-    }
-    apply();
-    hide();
-  }
+	function save(choice) {
+		const before = state;
+		state = {
+			v: VERSION,
+			necessary: true,
+			analytics: !!choice.analytics,
+			marketing: !!choice.marketing,
+			date: new Date().toISOString(),
+		};
+		try {
+			localStorage.setItem(KEY, JSON.stringify(state));
+		} catch (e) {
+			/* soukromé okno */
+		}
+		// Odvolaný souhlas: smazat cookies a načíst stránku znovu, aby už žádný měřicí skript neběžel
+		const revoked = ['analytics', 'marketing'].filter((c) => before && before[c] && !state[c]);
+		if (revoked.length) {
+			revoked.forEach(clearCookies);
+			window.location.reload();
+			return;
+		}
+		apply();
+		hide();
+	}
 
-  function apply() {
-    if (!state) return;
-    gtag('consent', 'update', {
-      analytics_storage: state.analytics ? 'granted' : 'denied',
-      ad_storage: state.marketing ? 'granted' : 'denied',
-      ad_user_data: state.marketing ? 'granted' : 'denied',
-      ad_personalization: state.marketing ? 'granted' : 'denied',
-    });
-    window.dataLayer.push({ event: 'consent_update', consent_analytics: state.analytics, consent_marketing: state.marketing });
-    loadTags();
-    listeners.forEach((fn) => { try { fn(state); } catch (e) { /* nic */ } });
-  }
+	function apply() {
+		if (!state) return;
+		gtag('consent', 'update', {
+			analytics_storage: state.analytics ? 'granted' : 'denied',
+			ad_storage: state.marketing ? 'granted' : 'denied',
+			ad_user_data: state.marketing ? 'granted' : 'denied',
+			ad_personalization: state.marketing ? 'granted' : 'denied',
+		});
+		window.dataLayer.push({
+			event: 'consent_update',
+			consent_analytics: state.analytics,
+			consent_marketing: state.marketing,
+		});
+		loadTags();
+		listeners.forEach((fn) => {
+			try {
+				fn(state);
+			} catch (e) {
+				/* nic */
+			}
+		});
+	}
 
-  // Načtení měřicích nástrojů – pouze se souhlasem a vyplněným ID
-  function loadTags() {
-    const t = (window.SITE && window.SITE.tracking) || {};
+	// Načtení měřicích nástrojů – pouze se souhlasem a vyplněným ID
+	function loadTags() {
+		const t = (window.SITE && window.SITE.tracking) || {};
 
-    if (t.gtmId && (state.analytics || state.marketing) && !window.__pvGtm) {
-      window.__pvGtm = true;
-      window.dataLayer.push({ 'gtm.start': Date.now(), event: 'gtm.js' });
-      const s = document.createElement('script');
-      s.async = true;
-      s.src = 'https://www.googletagmanager.com/gtm.js?id=' + encodeURIComponent(t.gtmId);
-      document.head.appendChild(s);
-    }
+		if (t.gtmId && (state.analytics || state.marketing) && !window.__pvGtm) {
+			window.__pvGtm = true;
+			window.dataLayer.push({ 'gtm.start': Date.now(), event: 'gtm.js' });
+			const s = document.createElement('script');
+			s.async = true;
+			s.src = 'https://www.googletagmanager.com/gtm.js?id=' + encodeURIComponent(t.gtmId);
+			document.head.appendChild(s);
+		}
 
-    if (t.metaPixelId && state.marketing && !window.__pvPixel) {
-      window.__pvPixel = true;
-      /* eslint-disable */
-      !function (f, b, e, v, n, t2, s2) { if (f.fbq) return; n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments); }; if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0'; n.queue = []; t2 = b.createElement(e); t2.async = !0; t2.src = v; s2 = b.getElementsByTagName(e)[0]; s2.parentNode.insertBefore(t2, s2); }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
-      /* eslint-enable */
-      window.fbq('init', t.metaPixelId);
-      window.fbq('track', 'PageView');
-    }
-  }
+		if (t.metaPixelId && state.marketing && !window.__pvPixel) {
+			window.__pvPixel = true;
+			/* eslint-disable */
+			!(function (f, b, e, v, n, t2, s2) {
+				if (f.fbq) return;
+				n = f.fbq = function () {
+					n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+				};
+				if (!f._fbq) f._fbq = n;
+				n.push = n;
+				n.loaded = !0;
+				n.version = '2.0';
+				n.queue = [];
+				t2 = b.createElement(e);
+				t2.async = !0;
+				t2.src = v;
+				s2 = b.getElementsByTagName(e)[0];
+				s2.parentNode.insertBefore(t2, s2);
+			})(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+			/* eslint-enable */
+			window.fbq('init', t.metaPixelId);
+			window.fbq('track', 'PageView');
+		}
+	}
 
-  function render() {
-    const icon = PV.icon;
-    el = document.createElement('section');
-    el.className = 'consent';
-    el.setAttribute('aria-label', 'Souhlas s cookies');
-    el.hidden = true;
-    el.innerHTML = `
-      <h2 class="consent__title">${icon('cookie')}Cookies a soukromí</h2>
-      <p class="consent__text">Web používá jen technologie nutné pro svůj chod. Analytické a marketingové cookies zapneme pouze s vaším souhlasem. Více v <a href="ochrana-osobnich-udaju#cookies">zásadách ochrany osobních údajů</a>.</p>
-      <div class="consent__prefs" data-prefs hidden>
-        <div class="consent__cat">
-          <div class="consent__cat-text"><strong>Nezbytné</strong><span>Zajišťují základní funkce webu. Jsou vždy zapnuté.</span></div>
-          <label class="switch"><input type="checkbox" checked disabled aria-label="Nezbytné cookies – vždy zapnuté"><span class="switch__track" aria-hidden="true"></span></label>
-        </div>
-        <div class="consent__cat">
-          <div class="consent__cat-text"><strong>Analytické</strong><span>Souhrnné statistiky návštěvnosti, díky kterým web zlepšujeme.</span></div>
-          <label class="switch"><input type="checkbox" data-cat="analytics" aria-label="Analytické cookies"><span class="switch__track" aria-hidden="true"></span></label>
-        </div>
-        <div class="consent__cat">
-          <div class="consent__cat-text"><strong>Marketingové</strong><span>Měření kampaní na sociálních sítích a ve vyhledávačích.</span></div>
-          <label class="switch"><input type="checkbox" data-cat="marketing" aria-label="Marketingové cookies"><span class="switch__track" aria-hidden="true"></span></label>
-        </div>
-      </div>
-      <div class="consent__actions">
-        <button class="btn btn--primary btn--noicon" type="button" data-consent="reject">Jen nezbytné</button>
-        <button class="btn btn--primary btn--noicon" type="button" data-consent="accept">Přijmout vše</button>
-        <button class="consent__more" type="button" data-consent="settings" aria-expanded="false">Nastavení</button>
-      </div>`;
-    document.body.appendChild(el);
+	function render() {
+		const icon = PV.icon;
+		el = document.createElement('section');
+		el.className = 'consent';
+		el.setAttribute('aria-label', 'Souhlas s cookies');
+		el.hidden = true;
+		el.innerHTML = /* HTML */ ` <h2 class="consent__title">
+				${icon('cookie')}Cookies a soukromí
+			</h2>
+			<p class="consent__text">
+				Web používá jen technologie nutné pro svůj chod. Analytické a marketingové cookies
+				zapneme pouze s vaším souhlasem. Více v
+				<a href="ochrana-osobnich-udaju#cookies">zásadách ochrany osobních údajů</a>.
+			</p>
+			<div class="consent__prefs" data-prefs hidden>
+				<div class="consent__cat">
+					<div class="consent__cat-text">
+						<strong>Nezbytné</strong
+						><span>Zajišťují základní funkce webu. Jsou vždy zapnuté.</span>
+					</div>
+					<label class="switch"
+						><input
+							type="checkbox"
+							checked
+							disabled
+							aria-label="Nezbytné cookies – vždy zapnuté" /><span
+							class="switch__track"
+							aria-hidden="true"
+						></span
+					></label>
+				</div>
+				<div class="consent__cat">
+					<div class="consent__cat-text">
+						<strong>Analytické</strong
+						><span>Souhrnné statistiky návštěvnosti, díky kterým web zlepšujeme.</span>
+					</div>
+					<label class="switch"
+						><input
+							type="checkbox"
+							data-cat="analytics"
+							aria-label="Analytické cookies" /><span
+							class="switch__track"
+							aria-hidden="true"
+						></span
+					></label>
+				</div>
+				<div class="consent__cat">
+					<div class="consent__cat-text">
+						<strong>Marketingové</strong
+						><span>Měření kampaní na sociálních sítích a ve vyhledávačích.</span>
+					</div>
+					<label class="switch"
+						><input
+							type="checkbox"
+							data-cat="marketing"
+							aria-label="Marketingové cookies" /><span
+							class="switch__track"
+							aria-hidden="true"
+						></span
+					></label>
+				</div>
+			</div>
+			<div class="consent__actions">
+				<button class="btn btn--primary btn--noicon" type="button" data-consent="reject">
+					Jen nezbytné
+				</button>
+				<button class="btn btn--primary btn--noicon" type="button" data-consent="accept">
+					Přijmout vše
+				</button>
+				<button
+					class="consent__more"
+					type="button"
+					data-consent="settings"
+					aria-expanded="false"
+				>
+					Nastavení
+				</button>
+			</div>`;
+		document.body.appendChild(el);
 
-    const prefs = el.querySelector('[data-prefs]');
-    const settingsBtn = el.querySelector('[data-consent="settings"]');
+		const prefs = el.querySelector('[data-prefs]');
+		const settingsBtn = el.querySelector('[data-consent="settings"]');
 
-    el.addEventListener('click', (e) => {
-      const btn = e.target.closest('[data-consent]');
-      if (!btn) return;
-      const action = btn.dataset.consent;
-      if (action === 'accept') save({ analytics: true, marketing: true });
-      if (action === 'reject') save({ analytics: false, marketing: false });
-      if (action === 'settings') {
-        if (prefs.hidden) {
-          prefs.hidden = false;
-          settingsBtn.textContent = 'Uložit výběr';
-          settingsBtn.setAttribute('aria-expanded', 'true');
-          prefs.querySelector('[data-cat="analytics"]').focus();
-        } else {
-          save({
-            analytics: prefs.querySelector('[data-cat="analytics"]').checked,
-            marketing: prefs.querySelector('[data-cat="marketing"]').checked,
-          });
-        }
-      }
-    });
-  }
+		el.addEventListener('click', (e) => {
+			const btn = e.target.closest('[data-consent]');
+			if (!btn) return;
+			const action = btn.dataset.consent;
+			if (action === 'accept') save({ analytics: true, marketing: true });
+			if (action === 'reject') save({ analytics: false, marketing: false });
+			if (action === 'settings') {
+				if (prefs.hidden) {
+					prefs.hidden = false;
+					settingsBtn.textContent = 'Uložit výběr';
+					settingsBtn.setAttribute('aria-expanded', 'true');
+					prefs.querySelector('[data-cat="analytics"]').focus();
+				} else {
+					save({
+						analytics: prefs.querySelector('[data-cat="analytics"]').checked,
+						marketing: prefs.querySelector('[data-cat="marketing"]').checked,
+					});
+				}
+			}
+		});
+	}
 
-  function show(withPrefs) {
-    if (!el) render();
-    const prefs = el.querySelector('[data-prefs]');
-    const settingsBtn = el.querySelector('[data-consent="settings"]');
-    el.querySelector('[data-cat="analytics"]').checked = !!(state && state.analytics);
-    el.querySelector('[data-cat="marketing"]').checked = !!(state && state.marketing);
-    prefs.hidden = !withPrefs;
-    settingsBtn.textContent = withPrefs ? 'Uložit výběr' : 'Nastavení';
-    settingsBtn.setAttribute('aria-expanded', String(!!withPrefs));
-    el.hidden = false;
-  }
+	function show(withPrefs) {
+		if (!el) render();
+		const prefs = el.querySelector('[data-prefs]');
+		const settingsBtn = el.querySelector('[data-consent="settings"]');
+		el.querySelector('[data-cat="analytics"]').checked = !!(state && state.analytics);
+		el.querySelector('[data-cat="marketing"]').checked = !!(state && state.marketing);
+		prefs.hidden = !withPrefs;
+		settingsBtn.textContent = withPrefs ? 'Uložit výběr' : 'Nastavení';
+		settingsBtn.setAttribute('aria-expanded', String(!!withPrefs));
+		el.hidden = false;
+	}
 
-  function hide() {
-    if (el) el.hidden = true;
-  }
+	function hide() {
+		if (el) el.hidden = true;
+	}
 
-  window.PVConsent = {
-    get: () => state,
-    has: (category) => !!(state && state[category]),
-    onChange: (fn) => listeners.push(fn),
-    open: () => {
-      show(true);
-      const first = el.querySelector('[data-cat="analytics"]');
-      if (first) first.focus();
-    },
-  };
+	window.PVConsent = {
+		get: () => state,
+		has: (category) => !!(state && state[category]),
+		onChange: (fn) => listeners.push(fn),
+		open: () => {
+			show(true);
+			const first = el.querySelector('[data-cat="analytics"]');
+			if (first) first.focus();
+		},
+	};
 
-  if (state) apply();
-  else if (document.body.dataset.page !== 'admin') show(false);
+	if (state) apply();
+	else if (document.body.dataset.page !== 'admin') show(false);
 })();
